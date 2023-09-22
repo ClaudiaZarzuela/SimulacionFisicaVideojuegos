@@ -9,6 +9,7 @@
 #include "callbacks.hpp"
 
 #include <iostream>
+#include "Particle.h"
 
 std::string display_text = "This is a test";
 
@@ -29,7 +30,7 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
-
+Particle* _particle = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -54,7 +55,9 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-	}
+
+	_particle = new Particle(Vector3(0,0,0), Vector3(5,0,0));
+}
 
 
 // Function to configure what happens in each step of physics
@@ -66,6 +69,7 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+	_particle->integrate(t);
 }
 
 // Function to clean data
@@ -73,6 +77,7 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
+	delete(_particle);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
@@ -84,6 +89,7 @@ void cleanupPhysics(bool interactive)
 	transport->release();
 	
 	gFoundation->release();
+
 	}
 
 // Function called when a key is pressed
