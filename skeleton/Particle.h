@@ -2,7 +2,7 @@
 #include "RenderUtils.hpp"
 class Particle
 {
-public: Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, float Gravedad);
+public: Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time);
 	  ~Particle();
 
 	  void integrate(double t);
@@ -18,10 +18,13 @@ private:
 	physx::PxShape* forma;
 	// Color of the particle
 	Vector4 color;
+	Vector3 gravedad;
 
+	float time = 0;
+	float maxTime;
 	float damping = 0.998;
 	float masa;
-	float gravedad;
+	bool alive = true;
 	RenderItem* renderItem;
 };
 

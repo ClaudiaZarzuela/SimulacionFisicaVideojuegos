@@ -9,7 +9,7 @@
 #include "callbacks.hpp"
 
 #include <iostream>
-#include "Particle.h"
+#include "Proyectil.h"
 
 std::string display_text = "This is a test";
 
@@ -30,7 +30,7 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
-Particle* _particle = NULL;
+Proyectil* _proyectil = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -56,7 +56,8 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	_particle = new Particle(Vector3(0,0,0), Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f), 0.99f, 2.0f);
+	_proyectil = new Proyectil(Proyectil::Types::PISTOL);
+
 }
 
 
@@ -69,7 +70,7 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	_particle->integrate(t);
+	_proyectil->integrate(t);
 }
 
 // Function to clean data
@@ -77,7 +78,7 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-	delete(_particle);
+	delete(_proyectil);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
@@ -99,11 +100,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	//case 'B': break;
-	//case ' ':	break;
 	case ' ':
 	{
-		break;
+		_proyectil->shoot(GetCamera()->getDir(), GetCamera()->getTransform().p); break;
 	}
 	default:
 		break;
