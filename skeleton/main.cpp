@@ -9,7 +9,7 @@
 #include "callbacks.hpp"
 
 #include <iostream>
-#include "Proyectil.h"
+#include "Weapon.h"
 
 std::string display_text = "This is a test";
 
@@ -30,7 +30,7 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
-Proyectil* _proyectil = NULL;
+Weapon* _proyectil = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -56,7 +56,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	_proyectil = new Proyectil(Proyectil::Types::PISTOL);
+	_proyectil = new Weapon(Weapon::Types::PISTOL);
 
 }
 

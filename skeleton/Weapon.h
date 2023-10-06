@@ -2,7 +2,7 @@
 #include "Particle.h"
 #include "RenderUtils.hpp"
 
-class Proyectil
+class Weapon
 {
 public:
 	enum Types {
@@ -17,7 +17,7 @@ private:
     std::vector<Particle*> particles;
 
 public:
-	Proyectil(Types currentType);
+	Weapon(Types currentType);
 	void integrate(double t);
 	void shoot(Vector3 dir, Vector3 pos);
 };

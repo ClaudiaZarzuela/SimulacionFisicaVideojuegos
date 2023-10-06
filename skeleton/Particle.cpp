@@ -9,7 +9,7 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Mas
 	gravedad = Gravedad;
 	maxTime = Time;
 
-	forma = CreateShape(physx::PxSphereGeometry(5));
+	forma = CreateShape(physx::PxSphereGeometry(1));
 	color = Vector4(0, 0, 0, 0);
 	renderItem = new RenderItem(forma, &pos, color);	
 }

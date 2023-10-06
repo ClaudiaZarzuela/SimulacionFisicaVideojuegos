@@ -1,6 +1,6 @@
-#include "Proyectil.h"
+#include "Weapon.h"
 #include <iostream>
-Proyectil::Proyectil(Types currentType) {
+Weapon::Weapon(Types currentType) {
 	switch (currentType) {
 	case PISTOL:
 		speedReal = 330.0f;
@@ -25,18 +25,26 @@ Proyectil::Proyectil(Types currentType) {
 	}
 }
 
-void Proyectil::integrate(double t) {
-	for each (Particle* p in particles) p->integrate(t);
+void Weapon::integrate(double t) {
+	for (auto it = particles.begin(); it != particles.end();) {
+		if ((*it)->isAlive()) {
+			(*it)->integrate(t); ++it;
+		}
+		else {
+			delete(*it);
+			it = particles.erase(it);
+		}
+	}
 }
 
-void Proyectil::shoot(Vector3 dir, Vector3 pos) {
-	particles.push_back(new Particle(pos, speedSim * dir, calculateGravity(dir), 0.998, calculateMass(dir), calculateGravity(dir), 5.0f));
+void Weapon::shoot(Vector3 dir, Vector3 pos) {
+	particles.push_back(new Particle(pos, speedSim * dir, calculateGravity(dir), 0.998, calculateMass(dir), calculateGravity(dir), 20.0f));
 }
 
-Vector3 Proyectil::calculateGravity(Vector3 dir) {
+Vector3 Weapon::calculateGravity(Vector3 dir) {
 	return Vector3(0, -9.8 * pow(speedSim * dir.magnitude() / speedReal * dir.magnitude(), 2), 0);
 }
 
-float Proyectil::calculateMass(Vector3 dir) {
+float Weapon::calculateMass(Vector3 dir) {
 	return masaReal * pow(speedReal * dir.magnitude() / speedSim * dir.magnitude(), 2);
 }

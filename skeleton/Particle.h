@@ -6,6 +6,7 @@ public: Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa,
 	  ~Particle();
 
 	  void integrate(double t);
+	  bool isAlive() { return alive; }
 
 private:
 	// Position in world space
