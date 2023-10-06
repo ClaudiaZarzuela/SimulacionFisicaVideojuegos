@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "Weapon.h"
+#include "Particle.h"
 
 std::string display_text = "This is a test";
 
@@ -31,6 +32,7 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 Weapon* _proyectil = NULL;
+Particle* _particula = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -56,7 +58,14 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	_proyectil = new Weapon(Weapon::Types::PISTOL);
+	//Apartado 1
+	_particula = new Particle(Vector3(0, 0, 0), Vector3(0, 10, 0));
+
+	//Apartado 2
+	//_particula = new Particle(Vector3(0, 0, 0), Vector3(0, 2, 0), Vector3(0, 10, 0), 0.998);
+
+	//Apartado 3
+	//_proyectil = new Weapon(Weapon::Types::PISTOL);
 
 }
 
@@ -70,7 +79,12 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	_proyectil->integrate(t);
+
+	//Apartado 1 y 2
+	_particula->integrate(t);
+
+	//Apartado 3
+	//_proyectil->integrate(t);
 }
 
 // Function to clean data
@@ -78,7 +92,12 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-	delete(_proyectil);
+
+	//Apartado 1 y 2
+	delete(_particula);
+	
+	//Apartado 3
+	//delete(_proyectil);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
@@ -102,7 +121,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	case ' ':
 	{
-		_proyectil->shoot(GetCamera()->getDir(), GetCamera()->getTransform().p); break;
+		//Apartado 3
+		//_proyectil->shoot(GetCamera()->getDir(), GetCamera()->getTransform().p); break;
 	}
 	default:
 		break;

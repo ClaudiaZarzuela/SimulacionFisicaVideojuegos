@@ -2,11 +2,20 @@
 #include "RenderUtils.hpp"
 class Particle
 {
-public: Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time);
-	  ~Particle();
+public: 
+	//Apartado 1
+	Particle(Vector3 Pos, Vector3 Vel);
 
-	  void integrate(double t);
-	  bool isAlive() { return alive; }
+	//Apartado 2
+	Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping);
+
+	//Apartado 3
+	Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time);
+	
+	~Particle();
+
+	void integrate(double t);
+	bool isAlive() { return alive; }
 
 private:
 	// Position in world space
