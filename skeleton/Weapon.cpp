@@ -34,6 +34,7 @@ void Weapon::integrate(double t) {
 			delete(*it);
 			it = particles.erase(it);
 		}
+
 	}
 }
 
