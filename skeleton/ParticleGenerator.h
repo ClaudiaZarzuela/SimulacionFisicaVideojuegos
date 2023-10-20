@@ -26,11 +26,12 @@ public:
 	inline void setNParticles(int n_p) { _n_particles = n_p; }
 
 protected:
-	int _n_particles = 3; // Number of particles for each generateParticles call(TODO: add randomness ? ? )
+	int _n_particles = 1; // Number of particles for each generateParticles call(TODO: add randomness ? ? )
 	double _generation_prob = 1.0; // IF 1.0 --> always produces particles
 	Particle* _model_particle = nullptr; // Has the attributes of the particle that will be generated!(damping, lifetime, etc.)
 	Vector3 _origin, _mean_velocity;
-	std::mt19937 _mt; //generador de numeros aleatorios
+	std::random_device rd{};
+	std::mt19937 _mt{rd()}; //generador de numeros aleatorios
 	std::uniform_real_distribution<double> _u{ 0,1 };
 	std::string _name;
 };

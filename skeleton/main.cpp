@@ -11,6 +11,7 @@
 #include <iostream>
 #include "Weapon.h"
 #include "Particle.h"
+#include "ParticleSystem.h"
 
 std::string display_text = "This is a test";
 
@@ -33,6 +34,7 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 Weapon* _proyectil = NULL;
 Particle* _particula = NULL;
+ParticleSystem* _particleSystem = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -58,7 +60,8 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	_proyectil = new Weapon(Weapon::Types::LASER);
+	//_proyectil = new Weapon(Weapon::Types::LASER);
+	_particleSystem = new ParticleSystem();
 
 }
 
@@ -72,7 +75,8 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	_proyectil->integrate(t);
+	//_proyectil->integrate(t);
+	_particleSystem->integrate(t);
 }
 
 // Function to clean data
@@ -80,7 +84,8 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-	delete(_proyectil);
+	//delete(_proyectil);
+	delete(_particleSystem);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
@@ -104,7 +109,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	case ' ':
 	{
-		_proyectil->shoot(GetCamera()->getDir(), GetCamera()->getTransform().p); break;
+		//_proyectil->shoot(GetCamera()->getDir(), GetCamera()->getTransform().p); break;
 	}
 	default:
 		break;

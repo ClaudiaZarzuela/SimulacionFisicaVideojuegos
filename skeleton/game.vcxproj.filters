@@ -12,6 +12,10 @@
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="ParticleGenerator.cpp" />
+    <ClCompile Include="GaussianParticleGenerator.cpp" />
+    <ClCompile Include="UniformParticleGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -25,6 +29,10 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="ParticleGenerator.h" />
+    <ClInclude Include="GaussianParticleGenerator.h" />
+    <ClInclude Include="UniformParticleGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

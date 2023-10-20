@@ -21,7 +21,7 @@ public:
 	// Shape of the particle
 	physx::PxShape* forma;
 	// Color of the particle
-	Vector4 color;
+	Vector4 _color;
 	Vector3 gravedad = Vector3(0,-10,0);
 
 	float time = 0;
