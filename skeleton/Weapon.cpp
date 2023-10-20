@@ -1,4 +1,4 @@
-#include "Weapon.h"
+﻿#include "Weapon.h"
 #include <iostream>
 Weapon::Weapon(Types currentType) {
 	switch (currentType) {
@@ -26,6 +26,14 @@ Weapon::Weapon(Types currentType) {
 }
 
 void Weapon::integrate(double t) {
+	/*Extinción de las partículas
+		❑Se termina su tiempo de vida
+		❑No aporta nada a la imagen
+			❑Su color y transparencia cae por debajo de un 
+			umbral
+			❑Se desplaza más de una distancia en una 
+			dirección determinada
+	*/
 	for (auto it = particles.begin(); it != particles.end();) {
 		if ((*it)->isAlive()) {
 			(*it)->integrate(t); ++it;

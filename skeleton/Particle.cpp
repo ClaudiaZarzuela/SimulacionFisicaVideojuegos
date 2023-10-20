@@ -1,8 +1,8 @@
 #include "Particle.h"
 #include <math.h>
 Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time) {
-	vel = Vel;
-	pos = physx::PxTransform(Pos);
+	_vel = Vel;
+	_pose = physx::PxTransform(Pos);
 	a = A; 
 	damping = Damping;
 	masa = Masa;
@@ -11,59 +11,26 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Mas
 
 	forma = CreateShape(physx::PxSphereGeometry(1));
 	color = Vector4(0, 0, 0, 0);
-	renderItem = new RenderItem(forma, &pos, color);	
+	renderItem = new RenderItem(forma, &_pose, color);	
 }
 
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping) {
-	vel = Vel;
-	pos = physx::PxTransform(Pos);
-	a = A;
-	damping = Damping;
-
-	forma = CreateShape(physx::PxSphereGeometry(1));
-	color = Vector4(0, 0, 0, 0);
-	renderItem = new RenderItem(forma, &pos, color);
-}
-
-Particle::Particle(Vector3 Pos, Vector3 Vel) {
-	vel = Vel;
-	pos = physx::PxTransform(Pos);
-
-	forma = CreateShape(physx::PxSphereGeometry(1));
-	color = Vector4(0, 0, 0, 0);
-	renderItem = new RenderItem(forma, &pos, color);	
-}
 Particle::~Particle() {
 	renderItem->release();
 }
 void Particle::integrate(double t) {
-
-#pragma region Apartado 1
-	pos.p += vel * t;
-#pragma endregion
-
-#pragma region Apartado 2
-	/*pos.p += vel * t;
-	vel += a * t;
-	vel *= pow(damping, t);
-	time += t;*/
-	
-#pragma endregion
-
-#pragma region Apartado 3
-	/*if (alive) {
+	if (alive) {
 		// Update position
-		pos.p += vel * t;
+		_pose.p += _vel * t;
 
 		// Update linear velocity
-		vel += a * t;
+		_vel += a * t;
 
 		// Impose drag (damping)
-		vel *= pow(damping, t);
+		_vel *= pow(damping, t);
 		time += t;
 		if(time > maxTime) alive = false;
-	}*/
-#pragma endregion
-	
-	
+	}
 }
+ Particle* Particle::clone() const {
+	 return new Particle(_pose.p, _vel, a,damping, masa,gravedad, maxTime);
+ }

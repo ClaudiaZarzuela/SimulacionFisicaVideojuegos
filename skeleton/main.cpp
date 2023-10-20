@@ -58,14 +58,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	//Apartado 1
-	_particula = new Particle(Vector3(0, 0, 0), Vector3(0, 10, 0));
-
-	//Apartado 2
-	//_particula = new Particle(Vector3(0, 0, 0), Vector3(0, 2, 0), Vector3(0, 10, 0), 0.998);
-
-	//Apartado 3
-	//_proyectil = new Weapon(Weapon::Types::PISTOL);
+	_proyectil = new Weapon(Weapon::Types::LASER);
 
 }
 
@@ -79,12 +72,7 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-
-	//Apartado 1 y 2
-	_particula->integrate(t);
-
-	//Apartado 3
-	//_proyectil->integrate(t);
+	_proyectil->integrate(t);
 }
 
 // Function to clean data
@@ -92,12 +80,7 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-
-	//Apartado 1 y 2
-	delete(_particula);
-	
-	//Apartado 3
-	//delete(_proyectil);
+	delete(_proyectil);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
@@ -121,8 +104,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	case ' ':
 	{
-		//Apartado 3
-		//_proyectil->shoot(GetCamera()->getDir(), GetCamera()->getTransform().p); break;
+		_proyectil->shoot(GetCamera()->getDir(), GetCamera()->getTransform().p); break;
 	}
 	default:
 		break;
