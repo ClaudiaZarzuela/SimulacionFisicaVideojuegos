@@ -32,7 +32,6 @@ protected:
 	Vector3 _origin, _mean_velocity;
 	std::random_device rd{};
 	std::mt19937 _mt{rd()}; //generador de numeros aleatorios
-	std::uniform_real_distribution<double> _u{ 0,1 };
 	std::string _name;
 };
 

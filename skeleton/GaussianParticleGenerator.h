@@ -4,7 +4,7 @@ class GaussianParticleGenerator: public ParticleGenerator
 {
 public:
 	GaussianParticleGenerator(Vector3 std_dev_pos, Vector3 mean_pos, Vector3 std_dev_vel, Vector3 mean_vel, std::string name);
-	virtual std::list<Particle*> generateParticles();
+	virtual std::list<Particle*> generateParticles() override;
 
 protected:
 	Vector3 _std_dev_pos, _std_dev_vel, _mean_pos, _mean_vel;

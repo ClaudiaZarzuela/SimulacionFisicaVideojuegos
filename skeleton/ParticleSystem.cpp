@@ -1,7 +1,8 @@
 ﻿#include "ParticleSystem.h"
 ParticleSystem::ParticleSystem(const Vector3& g) {
 	_gravity = g;
-	_particle_generators.push_back(new GaussianParticleGenerator(Vector3(2, 0.01, 2), Vector3(10, 0.01, 5), Vector3(3, 10, 1), Vector3(3, 30, 1), "fuenteG"));
+	_particle_generators.push_back(new GaussianParticleGenerator(Vector3(3, 0.01, 3), Vector3(-15, 0.01, -15), Vector3(5, 5, 5), Vector3(2, 25, 2), "fuenteG"));
+	_particle_generators.push_back(new UniformParticleGenerator(Vector3(10, 0.01, 10), Vector3(15, 0.01, 15), Vector3(-2, 20, -2), Vector3(2, 30, 2), "fuenteU"));
 
 }
 void ParticleSystem::integrate(double t) {
