@@ -3,7 +3,7 @@
 class UniformParticleGenerator :public ParticleGenerator
 {
 public: 
-	UniformParticleGenerator(Vector3 pos_width_min, Vector3 pos_width_max, Vector3 vel_width_min, Vector3 vel_width_max, std::string name);
+	UniformParticleGenerator(Vector3 pos_width_min, Vector3 pos_width_max, Vector3 vel_width_min, Vector3 vel_width_max);
 	virtual std::list<Particle*> generateParticles() override;
 
 protected:

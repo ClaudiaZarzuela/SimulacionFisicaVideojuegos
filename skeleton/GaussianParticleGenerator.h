@@ -3,7 +3,9 @@
 class GaussianParticleGenerator: public ParticleGenerator
 {
 public:
-	GaussianParticleGenerator(Vector3 std_dev_pos, Vector3 mean_pos, Vector3 std_dev_vel, Vector3 mean_vel, std::string name);
+	GaussianParticleGenerator(Vector3 std_dev_pos, Vector3 mean_pos, 
+	Vector3 std_dev_vel, Vector3 mean_vel);
+	GaussianParticleGenerator(){};
 	virtual std::list<Particle*> generateParticles() override;
 
 protected:
@@ -14,5 +16,6 @@ protected:
 	std::normal_distribution<float>* posNormalX;
 	std::normal_distribution<float>* posNormalY;
 	std::normal_distribution<float>* posNormalZ;
+	void calculateNormalDistribution(Vector3 std_dev_pos, Vector3 mean_pos, Vector3 std_dev_vel, Vector3 mean_vel);
 };
 

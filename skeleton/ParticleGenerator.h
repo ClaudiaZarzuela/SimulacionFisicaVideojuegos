@@ -7,7 +7,9 @@
 class ParticleGenerator
 {
 public:
-	ParticleGenerator();
+	ParticleGenerator(){
+		_model_particle = new Particle(Vector3(0, 0, 0), Vector3(0, 50, 0), Vector3(0, -10, 0), 0.998, 1.0f, Vector3(0, -10, 0), 2.0f, Vector4(float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), 1));
+	};
 	~ParticleGenerator(){};
 	virtual std::list<Particle*> generateParticles() = 0;
 	inline void setOrigin(const Vector3& p) { _origin = p; }

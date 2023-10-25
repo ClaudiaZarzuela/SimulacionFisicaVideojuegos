@@ -1,10 +1,14 @@
 #pragma once
 #include "RenderUtils.hpp"
 
+enum Type {
+	NORMAL, FIREWORK
+};
 class Particle
 {
 public: 
-	Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time);
+	Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, 
+		     float Time, Vector4 color, bool esModelo = false, double scale = 0.5);
 	~Particle();
 
 	void integrate(double t);
@@ -29,6 +33,9 @@ public:
 	float damping = 0.998;
 	float masa;
 	bool alive = true;
-	RenderItem* renderItem;
+	Type type = NORMAL;
+	bool esModelo;
+	double scale;
+	RenderItem* renderItem = nullptr;
 };
 

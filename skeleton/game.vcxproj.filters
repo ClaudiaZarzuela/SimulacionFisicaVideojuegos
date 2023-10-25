@@ -16,6 +16,9 @@
     <ClCompile Include="ParticleGenerator.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
+    <ClCompile Include="Firework.cpp" />
+    <ClCompile Include="FireworkGenerator.cpp" />
+    <ClCompile Include="FireworkParticleGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -33,6 +36,9 @@
     <ClInclude Include="ParticleGenerator.h" />
     <ClInclude Include="GaussianParticleGenerator.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
+    <ClInclude Include="Firework.h" />
+    <ClInclude Include="FireworkGenerator.h" />
+    <ClInclude Include="FireworkParticleGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

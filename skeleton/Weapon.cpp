@@ -47,7 +47,7 @@ void Weapon::integrate(double t) {
 }
 
 void Weapon::shoot(Vector3 dir, Vector3 pos) {
-	particles.push_back(new Particle(pos, speedSim * dir, calculateGravity(dir), 0.998, calculateMass(dir), calculateGravity(dir), 20.0f));
+	particles.push_back(new Particle(pos, speedSim * dir, calculateGravity(dir), 0.998, calculateMass(dir), calculateGravity(dir), 20.0f, Vector4(float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), 1)));
 }
 
 Vector3 Weapon::calculateGravity(Vector3 dir) {

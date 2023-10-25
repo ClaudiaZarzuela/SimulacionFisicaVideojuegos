@@ -1,7 +1,12 @@
 #include "GaussianParticleGenerator.h"
-GaussianParticleGenerator::GaussianParticleGenerator(Vector3 std_dev_pos, Vector3 mean_pos,  Vector3 std_dev_vel, Vector3 mean_vel, std::string name):ParticleGenerator() {
+GaussianParticleGenerator::GaussianParticleGenerator(Vector3 std_dev_pos, Vector3 mean_pos,  
+Vector3 std_dev_vel, Vector3 mean_vel):ParticleGenerator() {
 	_std_dev_pos = std_dev_pos; _std_dev_vel = std_dev_vel;
 	_mean_pos = mean_pos; _mean_vel = mean_vel;
+	calculateNormalDistribution(_std_dev_pos, _mean_pos, _std_dev_vel, _mean_vel);
+}
+
+void GaussianParticleGenerator::calculateNormalDistribution(Vector3 std_dev_pos, Vector3 mean_pos,Vector3 std_dev_vel, Vector3 mean_vel) {
 	posNormalX = new std::normal_distribution<float>(mean_pos.x, std_dev_pos.x);
 	posNormalY = new std::normal_distribution<float>(mean_pos.y, std_dev_pos.y);
 	posNormalZ = new std::normal_distribution<float>(mean_pos.z, std_dev_pos.z);
@@ -9,9 +14,7 @@ GaussianParticleGenerator::GaussianParticleGenerator(Vector3 std_dev_pos, Vector
 	velNormalX = new std::normal_distribution<float>(mean_vel.x, std_dev_vel.x);
 	velNormalY = new std::normal_distribution<float>(mean_vel.y, std_dev_vel.y);
 	velNormalZ = new std::normal_distribution<float>(mean_vel.z, std_dev_vel.z);
-	_name = name;
 }
-
 std::list<Particle*> GaussianParticleGenerator::generateParticles() {
 	std::list<Particle*> particles;
 	for (int i = 0; i < _n_particles; ++i) {

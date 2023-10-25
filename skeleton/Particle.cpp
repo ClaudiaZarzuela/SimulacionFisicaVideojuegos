@@ -1,6 +1,6 @@
 #include "Particle.h"
 #include <math.h>
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time) {
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time, Vector4 color, bool esMod, double s) {
 	_vel = Vel;
 	_pose = physx::PxTransform(Pos);
 	a = A; 
@@ -8,14 +8,16 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Mas
 	masa = Masa;
 	gravedad = Gravedad;
 	maxTime = Time;
-
-	forma = CreateShape(physx::PxSphereGeometry(0.5));
-	_color = Vector4(float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), 1);
-	renderItem = new RenderItem(forma, &_pose, _color);	
+	esModelo = esMod; 
+	scale = s;
+	forma = CreateShape(physx::PxSphereGeometry(scale));
+	_color = color;
+	if(!esModelo) renderItem = new RenderItem(forma, &_pose, _color);	
 }
 
 Particle::~Particle() {
-	renderItem->release();
+	if(renderItem != nullptr)
+		renderItem->release();
 }
 void Particle::integrate(double t) {
 	if (alive) {
@@ -31,6 +33,6 @@ void Particle::integrate(double t) {
 		if(time > maxTime) alive = false;
 	}
 }
- Particle* Particle::clone() const {
-	 return new Particle(_pose.p, _vel, a,damping, masa,gravedad, maxTime);
- }
+Particle* Particle::clone() const {
+	return new Particle(_pose.p, _vel, a, damping, masa, gravedad, maxTime, _color, esModelo, scale);
+}

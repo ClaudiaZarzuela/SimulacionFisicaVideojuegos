@@ -109,6 +109,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	case ' ':
 	{
+		_particleSystem->shootFirework();
 		//_proyectil->shoot(GetCamera()->getDir(), GetCamera()->getTransform().p); break;
 	}
 	default:
