@@ -1,9 +1,8 @@
 #pragma once
 #include "RenderUtils.hpp"
+#include <list>
+class FireworkGenerator;
 
-enum Type {
-	NORMAL, FIREWORK
-};
 class Particle
 {
 public: 
@@ -15,7 +14,8 @@ public:
 	bool isAlive() { return alive; }
 	virtual Particle* clone() const;
 	void setPos(Vector3 p) { _pose = physx::PxTransform(p); }
-
+	bool generatesOnDeath();
+	virtual std::list<Particle*> explode() { return std::list<Particle*>(); }
 	// Position in world space
 	physx::PxTransform _pose;
 	// Linear velocity in world space
@@ -33,9 +33,10 @@ public:
 	float damping = 0.998;
 	float masa;
 	bool alive = true;
-	Type type = NORMAL;
 	bool esModelo;
 	double scale;
 	RenderItem* renderItem = nullptr;
+
+	FireworkGenerator* _gen = nullptr;
 };
 

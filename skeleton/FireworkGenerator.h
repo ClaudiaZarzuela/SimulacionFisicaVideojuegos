@@ -2,13 +2,18 @@
 #include "Firework.h"
 class FireworkGenerator
 {
-protected:
-	int numGeneraciones;
-	Firework* firework = nullptr;
+private:
+	std::vector<Firework*> _firework_pool;
 public:
-
-	Firework* shoot();
-	FireworkGenerator(Firework* modelo, int numGen);
-	~FireworkGenerator(){ delete firework; }
+	Firework* getModel(int gen) { return _firework_pool[gen];}
+	Particle* shoot();
+	std::list<Particle*> explode(Firework* p);
+	FireworkGenerator();
+	~FireworkGenerator(){
+		for (auto it = _firework_pool.begin(); it != _firework_pool.end();) {
+			delete(*it);
+			it = _firework_pool.erase(it);
+		}
+	}
 };
 

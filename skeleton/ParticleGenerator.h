@@ -1,30 +1,20 @@
 #pragma once
 #include <time.h>
 #include "core.hpp"
-#include "Particle.h"
 #include <random>
 #include <list>
+class Particle;
 class ParticleGenerator
 {
 public:
-	ParticleGenerator(){
-		_model_particle = new Particle(Vector3(0, 0, 0), Vector3(0, 50, 0), Vector3(0, -10, 0), 0.998, 1.0f, Vector3(0, -10, 0), 2.0f, Vector4(float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), 1));
-	};
+	ParticleGenerator();
 	~ParticleGenerator(){};
 	virtual std::list<Particle*> generateParticles() = 0;
 	inline void setOrigin(const Vector3& p) { _origin = p; }
 	inline void setMeanVelocity(const Vector3& v) {_mean_velocity = v;}
 	inline Vector3 getMeanVelocity() const {return _mean_velocity;}
-	inline void setMeanDuration(double new_duration) {_model_particle->time = new_duration;}
-	inline void setParticle(Particle* p, bool modify_pos_vel = true) {
-		delete _model_particle;
-		_model_particle = p->clone();
-		if (modify_pos_vel) {
-			_origin = p->_pose.p;
-			_mean_velocity = p->_vel;
-		}
-		_model_particle->setPos({ -1000.0f, -1000.0f, -1000.0f });
-	}
+	void setMeanDuration(double new_duration);
+	void setParticle(Particle* p);
 	inline void setNParticles(int n_p) { _n_particles = n_p; }
 
 protected:

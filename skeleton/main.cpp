@@ -60,7 +60,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	//_proyectil = new Weapon(Weapon::Types::LASER);
+	_proyectil = new Weapon(Weapon::Types::LASER);
 	_particleSystem = new ParticleSystem();
 
 }
@@ -75,7 +75,7 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	//_proyectil->integrate(t);
+	_proyectil->integrate(t);
 	_particleSystem->integrate(t);
 }
 
@@ -84,7 +84,7 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-	//delete(_proyectil);
+	delete(_proyectil);
 	delete(_particleSystem);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
@@ -109,8 +109,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	case ' ':
 	{
-		_particleSystem->shootFirework();
-		//_proyectil->shoot(GetCamera()->getDir(), GetCamera()->getTransform().p); break;
+		_particleSystem->shootFirework(); break;
+	}
+	case 'T': {
+		_proyectil->shoot(GetCamera()->getDir(), GetCamera()->getTransform().p); break;
 	}
 	default:
 		break;

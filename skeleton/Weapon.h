@@ -9,9 +9,9 @@ public:
 		PISTOL, ARTILLERY, FIREBALL, LASER
 	};
 private:
+	
 	Vector3 calculateGravity(Vector3 dir);
 	float calculateMass(Vector3 dir);
-
 	
 	float masaReal, speedReal, speedSim, lifeTime;
     std::vector<Particle*> particles;

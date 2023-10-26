@@ -1,5 +1,6 @@
 #include "Particle.h"
 #include <math.h>
+#include "FireworkGenerator.h"
 Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time, Vector4 color, bool esMod, double s) {
 	_vel = Vel;
 	_pose = physx::PxTransform(Pos);
@@ -34,5 +35,7 @@ void Particle::integrate(double t) {
 	}
 }
 Particle* Particle::clone() const {
-	return new Particle(_pose.p, _vel, a, damping, masa, gravedad, maxTime, _color, esModelo, scale);
+	return new Particle(_pose.p, _vel, a, damping, masa, gravedad, maxTime, _color, false, scale);
 }
+
+bool Particle::generatesOnDeath() { return _gen != nullptr; }

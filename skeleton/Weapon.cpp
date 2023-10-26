@@ -23,17 +23,10 @@ Weapon::Weapon(Types currentType) {
 		masaReal = 0.1f;
 		break;
 	}
+
 }
 
 void Weapon::integrate(double t) {
-	/*Extinción de las partículas
-		❑Se termina su tiempo de vida
-		❑No aporta nada a la imagen
-			❑Su color y transparencia cae por debajo de un 
-			umbral
-			❑Se desplaza más de una distancia en una 
-			dirección determinada
-	*/
 	for (auto it = particles.begin(); it != particles.end();) {
 		if ((*it)->isAlive()) {
 			(*it)->integrate(t); ++it;
@@ -47,7 +40,7 @@ void Weapon::integrate(double t) {
 }
 
 void Weapon::shoot(Vector3 dir, Vector3 pos) {
-	particles.push_back(new Particle(pos, speedSim * dir, calculateGravity(dir), 0.998, calculateMass(dir), calculateGravity(dir), 20.0f, Vector4(float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), 1)));
+	particles.push_back(new Particle(pos, speedSim * dir, calculateGravity(dir), 0.998, calculateMass(dir), calculateGravity(dir), 3.0f, Vector4(float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), 1)));
 }
 
 Vector3 Weapon::calculateGravity(Vector3 dir) {
