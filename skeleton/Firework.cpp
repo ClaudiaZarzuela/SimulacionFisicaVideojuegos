@@ -19,5 +19,5 @@ std::list<Particle*> Firework::explode() {
 }
 
 Particle* Firework::clone() const {
-	return new Firework(_pose.p, _vel, a, damping, masa, gravedad, maxTime, _color, numP, generacionActual, _gen, false, scale);
+	return new Firework(_pose.p, _vel, a, damping, mass, gravedad, maxTime, _color, numP, generacionActual, _gen, false, scale);
 }

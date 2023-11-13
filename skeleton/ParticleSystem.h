@@ -5,6 +5,8 @@
 #include "UniformParticleGenerator.h"
 #include "FireworkGenerator.h"
 #include <list>
+#include "GravityForceGenerator.h"
+#include "ParticleForceRegistry.h"
 class ParticleSystem
 {
 private:
@@ -20,8 +22,10 @@ private:
 	Vector3 _gravity;
 	std::list<Particle*> _particles;
 	std::list <ParticleGenerator*> _particle_generators;
-	
+	std::list <ForceGenerator*> _force_generators;
 	FireworkGenerator* _firework_generator = nullptr; 
+	ParticleForceRegistry* _force_registry = nullptr;
+	GravityForceGenerator* gravity_generator = nullptr;
 	void onParticleDeath(Particle* p);
 
 public:
@@ -30,6 +34,8 @@ public:
 	~ParticleSystem();
 	void shootFirework();
 	void createGenerators();
+	void createForceGenerators();
+	void registerForces();
 
 };
 

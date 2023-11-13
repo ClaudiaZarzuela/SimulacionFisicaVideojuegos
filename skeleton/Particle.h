@@ -7,7 +7,8 @@ class Particle
 {
 public: 
 	Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, 
-		     float Time, Vector4 color, bool esModelo = false, double scale = 0.5);
+		float Time, Vector4 color, bool esModelo = false, double scale = 0.5);
+	Particle(Vector3 Pos, Vector3 Vel, float Damping, float Masa, float Time, Vector4 color, bool esMod, double scale = 0.5);
 	~Particle();
 
 	void integrate(double t);
@@ -27,16 +28,19 @@ public:
 	// Color of the particle
 	Vector4 _color;
 	Vector3 gravedad = Vector3(0,-10,0);
-
 	float time = 0;
 	float maxTime;
 	float damping = 0.998;
-	float masa;
+	float mass;
 	bool alive = true;
 	bool esModelo;
 	double scale;
+	Vector3 force = Vector3(0, 0, 0);
+	// Clears accumulated force
+	inline void clearForce() { force *= 0.0; }
+	// Add force to apply in next integration only
+	inline void addForce(const Vector3& f) { force += f; }
 	RenderItem* renderItem = nullptr;
-
 	FireworkGenerator* _gen = nullptr;
 };
 

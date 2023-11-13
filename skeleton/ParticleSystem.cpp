@@ -1,8 +1,10 @@
 ﻿#include "ParticleSystem.h"
 ParticleSystem::ParticleSystem(const Vector3& g) {
 	_gravity = g;
-	createGenerators();
+	//createGenerators();
+	createForceGenerators();
 	inicialiceBoundingBox();
+	registerForces();
 }
 
 void ParticleSystem::createGenerators() {
@@ -14,6 +16,19 @@ void ParticleSystem::createGenerators() {
 	_particle_generators.push_back(new UniformParticleGenerator(Vector3(25, 0.01, 0.01), Vector3(30, 0.01, 0.01), Vector3(-2, 20, -2), Vector3(2, 30, 2)));
 	//Fireworks
 	_firework_generator = new FireworkGenerator();
+}
+
+void ParticleSystem::createForceGenerators() {
+	_force_registry = new ParticleForceRegistry();
+	gravity_generator = new GravityForceGenerator(_gravity);
+}
+
+void ParticleSystem::registerForces() {
+	for (int i = 0; i < 10; ++i) {
+		Particle* aux = new Particle(Vector3(rand() % 10, 0, rand() % 10), Vector3(0, 30, 0), 0.998, 1.0f, 20.0f, Vector4(float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), 1), false);
+		_particles.push_back(aux);
+		_force_registry->addRegistry(gravity_generator, aux);
+	}
 }
 
 void ParticleSystem::integrate(double t) {
@@ -34,6 +49,8 @@ void ParticleSystem::integrate(double t) {
 	for (auto it = _particle_generators.begin(); it != _particle_generators.end();) {
 		_particles.splice(_particles.end(), (*it)->generateParticles()); ++it;
 	}
+
+	_force_registry->updateForces(t);
 }
 
 void ParticleSystem::shootFirework() {

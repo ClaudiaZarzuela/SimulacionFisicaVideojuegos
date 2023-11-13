@@ -8,7 +8,7 @@ class ParticleGenerator
 {
 public:
 	ParticleGenerator();
-	~ParticleGenerator(){};
+	~ParticleGenerator() {};
 	virtual std::list<Particle*> generateParticles() = 0;
 	inline void setOrigin(const Vector3& p) { _origin = p; }
 	inline void setMeanVelocity(const Vector3& v) {_mean_velocity = v;}
