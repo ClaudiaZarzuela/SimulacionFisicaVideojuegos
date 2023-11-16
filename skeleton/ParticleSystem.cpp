@@ -78,7 +78,7 @@ bool ParticleSystem::insideBoundingBox(Vector3 pos) {
 
 void ParticleSystem::inicialiceBoundingBox() {
 	//box = { -50, 100, 0, 300, -20, 20 };
-	box = { -1000, 1000, 0, 100, -100, 100 };
+	box = { -10000, 10000, 0, 10000, -10000, 10000 };
 }
 
 void ParticleSystem::registerParticlesToForce(std::list<Particle*> p) {

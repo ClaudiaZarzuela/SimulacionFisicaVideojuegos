@@ -11,7 +11,16 @@ GaussianParticleGenerator::GaussianParticleGenerator(Vector3 std_dev_pos, Vector
 	velNormalZ = new std::normal_distribution<float>(mean_vel.z, std_dev_vel.z);
 	setNParticles(numP);
 }
- 
+GaussianParticleGenerator::~GaussianParticleGenerator() {
+	delete(posNormalX);
+	delete(posNormalY);
+	delete(posNormalZ);
+
+	delete(velNormalX);
+	delete(velNormalY);
+	delete(velNormalZ);
+}
+
 std::list<Particle*> GaussianParticleGenerator::generateParticles() {
 	std::list<Particle*> particles;
 	for (int i = 0; i < _n_particles; ++i) {

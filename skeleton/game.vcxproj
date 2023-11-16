@@ -256,7 +256,6 @@
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Firework.cpp" />
     <ClCompile Include="FireworkGenerator.cpp" />
-    <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="GravityForceGenerator.cpp" />
     <ClCompile Include="main.cpp" />

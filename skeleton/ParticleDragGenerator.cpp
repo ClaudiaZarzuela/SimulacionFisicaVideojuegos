@@ -3,13 +3,13 @@
 
 void ParticleDragGenerator::updateForce(Particle* particle, double t) {
 	//Check that the particle has Finite Mass
-	if (fabs(particle->_inv_mass) < 1e-10) return;
+	if (fabs(1/(particle->mass)) < 1e-10) return;
 	if (insideBoundingBox(particle->_pose.p)) {
 		//Compute the drag force
-		Vector3 v = particle->getVel();
+		Vector3 v = particle->_vel;
 		//std::cout << v.x <<  " " << v.y << " " << v.z << std::endl;
 		
-		Vector3 dragF = _k1 * (_vel-v) + _k2 * (_vel-v).magnitude() * (_vel - v);
+		Vector3 dragF = _k1 * (_wind - v) + _k2 * (_wind - v).magnitude() * (_wind - v);
 		//Apply the drag force
 		//std::cout << dragF.x << "\t" << dragF.y << "\t" << dragF.z << std::endl;
 		particle->addForce(dragF);

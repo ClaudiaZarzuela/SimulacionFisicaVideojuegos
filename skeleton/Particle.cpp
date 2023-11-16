@@ -8,7 +8,7 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Mas
 	a = A; 
 	damping = Damping;
 	mass = Masa;
-	_inv_mass = 1 / mass;
+	//_inv_mass = 1 / mass;
 	gravedad = Gravedad;
 	maxTime = Time;
 	esModelo = esMod; 
@@ -24,7 +24,7 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, float Damping, float Masa, float Ti
 	_pose = physx::PxTransform(Pos);
 	damping = Damping;
 	mass = Masa;
-	_inv_mass = 1 / mass;
+	//_inv_mass = 1 / mass;
 	maxTime = Time;
 	esModelo = esMod;
 	scale = s;
@@ -40,7 +40,7 @@ Particle::~Particle() {
 void Particle::integrate(double t) {
 	if (alive) {
 		// Get the accel considering the force accum
-		Vector3 resulting_accel = force * _inv_mass;
+		Vector3 resulting_accel = force * (1/mass);
 		// Update linear velocity
 		_vel += resulting_accel * t;
 		// Impose drag (damping)

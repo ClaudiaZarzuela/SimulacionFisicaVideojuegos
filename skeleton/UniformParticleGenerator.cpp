@@ -12,6 +12,15 @@ UniformParticleGenerator::UniformParticleGenerator(Vector3 pos_width_min, Vector
 	velUniformY = new std::uniform_real_distribution<float>(vel_width_min.y, vel_width_max.y);
 	velUniformZ = new std::uniform_real_distribution<float>(vel_width_min.z, vel_width_max.z);
 }
+UniformParticleGenerator::~UniformParticleGenerator() {
+	delete(posUniformX);
+	delete(posUniformY);
+	delete(posUniformZ);
+
+	delete(velUniformX);
+	delete(velUniformY);
+	delete(velUniformZ);
+}
 
 std::list<Particle*> UniformParticleGenerator::generateParticles() {
 	std::list<Particle*> particles;
@@ -25,6 +34,5 @@ std::list<Particle*> UniformParticleGenerator::generateParticles() {
 		p->_vel.z = (*velUniformZ)(_mt);
 		particles.push_back(p);
 	}
-	//setNParticles(((rand() % 2)));
 	return particles;
 }

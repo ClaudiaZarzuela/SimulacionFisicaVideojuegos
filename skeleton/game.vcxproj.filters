@@ -20,7 +20,6 @@
     <ClCompile Include="FireworkGenerator.cpp" />
     <ClCompile Include="ParticleForceRegistry.cpp" />
     <ClCompile Include="GravityForceGenerator.cpp" />
-    <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="ParticleDragGenerator.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="ParticleWhirlWindGenerator.cpp" />

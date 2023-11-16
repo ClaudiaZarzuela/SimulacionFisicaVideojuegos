@@ -33,7 +33,7 @@ public:
 	float maxTime;
 	float damping = 0.998;
 	float mass;
-	float _inv_mass;
+	//float _inv_mass;
 	bool alive = true;
 	bool esModelo;
 	double scale;
