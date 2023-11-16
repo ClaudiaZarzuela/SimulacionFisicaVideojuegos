@@ -6,7 +6,9 @@
 #include "FireworkGenerator.h"
 #include <list>
 #include "GravityForceGenerator.h"
+#include "ParticleDragGenerator.h"
 #include "ParticleForceRegistry.h"
+#include "ParticleWhirlWindGenerator.h"
 class ParticleSystem
 {
 private:
@@ -25,17 +27,16 @@ private:
 	std::list <ForceGenerator*> _force_generators;
 	FireworkGenerator* _firework_generator = nullptr; 
 	ParticleForceRegistry* _force_registry = nullptr;
-	GravityForceGenerator* gravity_generator = nullptr;
 	void onParticleDeath(Particle* p);
+	void createGenerators();
+	void createForceGenerators();
+	void registerParticlesToForce(std::list<Particle*> p);
 
 public:
 	void integrate(double t);
 	ParticleSystem(const Vector3& g = { 0.0f, -10.0f, 0.0f });
 	~ParticleSystem();
 	void shootFirework();
-	void createGenerators();
-	void createForceGenerators();
-	void registerForces();
 
 };
 

@@ -16,6 +16,7 @@ public:
 	virtual Particle* clone() const;
 	void setPos(Vector3 p) { _pose = physx::PxTransform(p); }
 	bool generatesOnDeath();
+	inline Vector3 getVel() { return _vel; }
 	virtual std::list<Particle*> explode() { return std::list<Particle*>(); }
 	// Position in world space
 	physx::PxTransform _pose;
@@ -32,6 +33,7 @@ public:
 	float maxTime;
 	float damping = 0.998;
 	float mass;
+	float _inv_mass;
 	bool alive = true;
 	bool esModelo;
 	double scale;

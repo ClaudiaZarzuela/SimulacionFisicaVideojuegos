@@ -13,7 +13,7 @@
 #include "Particle.h"
 #include "ParticleSystem.h"
 
-std::string display_text = "This is a test";
+std::string display_text = "Practica 3";
 
 
 using namespace physx;

@@ -1,5 +1,6 @@
 #include "UniformParticleGenerator.h"
 #include "Particle.h"
+#include <iostream>
 UniformParticleGenerator::UniformParticleGenerator(Vector3 pos_width_min, Vector3 pos_width_max, Vector3 vel_width_min, Vector3 vel_width_max):ParticleGenerator() {
 	_pos_width_min = pos_width_min; _pos_width_max = pos_width_max;
 	posUniformX = new std::uniform_real_distribution<float>(pos_width_min.x, pos_width_max.x);
@@ -24,6 +25,6 @@ std::list<Particle*> UniformParticleGenerator::generateParticles() {
 		p->_vel.z = (*velUniformZ)(_mt);
 		particles.push_back(p);
 	}
-	setNParticles(((rand() % 2)));
+	//setNParticles(((rand() % 2)));
 	return particles;
 }
