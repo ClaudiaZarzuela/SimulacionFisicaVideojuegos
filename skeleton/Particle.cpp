@@ -40,7 +40,7 @@ Particle::~Particle() {
 void Particle::integrate(double t) {
 	if (alive) {
 		// Get the accel considering the force accum
-		Vector3 resulting_accel = force * (1/mass);
+		Vector3 resulting_accel = force * mass;
 		// Update linear velocity
 		_vel += resulting_accel * t;
 		// Impose drag (damping)

@@ -13,7 +13,7 @@
 #include "Particle.h"
 #include "ParticleSystem.h"
 
-std::string display_text = "Practica 3";
+std::string display_text = "This is a test";
 
 
 using namespace physx;
@@ -103,6 +103,7 @@ void cleanupPhysics(bool interactive)
 // Function called when a key is pressed
 void keyPress(unsigned char key, const PxTransform& camera)
 {
+	_particleSystem->keyPress(key);
 	PX_UNUSED(camera);
 
 	switch(toupper(key))

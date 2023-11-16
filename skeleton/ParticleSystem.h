@@ -9,6 +9,8 @@
 #include "ParticleDragGenerator.h"
 #include "ParticleForceRegistry.h"
 #include "ParticleWhirlWindGenerator.h"
+#include "ExplotionGenerator.h"
+#include <set>
 class ParticleSystem
 {
 private:
@@ -24,15 +26,16 @@ private:
 	Vector3 _gravity;
 	std::list<Particle*> _particles;
 	std::list <ParticleGenerator*> _particle_generators;
-	std::list <ForceGenerator*> _force_generators;
+	std::set<ForceGenerator*> _force_generators;
+	ExplotionGenerator* _explosion_generator = nullptr;
 	FireworkGenerator* _firework_generator = nullptr; 
 	ParticleForceRegistry* _force_registry = nullptr;
 	void onParticleDeath(Particle* p);
 	void createGenerators();
 	void createForceGenerators();
 	void registerParticlesToForce(std::list<Particle*> p);
-
 public:
+	void keyPress(unsigned char key);
 	void integrate(double t);
 	ParticleSystem(const Vector3& g = { 0.0f, -10.0f, 0.0f });
 	~ParticleSystem();

@@ -3,7 +3,7 @@
 class ParticleWhirlWindGenerator : public ParticleDragGenerator
 {
 public:
-	ParticleWhirlWindGenerator(Vector3 pos, Vector3 Dimensions, int k) :ParticleDragGenerator(pos, Dimensions) {
+	ParticleWhirlWindGenerator(Vector3 pos, Vector3 Dimensions,int h, int k) :ParticleDragGenerator(pos, Dimensions, h) {
 		K = k; setDrag(2, 0);
 	}
 	~ParticleWhirlWindGenerator(){}
