@@ -28,9 +28,11 @@ void ParticleSystem::integrate(double t) {
 			(*it)->integrate(t); ++it;
 		}
 		else {
-			_force_registry->deleteParticleRegistry((*it));
+			_force_registry->deleteParticleRegistry(*it);
 			if ((*it)->generatesOnDeath()) {
-				_particles.splice(_particles.end(), _firework_generator->explode(static_cast<Firework*>(*it)));
+				auto aux = _firework_generator->explode(static_cast<Firework*>(*it));
+				_particles.splice(_particles.end(),aux);
+				registerParticlesToForce(aux);
 			}
 			delete(*it);
 			it = _particles.erase(it);
@@ -41,6 +43,17 @@ void ParticleSystem::integrate(double t) {
 		registerParticlesToForce(_newParticles);
 		_particles.splice(_particles.end(), _newParticles); ++it;
 	}
+
+	for (auto it = _explosion_generator.begin(); it != _explosion_generator.end();) {
+		if (!(*it)->updateTime(t)) {
+			std::cout << "BORRAR GENERADOR DE EXPLOSION" << std::endl;
+			ExplotionGenerator* aux = (*it);
+			_force_registry->deleteForceRegistry(aux);
+			it = _explosion_generator.erase(it); delete (aux);
+		}
+		else ++it;
+	}
+
 	_force_registry->updateForces(t);
 }
 
@@ -53,6 +66,10 @@ ParticleSystem::~ParticleSystem() {
 	for (auto it = _particles.begin(); it != _particles.end();) {
 		delete(*it);
 		it = _particles.erase(it);
+	}
+	for (auto it = _explosion_generator.begin(); it != _explosion_generator.end();) {
+		delete(*it);
+		it = _explosion_generator.erase(it);
 	}
 	for (auto it = _force_generators.begin(); it != _force_generators.end();) {
 		delete(*it);
@@ -76,7 +93,7 @@ void ParticleSystem::keyPress(unsigned char key) {
 	
 	switch (tolower(key)) {
 	case 'e':
-		_force_registry->addRegistryToParticles(new ExplotionGenerator(10000, 1000, 20, Vector3(0, 10, 0)), _particles);
+		explode();
 		break;
 	default: break;
 	}
@@ -91,5 +108,14 @@ void ParticleSystem::registerParticlesToForce(std::list<Particle*> p) {
 		for (auto ot = p.begin(); ot != p.end(); ++ot) {
 			_force_registry->addRegistry(*it, *ot);
 		}
+	}
+}
+
+void ParticleSystem::explode() {
+	auto expl = new ExplotionGenerator(10000, 1000, 20, Vector3(0, 10, 0));
+	_explosion_generator.push_back(expl);
+	for (auto it = _particles.begin(); it != _particles.end(); ++it)
+	{
+		_force_registry->addRegistry(expl, *it);
 	}
 }

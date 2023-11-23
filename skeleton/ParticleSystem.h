@@ -27,13 +27,14 @@ private:
 	std::list<Particle*> _particles;
 	std::list <ParticleGenerator*> _particle_generators;
 	std::set<ForceGenerator*> _force_generators;
-	ExplotionGenerator* _explosion_generator = nullptr;
+	std::list <ExplotionGenerator*> _explosion_generator;
 	FireworkGenerator* _firework_generator = nullptr; 
 	ParticleForceRegistry* _force_registry = nullptr;
 	void onParticleDeath(Particle* p);
 	void createGenerators();
 	void createForceGenerators();
 	void registerParticlesToForce(std::list<Particle*> p);
+	void explode();
 public:
 	void keyPress(unsigned char key);
 	void integrate(double t);

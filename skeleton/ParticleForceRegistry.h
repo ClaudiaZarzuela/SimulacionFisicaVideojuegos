@@ -3,30 +3,33 @@
 #include "ForceGenerator.h"
 #include <unordered_set>
 
-typedef std::pair<ForceGenerator*, Particle*> FRPair;
+typedef std::pair<Particle*, ForceGenerator*> FRPair;
 
-class ParticleForceRegistry : public std::multimap<ForceGenerator*, Particle*> {
+class ParticleForceRegistry : public std::multimap<Particle*, ForceGenerator*> {
 public:
 	void updateForces(double duration) {
 		for (auto it = begin(); it != end(); ++it) {
-			if (it->second->isAlive()) it->first->updateForce(it->second, duration);
+			if (it->first->isAlive()) it->second->updateForce(it->first, duration);
 		}
 
 	}
 	void addRegistry(ForceGenerator* fg, Particle* p) {
-		insert(FRPair(fg, p));
+		insert(FRPair(p, fg));
 	}
-	void addRegistryToParticles(ForceGenerator* fg, std::list<Particle*> p) {
-		for (auto it = p.begin(); it != p.end(); ++it) {
-			addRegistry(fg, *it);
-		}
+	
+	void deleteParticleRegistry(Particle* p) {
+		this->erase(p);
 	}
 
-	void deleteParticleRegistry(Particle* p) {
+
+	void deleteForceRegistry(ForceGenerator* f) {
 		for (auto it = begin(); it != end();) {
-			auto ot = it++;
-			if (ot->second == p)
-				erase(ot);
+			if (it->second == f) it = erase(it);
+			else ++it;
 		}
+
+	}
+	~ParticleForceRegistry() {
+
 	}
 };
