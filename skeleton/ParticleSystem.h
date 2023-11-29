@@ -9,7 +9,12 @@
 #include "ParticleDragGenerator.h"
 #include "ParticleForceRegistry.h"
 #include "ParticleWhirlWindGenerator.h"
+#include "SpringForceGenerator.h"
 #include "ExplotionGenerator.h"
+#include "AnchoredSpringFG.h"
+#include "SpringForceGenerator.h"
+#include "ElasticForceGenerator.h"
+#include "BuoyancyForceGenerator.h"
 #include <set>
 class ParticleSystem
 {
@@ -30,11 +35,19 @@ private:
 	std::list <ExplotionGenerator*> _explosion_generator;
 	FireworkGenerator* _firework_generator = nullptr; 
 	ParticleForceRegistry* _force_registry = nullptr;
+	BuoyancyForceGenerator* _bouyancyForce = nullptr;
+	GravityForceGenerator* _gravityForce = nullptr;
+	void changeK(char key);
 	void onParticleDeath(Particle* p);
 	void createGenerators();
 	void createForceGenerators();
 	void registerParticlesToForce(std::list<Particle*> p);
+	void registerParticleToForce(Particle* p);
 	void explode();
+	void addForceWithTime();
+	void generateSpringDemo();
+	void activeForce(std::string type);
+	void generateSlinky();
 public:
 	void keyPress(unsigned char key);
 	void integrate(double t);

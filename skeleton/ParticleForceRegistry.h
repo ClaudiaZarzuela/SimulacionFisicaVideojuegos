@@ -2,6 +2,8 @@
 #include <map>
 #include "ForceGenerator.h"
 #include <unordered_set>
+#include <iostream>
+
 
 typedef std::pair<Particle*, ForceGenerator*> FRPair;
 
@@ -21,7 +23,6 @@ public:
 		this->erase(p);
 	}
 
-
 	void deleteForceRegistry(ForceGenerator* f) {
 		for (auto it = begin(); it != end();) {
 			if (it->second == f) it = erase(it);
@@ -29,7 +30,5 @@ public:
 		}
 
 	}
-	~ParticleForceRegistry() {
-
-	}
+	
 };

@@ -25,7 +25,7 @@ std::list<Particle*> GaussianParticleGenerator::generateParticles() {
 	std::list<Particle*> particles;
 	for (int i = 0; i < _n_particles; ++i) {
 		Particle* p = _model_particle->clone();
-		//p->mass = (rand() % 5) + 1;
+		p->mass = (rand() % 5) + 1;
 		p->_pose.p.x = (*posNormalX)(_mt);
 		p->_pose.p.y = (*posNormalY)(_mt);
 		p->_pose.p.z = (*posNormalZ)(_mt);

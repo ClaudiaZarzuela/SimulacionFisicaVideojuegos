@@ -25,6 +25,10 @@
     <ClCompile Include="ParticleWhirlWindGenerator.cpp" />
     <ClCompile Include="ModelParticle.cpp" />
     <ClCompile Include="ExplotionGenerator.cpp" />
+    <ClCompile Include="SpringForceGenerator.cpp" />
+    <ClCompile Include="AnchoredSpringFG.cpp" />
+    <ClCompile Include="ElasticForceGenerator.cpp" />
+    <ClCompile Include="BuoyancyForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -52,6 +56,10 @@
     <ClInclude Include="ParticleWhirlWindGenerator.h" />
     <ClInclude Include="ModelParticle.h" />
     <ClInclude Include="ExplotionGenerator.h" />
+    <ClInclude Include="SpringForceGenerator.h" />
+    <ClInclude Include="AnchoredSpringFG.h" />
+    <ClInclude Include="ElasticForceGenerator.h" />
+    <ClInclude Include="BuoyancyForceGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

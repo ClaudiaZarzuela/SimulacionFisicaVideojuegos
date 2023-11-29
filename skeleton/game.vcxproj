@@ -253,7 +253,10 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnchoredSpringFG.cpp" />
+    <ClCompile Include="BuoyancyForceGenerator.cpp" />
     <ClCompile Include="callbacks.cpp" />
+    <ClCompile Include="ElasticForceGenerator.cpp" />
     <ClCompile Include="ExplotionGenerator.cpp" />
     <ClCompile Include="Firework.cpp" />
     <ClCompile Include="FireworkGenerator.cpp" />
@@ -268,6 +271,7 @@
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="ParticleWhirlWindGenerator.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="RenderUtils.cpp" />
@@ -275,8 +279,11 @@
     <ClCompile Include="Render\Render.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnchoredSpringFG.h" />
+    <ClInclude Include="BuoyancyForceGenerator.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
+    <ClInclude Include="ElasticForceGenerator.h" />
     <ClInclude Include="ExplotionGenerator.h" />
     <ClInclude Include="Firework.h" />
     <ClInclude Include="FireworkGenerator.h" />
@@ -291,6 +298,7 @@
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="ParticleWhirlWindGenerator.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="RenderUtils.hpp" />
