@@ -67,6 +67,22 @@ public:
 
 		}
 	}
+	inline void changeMass(char key) {
+		if(key == 'm')mass += 100;
+		else {
+			if (mass - 100 > 0) mass -= 100;
+			else mass = 1;
+		}
+	}
+	inline void changeVolume(char key) {
+		if (key == 'b')scale += {0.5,0.5,0.5};
+		else {
+			Vector3 aux = scale;
+			aux -= {0.5, 0.5, 0.5};
+			if (aux.x <= 0 || aux.y <= 0 || aux.z <= 0) scale -= {0.5, 0.5, 0.5};
+			else scale = { 1,1,1 };
+		}
+	}
 #pragma endregion
 };
 

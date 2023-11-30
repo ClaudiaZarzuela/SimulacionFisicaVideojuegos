@@ -30,6 +30,7 @@ private:
 
 	Vector3 _gravity;
 	std::list<Particle*> _particles;
+	Particle* _particleBouyancy;
 	std::list <ParticleGenerator*> _particle_generators;
 	std::set<ForceGenerator*> _force_generators;
 	std::list <ExplotionGenerator*> _explosion_generator;
@@ -37,6 +38,7 @@ private:
 	ParticleForceRegistry* _force_registry = nullptr;
 	BuoyancyForceGenerator* _bouyancyForce = nullptr;
 	GravityForceGenerator* _gravityForce = nullptr;
+
 	void changeK(char key);
 	void onParticleDeath(Particle* p);
 	void createGenerators();
@@ -49,6 +51,8 @@ private:
 	void generateBouyancy();
 	void activeForce(std::string type);
 	void generateSlinky();
+	void changeMass(char key);
+	void changeVolume(char key);
 public:
 	void keyPress(unsigned char key);
 	void integrate(double t);

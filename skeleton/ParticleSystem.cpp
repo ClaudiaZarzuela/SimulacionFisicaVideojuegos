@@ -11,6 +11,10 @@ ParticleSystem::ParticleSystem(const Vector3& g) {
 	std::cout << "- key 'p' to add Wind Force for 5 seconds" << std::endl;
 	std::cout << "- key 'i' to increase k value" << std::endl;
 	std::cout << "- key 'o' to decrease k value" << std::endl;
+	std::cout << "- key 'b' to increase volume to the white cube particle " << std::endl;
+	std::cout << "- key 'v' to decrease volume to the white cube particle" << std::endl;
+	std::cout << "- key 'm' to increase mass to the white cube particle " << std::endl;
+	std::cout << "- key 'n' to decrease mass to the white cube particle" << std::endl;
 	std::cout << "--------------------------------------------------------" << std::endl;
 	_gravity = g;
 	//createGenerators();
@@ -101,6 +105,7 @@ ParticleSystem::~ParticleSystem() {
 		delete(*it);
 		it = _particle_generators.erase(it);
 	}
+	
 
 	delete(_firework_generator);
 	delete(_force_registry);
@@ -141,6 +146,18 @@ void ParticleSystem::keyPress(unsigned char key) {
 	case 'i':
 		changeK(tolower(key));
 		break;
+	case 'm':
+		changeMass(key);
+		break;
+	case 'n':
+		changeMass(key);
+		break;
+	case 'v':
+		changeVolume(key);
+		break;
+	case 'b':
+		changeVolume(key);
+		break;
 	default: break;
 	}
 }
@@ -158,7 +175,6 @@ void ParticleSystem::activeForce(std::string type) {
 void ParticleSystem::inicialiceBoundingBox() {
 	box = { -1000, 1000, -1000, 1000, -1000, 1000 };
 }
-
 void ParticleSystem::registerParticlesToForce(std::list<Particle*> p) {
 	for (auto it = _force_generators.begin(); it != _force_generators.end(); ++it) {
 		for (auto ot = p.begin(); ot != p.end(); ++ot) {
@@ -166,7 +182,6 @@ void ParticleSystem::registerParticlesToForce(std::list<Particle*> p) {
 		}
 	}
 }
-
 void ParticleSystem::registerParticleToForce(Particle* p) {
 	for (auto it = _force_generators.begin(); it != _force_generators.end(); ++it) {
 			_force_registry->addRegistry(*it, p);
@@ -240,12 +255,28 @@ void ParticleSystem::generateBouyancy() {
 	std::cout << "Particula Rojo:" << std::endl;
 	std::cout << "Masa: " << p1->mass << std::endl << "Volumen: " << p1->getVolume() << std::endl;
 
-	Particle* p3 = new Particle({10.0,20.0,0.0 }, { 0.0,0.0,0.0 }, 0.86, 400.0, 100, false, { 1,1,1,1 }, { 2,3,2 }, Particle::BOX);//blanco
-	_particles.push_back(p3);
-	_force_registry->addRegistry(_gravityForce, p3);
-	_force_registry->addRegistry(_bouyancyForce, p3);
+	_particleBouyancy = new Particle({10.0,20.0,0.0 }, { 0.0,0.0,0.0 }, 0.86, 400.0, 100, false, { 1,1,1,1 }, { 2,3,2 }, Particle::BOX);//blanco
+	_particles.push_back(_particleBouyancy);
+	_force_registry->addRegistry(_gravityForce, _particleBouyancy);
+	_force_registry->addRegistry(_bouyancyForce, _particleBouyancy);
 	std::cout << "Particula Blanco:" << std::endl;
-	std::cout << "Masa: " << p3->mass << std::endl << "Volumen: " << p3->getVolume() << std::endl;
+	std::cout << "Masa: " << _particleBouyancy->mass << std::endl << "Volumen: " << _particleBouyancy->getVolume() << std::endl;
+	std::cout << "--------------------------------------------------------" << std::endl;
+
+}
+void ParticleSystem::changeMass(char key) {
+	_particleBouyancy->changeMass(key);
+	std::cout << "--------------------------------------------------------" << std::endl;
+	std::cout << "Particula Blanco:" << std::endl;
+	std::cout << "Masa: " << _particleBouyancy->mass << std::endl << "Volumen: " << _particleBouyancy->getVolume() << std::endl;
+	std::cout << "--------------------------------------------------------" << std::endl;
+
+}
+void ParticleSystem::changeVolume(char key) {
+	_particleBouyancy->changeVolume(key);
+	std::cout << "--------------------------------------------------------" << std::endl;
+	std::cout << "Particula Blanco:" << std::endl;
+	std::cout << "Masa: " << _particleBouyancy->mass << std::endl << "Volumen: " << _particleBouyancy->getVolume() << std::endl;
 	std::cout << "--------------------------------------------------------" << std::endl;
 
 }
