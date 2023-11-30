@@ -1,7 +1,7 @@
 #include "Firework.h"
 #include <iostream>
 #include "FireworkGenerator.h"
-Firework::Firework(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time, Vector4 color, int numParticulas, int generacion, FireworkGenerator* originalGenerator, bool modelo, double scale):
+Firework::Firework(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time, Vector4 color, int numParticulas, int generacion, FireworkGenerator* originalGenerator, bool modelo, Vector3 scale):
 Particle(Pos, Vel, A, Damping,Masa, Gravedad, Time, color, modelo, scale){
 	numP = numParticulas;
 	generacionActual = generacion;

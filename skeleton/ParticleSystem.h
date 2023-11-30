@@ -46,6 +46,7 @@ private:
 	void explode();
 	void addForceWithTime();
 	void generateSpringDemo();
+	void generateBouyancy();
 	void activeForce(std::string type);
 	void generateSlinky();
 public:

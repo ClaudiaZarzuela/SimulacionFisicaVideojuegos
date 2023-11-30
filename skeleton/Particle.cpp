@@ -2,8 +2,7 @@
 #include <math.h>
 #include "FireworkGenerator.h"
 #include <iostream>
-const float Particle::RANDOM = float(rand() % 256 / 255.0f);
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time, Vector4 color, bool esMod, double s, GEOMETRY geometria) {
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time, Vector4 color, bool esMod, Vector3 s, GEOMETRY geometria) {
 	_myGeometry = geometria;
 	_vel = Vel;
 	_pose = physx::PxTransform(Pos);
@@ -16,12 +15,12 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Mas
 	esModelo = esMod; 
 	scale = s;
 	addGeometry();
-	_color = { float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), 1 };
+	_color = color;
 	if(!esModelo) renderItem = new RenderItem(forma, &_pose, _color);	
 }
 
 
-Particle::Particle(Vector3 Pos, Vector3 Vel, float Damping, float Masa, float Time, bool esMod, Vector4 color, double s, GEOMETRY geometria) {
+Particle::Particle(Vector3 Pos, Vector3 Vel, float Damping, float Masa, float Time, bool esMod, Vector4 color, Vector3 s, GEOMETRY geometria) {
 	_myGeometry = geometria;
 	_vel = Vel;
 	_pose = physx::PxTransform(Pos);
@@ -32,10 +31,10 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, float Damping, float Masa, float Ti
 	esModelo = esMod;
 	scale = s;
 	addGeometry();
-	_color = { float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), 1 };
+	_color = color;
 	if (!esModelo) renderItem = new RenderItem(forma, &_pose, _color);
 }
-Particle::Particle(Vector3 Pos, Vector3 Vel, float Masa, float Time, GEOMETRY geometria, Vector4 color, bool esMod, double s) {
+Particle::Particle(Vector3 Pos, Vector3 Vel, float Masa, float Time, GEOMETRY geometria, Vector3 s,Vector4 color, bool esMod) {
 	_myGeometry = geometria;
 	_vel = Vel;
 	_pose = physx::PxTransform(Pos);
@@ -46,7 +45,7 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, float Masa, float Time, GEOMETRY ge
 	esModelo = esMod;
 	scale = s;
 	addGeometry();
-	_color = { float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), 1 };
+	_color = color;
 	if (!esModelo) renderItem = new RenderItem(forma, &_pose, _color);
 }
 

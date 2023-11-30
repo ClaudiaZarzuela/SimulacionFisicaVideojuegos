@@ -4,11 +4,11 @@
 class BuoyancyForceGenerator: public ForceGenerator
 {
 public:
-	BuoyancyForceGenerator(float h, float v, float d) :ForceGenerator() { _height = h; _volume = v; _liquid_density = d; };
+	BuoyancyForceGenerator(float d, Vector3 pos) :ForceGenerator() {_liquid_density = d; _liquid_particle = new Particle(pos , { 0,0,0 }, 0, 1e6, Particle::BOX, {25,0.1,5},{0,0,255,1});};
 
 	virtual void updateForce(Particle* particle, double t);
 
-	virtual ~BuoyancyForceGenerator();
+	virtual ~BuoyancyForceGenerator() { delete(_liquid_particle); };
 	virtual inline void activateForce() override {
 		active = !active;
 		if (active) {
@@ -20,8 +20,6 @@ public:
 	}
 
 protected:
-	float _height;
-	float _volume;
 	float _liquid_density;
 	float _gravity = 9.8;
 
