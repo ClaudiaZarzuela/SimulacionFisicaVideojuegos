@@ -29,6 +29,8 @@
     <ClCompile Include="AnchoredSpringFG.cpp" />
     <ClCompile Include="ElasticForceGenerator.cpp" />
     <ClCompile Include="BuoyancyForceGenerator.cpp" />
+    <ClCompile Include="SolidoRigido.cpp" />
+    <ClCompile Include="Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -60,6 +62,8 @@
     <ClInclude Include="AnchoredSpringFG.h" />
     <ClInclude Include="ElasticForceGenerator.h" />
     <ClInclude Include="BuoyancyForceGenerator.h" />
+    <ClInclude Include="SolidoRigido.h" />
+    <ClInclude Include="Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

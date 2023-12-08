@@ -6,7 +6,7 @@ class BuoyancyForceGenerator: public ForceGenerator
 public:
 	BuoyancyForceGenerator(float d, Vector3 pos) :ForceGenerator() {_liquid_density = d; _liquid_particle = new Particle(pos , { 0,0,0 }, 0, 1e6, Particle::BOX, {25,0.1,5},{0,0,255,1});};
 
-	virtual void updateForce(Particle* particle, double t);
+	virtual void updateForce(Entity* particle, double t);
 
 	virtual ~BuoyancyForceGenerator() { delete(_liquid_particle); };
 	virtual inline void activateForce() override {

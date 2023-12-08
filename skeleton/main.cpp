@@ -60,12 +60,16 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
+
 	_proyectil = new Weapon(Weapon::Types::LASER);
-	_particleSystem = new ParticleSystem();
+	_particleSystem = new ParticleSystem(gScene, gPhysics);
 
 }
 
-
+void onCollision(physx::PxActor* actor1, physx::PxActor* actor2) {
+	PX_UNUSED(actor1);
+	PX_UNUSED(actor2);
+}
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
 // t: time passed since last call in milliseconds
@@ -119,13 +123,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	}
 }
-
-void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
-{
-	PX_UNUSED(actor1);
-	PX_UNUSED(actor2);
-}
-
 
 int main(int, const char*const*)
 {

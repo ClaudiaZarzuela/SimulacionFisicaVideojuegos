@@ -257,6 +257,7 @@
     <ClCompile Include="BuoyancyForceGenerator.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="ElasticForceGenerator.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExplotionGenerator.cpp" />
     <ClCompile Include="Firework.cpp" />
     <ClCompile Include="FireworkGenerator.cpp" />
@@ -271,6 +272,7 @@
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="ParticleWhirlWindGenerator.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="SolidoRigido.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -284,6 +286,7 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="ElasticForceGenerator.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="ExplotionGenerator.h" />
     <ClInclude Include="Firework.h" />
     <ClInclude Include="FireworkGenerator.h" />
@@ -298,6 +301,7 @@
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="ParticleWhirlWindGenerator.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="SolidoRigido.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
     <ClInclude Include="Weapon.h" />

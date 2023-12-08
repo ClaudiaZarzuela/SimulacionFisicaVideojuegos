@@ -5,9 +5,9 @@
 #include <iostream>
 
 
-typedef std::pair<Particle*, ForceGenerator*> FRPair;
+typedef std::pair<Entity*, ForceGenerator*> FRPair;
 
-class ParticleForceRegistry : public std::multimap<Particle*, ForceGenerator*> {
+class ParticleForceRegistry : public std::multimap<Entity*, ForceGenerator*> {
 public:
 	void updateForces(double duration) {
 		for (auto it = begin(); it != end(); ++it) {
@@ -15,11 +15,11 @@ public:
 		}
 
 	}
-	void addRegistry(ForceGenerator* fg, Particle* p) {
+	void addRegistry(ForceGenerator* fg, Entity* p) {
 		insert(FRPair(p, fg));
 	}
 	
-	void deleteParticleRegistry(Particle* p) {
+	void deleteParticleRegistry(Entity* p) {
 		this->erase(p);
 	}
 

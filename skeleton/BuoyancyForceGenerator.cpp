@@ -1,5 +1,5 @@
 #include "BuoyancyForceGenerator.h"
-void BuoyancyForceGenerator::updateForce(Particle* particle, double t) {
+void BuoyancyForceGenerator::updateForce(Entity* particle, double t) {
 	if (fabs(particle->_inv_mass) < 1e-10) return;
 	else {
 

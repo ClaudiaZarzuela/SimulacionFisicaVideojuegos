@@ -8,16 +8,16 @@ Particle(Pos, Vel, A, Damping,Masa, Gravedad, Time, color, modelo, scale){
 	_gen = originalGenerator;
 }
 
-std::list<Particle*> Firework::explode() {
+std::list<Entity*> Firework::explode() {
 	Firework* model = _gen->getModel(generacionActual + 1);
 	model->_pose.p = this->_pose.p;
 	GaussianParticleGenerator* pGen = new GaussianParticleGenerator(Vector3(0.1, 0.1, 0.1), model->_pose.p, Vector3(8, 8, 8), model->_vel, model->numP);
 	pGen->setParticle(model);
-	std::list<Particle*> s = pGen->generateParticles();
+	std::list<Entity*> s = pGen->generateParticles();
 	delete(pGen);
 	return s;
 }
 
 Particle* Firework::clone() const {
-	return new Firework(_pose.p, _vel, a, damping, mass, gravedad, maxTime, _color, numP, generacionActual, _gen, false, scale);
+	return new Firework(_pose.p, _vel, a, damping, mass, gravedad, maxTime, _color, numP, generacionActual, _gen, false, _scale);
 }

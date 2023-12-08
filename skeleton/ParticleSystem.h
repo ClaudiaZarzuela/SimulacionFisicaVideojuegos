@@ -16,6 +16,9 @@
 #include "ElasticForceGenerator.h"
 #include "BuoyancyForceGenerator.h"
 #include <set>
+#include "SolidoRigido.h"
+using namespace physx;
+
 class ParticleSystem
 {
 private:
@@ -28,10 +31,13 @@ private:
 	void inicialiceBoundingBox();
 	bool insideBoundingBox(Vector3 pos);
 
+	PxScene* gScene = nullptr;
+	PxPhysics* gPhysics = nullptr;
 	Vector3 _gravity;
-	std::list<Particle*> _particles;
+	std::list<Entity*> _particles;
 	Particle* _particleBouyancy;
 	std::list <ParticleGenerator*> _particle_generators;
+	std::list <ParticleGenerator*> _rigidBody_generator;
 	std::set<ForceGenerator*> _force_generators;
 	std::list <ExplotionGenerator*> _explosion_generator;
 	FireworkGenerator* _firework_generator = nullptr; 
@@ -43,8 +49,9 @@ private:
 	void onParticleDeath(Particle* p);
 	void createGenerators();
 	void createForceGenerators();
-	void registerParticlesToForce(std::list<Particle*> p);
-	void registerParticleToForce(Particle* p);
+	void createSolidoRigidoGenerators();
+	void registerParticlesToForce(std::list<Entity*> p);
+	void registerParticleToForce(Entity* p);
 	void explode();
 	void addForceWithTime();
 	void generateSpringDemo();
@@ -53,10 +60,11 @@ private:
 	void generateSlinky();
 	void changeMass(char key);
 	void changeVolume(char key);
+	void showAvailableKeys();
 public:
 	void keyPress(unsigned char key);
 	void integrate(double t);
-	ParticleSystem(const Vector3& g = { 0.0f, -10.0f, 0.0f });
+	ParticleSystem(PxScene* gS, PxPhysics* gP, const Vector3& g = { 0.0f, -10.0f, 0.0f });
 	~ParticleSystem();
 	void shootFirework();
 

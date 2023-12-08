@@ -7,7 +7,7 @@ class ForceGenerator {
 protected:
 	ForceGenerator(){};
 public:
-	virtual void updateForce(Particle* particle, double t) = 0;
+	virtual void updateForce(Entity* particle, double t) = 0;
 	std::string _name;
 	bool active = true;
 	double _t = 0.0; // If starting negative --> eternal

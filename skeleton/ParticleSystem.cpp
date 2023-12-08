@@ -1,6 +1,16 @@
 ﻿#include "ParticleSystem.h"
 #include <iostream>
-ParticleSystem::ParticleSystem(const Vector3& g) {
+ParticleSystem::ParticleSystem(PxScene* gS, PxPhysics* gP, const Vector3& g) {
+	gPhysics = gP;
+	gScene = gS;
+	//showAvailableKeys();
+	_force_registry = new ParticleForceRegistry();
+	//createGenerators();
+	//createForceGenerators();
+	createSolidoRigidoGenerators();
+	inicialiceBoundingBox();
+}
+void ParticleSystem::showAvailableKeys() {
 	std::cout << "--------------------------------------------------------" << std::endl;
 	std::cout << "LIST OF KEYS:" << std::endl;
 	std::cout << "- key 'g' to activate the Gravity Force" << std::endl;
@@ -16,23 +26,23 @@ ParticleSystem::ParticleSystem(const Vector3& g) {
 	std::cout << "- key 'm' to increase mass to the white cube particle " << std::endl;
 	std::cout << "- key 'n' to decrease mass to the white cube particle" << std::endl;
 	std::cout << "--------------------------------------------------------" << std::endl;
-	_gravity = g;
-	//createGenerators();
-	createForceGenerators();
-	inicialiceBoundingBox();
-
 }
-
 void ParticleSystem::createGenerators() {
 	_particle_generators.push_back(new UniformParticleGenerator( Vector3(-1, 5, -1), Vector3(1, 5, 1), Vector3(-10, 30, -10), Vector3(10, 30, 10)));
-	_particle_generators.push_back(new GaussianParticleGenerator(Vector3(3, 0.01, 5), Vector3(27, 1 ,0.01), Vector3(2, 5, 2), Vector3(2, 25, 2)));
-	_particle_generators.push_back(new GaussianParticleGenerator(Vector3(1, 0.01, 1), Vector3(100, 5, 0.01), Vector3(0.01, 0.01, 0.01), Vector3(0.01, 0.01, 0.01)));
+	_particle_generators.push_back(new GaussianParticleGenerator(Vector3(3, 0.01, 5), Vector3(27, 1 ,0.01), Vector3(2, 5, 2), Vector3(2, 25, 2),1));
+	_particle_generators.push_back(new GaussianParticleGenerator(Vector3(1, 0.01, 1), Vector3(100, 5, 0.01), Vector3(0.01, 0.01, 0.01), Vector3(0.01, 0.01, 0.01),1));
 	//Fireworks
 	_firework_generator = new FireworkGenerator();
 }
+void ParticleSystem::createSolidoRigidoGenerators() {
 
+	//Generar suelo
+	SolidoRigido* suelo = new SolidoRigido(gScene, gPhysics, { 0,0,0 }, { 100, 0.1, 100 }, { 0.8,0.8,0.8,1 });
+	
+	_rigidBody_generator.push_back(new UniformParticleGenerator(Vector3(-70,50,-5), Vector3(-30,50,5), Vector3(0.01,-20,0.01), Vector3(0.01,-10,0.01), gScene, gPhysics));
+	_rigidBody_generator.push_back(new GaussianParticleGenerator(Vector3(20,0.01,5), Vector3(50,50,0.01), Vector3(0.01,5,0.01), Vector3(0.01,-15,0.01), gScene, gPhysics));
+}
 void ParticleSystem::createForceGenerators() {
-	_force_registry = new ParticleForceRegistry();
 	_gravityForce = new GravityForceGenerator(_gravity);
 	_force_generators.insert(_gravityForce);
 
@@ -47,7 +57,6 @@ void ParticleSystem::createForceGenerators() {
 	generateBouyancy();
 #pragma endregion
 }
-
 void ParticleSystem::integrate(double t) {
 	for (auto it = _force_generators.begin(); it != _force_generators.end();) {
 		if (!(*it)->updateTime(t)) {
@@ -80,42 +89,25 @@ void ParticleSystem::integrate(double t) {
 		registerParticlesToForce(_newParticles);
 		_particles.splice(_particles.end(), _newParticles); ++it;
 	}
+	for (auto it = _rigidBody_generator.begin(); it != _rigidBody_generator.end();) {
+		if ((*it)->canGenerateMoreParticles()) {
+			(*it)->updateTime(t);
+			if ((*it)->hasPassedTimeRequired()) {
+				auto _newParticles = (*it)->generateRigidBodies();
+				registerParticlesToForce(_newParticles);
+				_particles.splice(_particles.end(), _newParticles);
+			}
+		}
+		++it;
+	}
 
 }
-
 void ParticleSystem::shootFirework() {
 	_particles.push_back(_firework_generator->shoot());
 }
-
-ParticleSystem::~ParticleSystem() {
-
-	for (auto it = _particles.begin(); it != _particles.end();) {
-		delete(*it);
-		it = _particles.erase(it);
-	}
-	for (auto it = _explosion_generator.begin(); it != _explosion_generator.end();) {
-		delete(*it);
-		it = _explosion_generator.erase(it);
-	}
-	for (auto it = _force_generators.begin(); it != _force_generators.end();) {
-		delete(*it);
-		it = _force_generators.erase(it);
-	}
-	for (auto it = _particle_generators.begin(); it != _particle_generators.end();) {
-		delete(*it);
-		it = _particle_generators.erase(it);
-	}
-	
-
-	delete(_firework_generator);
-	delete(_force_registry);
-}
-
 bool ParticleSystem::insideBoundingBox(Vector3 pos) {
 	return (pos.x > box.minX && pos.x <= box.maxX) && (pos.y >= box.minY && pos.y <= box.maxY) && (pos.z > box.minZ && pos.z <= box.maxZ);
 }
-
-
 void ParticleSystem::keyPress(unsigned char key) {
 	
 	switch (tolower(key)) {
@@ -175,20 +167,20 @@ void ParticleSystem::activeForce(std::string type) {
 void ParticleSystem::inicialiceBoundingBox() {
 	box = { -1000, 1000, -1000, 1000, -1000, 1000 };
 }
-void ParticleSystem::registerParticlesToForce(std::list<Particle*> p) {
+void ParticleSystem::registerParticlesToForce(std::list<Entity*> p) {
 	for (auto it = _force_generators.begin(); it != _force_generators.end(); ++it) {
 		for (auto ot = p.begin(); ot != p.end(); ++ot) {
 			_force_registry->addRegistry(*it, *ot);
 		}
 	}
 }
-void ParticleSystem::registerParticleToForce(Particle* p) {
+void ParticleSystem::registerParticleToForce(Entity* p) {
 	for (auto it = _force_generators.begin(); it != _force_generators.end(); ++it) {
 			_force_registry->addRegistry(*it, p);
 	}
 }
 void ParticleSystem::explode() {
-	auto expl = new ExplotionGenerator(10000, 1000, 20, Vector3(0, 10, 0));
+	auto expl = new ExplotionGenerator(10000000, 1000, 20, Vector3(0, 10, 0),0.5);
 	_force_generators.insert(expl);
 	for (auto it = _particles.begin(); it != _particles.end(); ++it)
 	{
@@ -318,4 +310,31 @@ void ParticleSystem::generateSpringDemo() {
 
 	_particles.push_back(p4);
 	_particles.push_back(p5);
+}
+ParticleSystem::~ParticleSystem() {
+
+	for (auto it = _particles.begin(); it != _particles.end();) {
+		delete(*it);
+		it = _particles.erase(it);
+	}
+	for (auto it = _explosion_generator.begin(); it != _explosion_generator.end();) {
+		delete(*it);
+		it = _explosion_generator.erase(it);
+	}
+	for (auto it = _force_generators.begin(); it != _force_generators.end();) {
+		delete(*it);
+		it = _force_generators.erase(it);
+	}
+	for (auto it = _particle_generators.begin(); it != _particle_generators.end();) {
+		delete(*it);
+		it = _particle_generators.erase(it);
+	}
+	for (auto it = _rigidBody_generator.begin(); it != _rigidBody_generator.end();) {
+		delete(*it);
+		it = _rigidBody_generator.erase(it);
+	}
+	
+
+	delete(_firework_generator);
+	delete(_force_registry);
 }

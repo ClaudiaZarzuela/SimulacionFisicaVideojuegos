@@ -6,7 +6,7 @@ class GravityForceGenerator : public ForceGenerator
 {
 public:
 	GravityForceGenerator(const Vector3& g){ setGravity(g); _name = "GRAVITY";}
-	virtual void updateForce(Particle* particle, double t);
+	virtual void updateForce(Entity* particle, double t);
 	inline void setGravity(Vector3 g) { _gravity = g; }
 	virtual inline void activateForce() override {
 		active = !active;

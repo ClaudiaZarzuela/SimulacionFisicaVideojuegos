@@ -7,7 +7,7 @@ public:
 		_name = "WHIRLWIND"; K = k; setDrag(2, 0);
 	}
 	~ParticleWhirlWindGenerator(){}
-	virtual void updateForce(Particle* particle, double t);
+	virtual void updateForce(Entity* particle, double t);
 	virtual inline void activateForce() override {
 		active = !active;
 		if (active) {

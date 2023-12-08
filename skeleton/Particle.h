@@ -1,9 +1,10 @@
 #pragma once
-#include "RenderUtils.hpp"
 #include <list>
+#include "Entity.h"
+
 class FireworkGenerator;
 
-class Particle
+class Particle: public Entity
 {
 public: 
 	enum GEOMETRY {
@@ -23,47 +24,31 @@ public:
 	~Particle();
 
 #pragma region PARAMETROS
-	physx::PxTransform _pose;
-	Vector3 _vel;
 	Vector3 a;
-	physx::PxShape* forma;
-	Vector4 _color;
 	Vector3 gravedad = Vector3(0,-10,0);
-	float time = 0;
-	float maxTime;
 	float damping = 0.998;
-	float mass;
-	float _inv_mass;
-	//float _inv_mass;
-	bool alive = true;
-	bool esModelo;
-	Vector3 scale;
-	Vector3 force = Vector3(0, 0, 0);
-	RenderItem* renderItem = nullptr;
 	FireworkGenerator* _gen = nullptr;
 	GEOMETRY _myGeometry;
 #pragma endregion
 
 #pragma region METODOS
-	void integrate(double t);
-	bool isAlive() { return alive; }
+	virtual void integrate(double t)override;
 	virtual Particle* clone() const;
-	void setPos(Vector3 p) { _pose = physx::PxTransform(p); }
-	bool generatesOnDeath();
+	virtual void setPosition(Vector3 p)override { _pose = physx::PxTransform(p); }
+	virtual void setVelocity(Vector3 Vel) override {};
+	virtual bool generatesOnDeath()override;
 	inline Vector3 getVel() { return _vel; }
-	virtual std::list<Particle*> explode() { return std::list<Particle*>(); }
+	virtual std::list<Entity*> explode() { return std::list<Entity*>(); }
 	inline void clearForce() { force *= 0.0; }
-	inline void addForce(const Vector3& f) { force += f; }
-	inline int getVolume() { return scale.x * scale.y * scale.z; }
-	inline int getHeight() { return scale.y; }
+	virtual void addForce(const Vector3& f) override{ force += f; }
 	inline void addGeometry(){
 		switch (_myGeometry) {
 			
 		case SPHERE:
-			forma = CreateShape(physx::PxSphereGeometry(scale.x)); break;
+			_shape = CreateShape(physx::PxSphereGeometry(_scale.x)); break;
 		case BOX:
-			physx::PxBoxGeometry planeGeo(Vector3(scale.x, scale.y, scale.z));
-			forma = CreateShape(planeGeo); break;
+			physx::PxBoxGeometry planeGeo(Vector3(_scale.x, _scale.y, _scale.z));
+			_shape = CreateShape(planeGeo); break;
 
 		}
 	}
@@ -75,12 +60,12 @@ public:
 		}
 	}
 	inline void changeVolume(char key) {
-		if (key == 'b')scale += {0.5,0.5,0.5};
+		if (key == 'b')_scale += {0.5,0.5,0.5};
 		else {
-			Vector3 aux = scale;
+			Vector3 aux = _scale;
 			aux -= {0.5, 0.5, 0.5};
-			if (aux.x <= 0 || aux.y <= 0 || aux.z <= 0) scale -= {0.5, 0.5, 0.5};
-			else scale = { 1,1,1 };
+			if (aux.x <= 0 || aux.y <= 0 || aux.z <= 0) _scale -= {0.5, 0.5, 0.5};
+			else _scale = { 1,1,1 };
 		}
 	}
 #pragma endregion

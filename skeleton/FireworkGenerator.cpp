@@ -12,8 +12,8 @@ Particle* FireworkGenerator::shoot() {
 	return _firework_pool[0]->clone();
 }
 
-std::list<Particle*> FireworkGenerator::explode(Firework* p) {
-    std::list<Particle*> s;
+std::list<Entity*> FireworkGenerator::explode(Firework* p) {
+    std::list<Entity*> s;
     if(p->getGenerations() < _firework_pool.size()-1) s = p->explode();
     return s;
 }

@@ -10,7 +10,7 @@ public:
 		int numParticulas, int generacion, FireworkGenerator* originalGenerator, bool modelo = false, Vector3 scale = { 0.5,0.5,0.5 });
 	~Firework(){};
 	// The firework generates more fireworks when exploding --> they should be gathered by the System
-	virtual std::list<Particle*> explode();
+	virtual std::list<Entity*> explode();
 	//void addGenerator(ParticleGenerator* p);
 	virtual Particle* clone() const;
 	int getGenerations() { return generacionActual; }

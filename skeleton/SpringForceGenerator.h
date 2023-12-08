@@ -17,7 +17,7 @@ public:
 		std::cout << "Valor de k: " << _k << std::endl;
 	}
 	SpringForceGenerator(double k, double resting_length, Particle* other);
-	virtual void updateForce(Particle* particle, double t);
+	virtual void updateForce(Entity* particle, double t);
 	inline void setK(double k) { _k = k; }
 	virtual ~SpringForceGenerator() {};
 	virtual inline void activateForce() override {

@@ -1,7 +1,7 @@
 #include "ParticleDragGenerator.h"
 #include <iostream>
 
-void ParticleDragGenerator::updateForce(Particle* particle, double t) {
+void ParticleDragGenerator::updateForce(Entity* particle, double t) {
 	//Check that the particle has Finite Mass
 	if (active) {
 		if (fabs(1 / (particle->mass)) < 1e-10) return;

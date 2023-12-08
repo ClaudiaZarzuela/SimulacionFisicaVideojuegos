@@ -2,7 +2,7 @@
 #include <math.h>
 #include "FireworkGenerator.h"
 #include <iostream>
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time, Vector4 color, bool esMod, Vector3 s, GEOMETRY geometria) {
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time, Vector4 color, bool esMod, Vector3 s, GEOMETRY geometria):Entity() {
 	_myGeometry = geometria;
 	_vel = Vel;
 	_pose = physx::PxTransform(Pos);
@@ -13,14 +13,14 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Mas
 	gravedad = Gravedad;
 	maxTime = Time;
 	esModelo = esMod; 
-	scale = s;
+	_scale = s;
 	addGeometry();
 	_color = color;
-	if(!esModelo) renderItem = new RenderItem(forma, &_pose, _color);	
+	if(!esModelo) renderItem = new RenderItem(_shape, &_pose, _color);	
 }
 
 
-Particle::Particle(Vector3 Pos, Vector3 Vel, float Damping, float Masa, float Time, bool esMod, Vector4 color, Vector3 s, GEOMETRY geometria) {
+Particle::Particle(Vector3 Pos, Vector3 Vel, float Damping, float Masa, float Time, bool esMod, Vector4 color, Vector3 s, GEOMETRY geometria):Entity() {
 	_myGeometry = geometria;
 	_vel = Vel;
 	_pose = physx::PxTransform(Pos);
@@ -29,12 +29,12 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, float Damping, float Masa, float Ti
 	_inv_mass = 1 / mass;
 	maxTime = Time;
 	esModelo = esMod;
-	scale = s;
+	_scale = s;
 	addGeometry();
 	_color = color;
-	if (!esModelo) renderItem = new RenderItem(forma, &_pose, _color);
+	if (!esModelo) renderItem = new RenderItem(_shape, &_pose, _color);
 }
-Particle::Particle(Vector3 Pos, Vector3 Vel, float Masa, float Time, GEOMETRY geometria, Vector3 s,Vector4 color, bool esMod) {
+Particle::Particle(Vector3 Pos, Vector3 Vel, float Masa, float Time, GEOMETRY geometria, Vector3 s,Vector4 color, bool esMod):Entity() {
 	_myGeometry = geometria;
 	_vel = Vel;
 	_pose = physx::PxTransform(Pos);
@@ -43,10 +43,10 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, float Masa, float Time, GEOMETRY ge
 	damping = 0.85;
 	maxTime = Time;
 	esModelo = esMod;
-	scale = s;
+	_scale = s;
 	addGeometry();
 	_color = color;
-	if (!esModelo) renderItem = new RenderItem(forma, &_pose, _color);
+	if (!esModelo) renderItem = new RenderItem(_shape, &_pose, _color);
 }
 
 Particle::~Particle() {
@@ -69,7 +69,7 @@ void Particle::integrate(double t) {
 	}
 }
 Particle* Particle::clone() const {
-	return new Particle(_pose.p, _vel, damping, mass, maxTime, false, _color, scale);
+	return new Particle(_pose.p, _vel, damping, mass, maxTime, false, _color, _scale);
 }
 
 bool Particle::generatesOnDeath() { return _gen != nullptr; }

@@ -15,6 +15,6 @@ public:
 		_duration = duration;
 
 	}
-	virtual void updateForce(Particle* particle, double t) override;
+	virtual void updateForce(Entity* particle, double t) override;
 };
 

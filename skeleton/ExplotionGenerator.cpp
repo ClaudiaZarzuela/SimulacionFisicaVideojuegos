@@ -1,6 +1,6 @@
 #include "ExplotionGenerator.h"
 #include <iostream>
-void ExplotionGenerator::updateForce(Particle* p, double t) {
+void ExplotionGenerator::updateForce(Entity* p, double t) {
 	//Check that the particle has Finite Mass
 		if (!eliminate) {
 			if (fabs((1 / p->mass)) < 1e-10) return ;
