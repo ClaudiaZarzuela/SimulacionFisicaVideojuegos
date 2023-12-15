@@ -3,10 +3,11 @@
 ParticleSystem::ParticleSystem(PxScene* gS, PxPhysics* gP, const Vector3& g) {
 	gPhysics = gP;
 	gScene = gS;
-	//showAvailableKeys();
+	_gravity = g;
+	showAvailableKeys();
 	_force_registry = new ParticleForceRegistry();
-	//createGenerators();
-	//createForceGenerators();
+	createGenerators();
+	createForceGenerators();
 	createSolidoRigidoGenerators();
 	inicialiceBoundingBox();
 }
@@ -14,22 +15,22 @@ void ParticleSystem::showAvailableKeys() {
 	std::cout << "--------------------------------------------------------" << std::endl;
 	std::cout << "LIST OF KEYS:" << std::endl;
 	std::cout << "- key 'g' to activate the Gravity Force" << std::endl;
-	std::cout << "- key 'u' to activate the Wind Force" << std::endl;
+	//std::cout << "- key 'u' to activate the Wind Force" << std::endl;
 	std::cout << "- key 'h' to activate the WhirlWind Force" << std::endl;
-	std::cout << "- key 'x' to activate the Explosion Force" << std::endl;
-	std::cout << "- key 'l' to activate the Spring Force" << std::endl;
+	std::cout << "- key 'e' to activate the Explosion Force" << std::endl;
+	/*std::cout << "- key 'l' to activate the Spring Force" << std::endl;
 	std::cout << "- key 'p' to add Wind Force for 5 seconds" << std::endl;
 	std::cout << "- key 'i' to increase k value" << std::endl;
 	std::cout << "- key 'o' to decrease k value" << std::endl;
 	std::cout << "- key 'b' to increase volume to the white cube particle " << std::endl;
 	std::cout << "- key 'v' to decrease volume to the white cube particle" << std::endl;
 	std::cout << "- key 'm' to increase mass to the white cube particle " << std::endl;
-	std::cout << "- key 'n' to decrease mass to the white cube particle" << std::endl;
+	std::cout << "- key 'n' to decrease mass to the white cube particle" << std::endl;*/
 	std::cout << "--------------------------------------------------------" << std::endl;
 }
 void ParticleSystem::createGenerators() {
-	_particle_generators.push_back(new UniformParticleGenerator( Vector3(-1, 5, -1), Vector3(1, 5, 1), Vector3(-10, 30, -10), Vector3(10, 30, 10)));
-	_particle_generators.push_back(new GaussianParticleGenerator(Vector3(3, 0.01, 5), Vector3(27, 1 ,0.01), Vector3(2, 5, 2), Vector3(2, 25, 2),1));
+	_particle_generators.push_back(new UniformParticleGenerator( Vector3(-5, 5, -1), Vector3(0.01, 5, 1), Vector3(-10, 30, -10), Vector3(10, 30, 10)));
+	//_particle_generators.push_back(new GaussianParticleGenerator(Vector3(3, 0.01, 5), Vector3(27, 1 ,0.01), Vector3(2, 5, 2), Vector3(2, 25, 2),1));
 	_particle_generators.push_back(new GaussianParticleGenerator(Vector3(1, 0.01, 1), Vector3(100, 5, 0.01), Vector3(0.01, 0.01, 0.01), Vector3(0.01, 0.01, 0.01),1));
 	//Fireworks
 	_firework_generator = new FireworkGenerator();
@@ -37,24 +38,33 @@ void ParticleSystem::createGenerators() {
 void ParticleSystem::createSolidoRigidoGenerators() {
 
 	//Generar suelo
-	SolidoRigido* suelo = new SolidoRigido(gScene, gPhysics, { 0,0,0 }, { 100, 0.1, 100 }, { 0.8,0.8,0.8,1 });
+	SolidoRigido* suelo = new SolidoRigido(gScene, gPhysics, { -2,0,0 }, { 50, 0.1, 50 }, { 0.8,0.8,0.8,1 });
 	
-	_rigidBody_generator.push_back(new UniformParticleGenerator(Vector3(-70,50,-5), Vector3(-30,50,5), Vector3(0.01,-20,0.01), Vector3(0.01,-10,0.01), gScene, gPhysics));
-	_rigidBody_generator.push_back(new GaussianParticleGenerator(Vector3(20,0.01,5), Vector3(50,50,0.01), Vector3(0.01,5,0.01), Vector3(0.01,-15,0.01), gScene, gPhysics));
+	//_rigidBody_generator.push_back(new UniformParticleGenerator(Vector3(-70,50,-5), Vector3(-30,50,5), Vector3(0.01,-20,0.01), Vector3(0.01,-10,0.01), gScene, gPhysics));
+	//_rigidBody_generator.push_back(new GaussianParticleGenerator(Vector3(20,0.01,5), Vector3(50,50,0.01), Vector3(0.01,5,0.01), Vector3(0.01,-15,0.01), gScene, gPhysics));
+	
+	_rigidBody_generator.push_back(new UniformParticleGenerator( Vector3(-5, 5, -1), Vector3(0.01, 5, 1), Vector3(-2, 20, -2), Vector3(2, 30, 2), gScene, gPhysics));
+	_rigidBody_generator.push_back(new GaussianParticleGenerator(Vector3(5, 0.01, 3), Vector3(100, 5, 0.01), Vector3(0.01, 0.01, 0.01), Vector3(0.01, 0.01, 0.01), gScene, gPhysics,100));
 }
 void ParticleSystem::createForceGenerators() {
+#pragma region Practica 3
 	_gravityForce = new GravityForceGenerator(_gravity);
 	_force_generators.insert(_gravityForce);
-
-#pragma region Practica 3
 	//_force_generators.insert(new ParticleDragGenerator(2, 0, { 25,0.0,0.0 }, Vector3(10, 0.01, 10), 100, Vector3(0, 20, -30)));
-	//_force_generators.insert(new ParticleWhirlWindGenerator(Vector3(100, -10, 0), Vector3(20, 0.01, 20),500, 1));
+	_force_generators.insert(new ParticleWhirlWindGenerator(Vector3(100, -10, 0), Vector3(50, 0.01, 50),500, 2));
 #pragma endregion
 
 #pragma region Practica 4
-	generateSpringDemo();
-	generateSlinky();
-	generateBouyancy();
+	//_gravityForce = new GravityForceGenerator(_gravity);
+	//_force_generators.insert(_gravityForce);
+	//generateSpringDemo();
+	//generateSlinky();
+	//generateBouyancy();
+#pragma endregion
+
+#pragma region Solido Rigido
+//_force_generators.insert(new ParticleDragGenerator(2, 0, { 25,0.0,0.0 }, Vector3(10, 0.01, 10), 100, Vector3(0, 20, -30)));
+//_force_generators.insert(new ParticleWhirlWindGenerator(Vector3(100, -10, 0), Vector3(90, 0.01, 90),500, 1));
 #pragma endregion
 }
 void ParticleSystem::integrate(double t) {
@@ -114,22 +124,22 @@ void ParticleSystem::keyPress(unsigned char key) {
 	case 'e':
 		explode();
 		break;
-	case 'p':
+		/*case 'p':
 		addForceWithTime();
-		break;
+		break;*/
 	case 'g':
 		activeForce("GRAVITY");
 		break;
-	case 'u': 
+	/*case 'u': 
 		activeForce("WIND");
-		break;
+		break;*/
 	case 'h':
 		activeForce("WHIRLWIND");
 		break;
-	case 'x':
+	/*case 'x':
 		activeForce("EXPLOSION");
-		break;
-	case 'l':
+		break;*/
+	/*case 'l':
 		activeForce("SPRING");
 		break;
 	case 'o':
@@ -149,7 +159,7 @@ void ParticleSystem::keyPress(unsigned char key) {
 		break;
 	case 'b':
 		changeVolume(key);
-		break;
+		break;*/
 	default: break;
 	}
 }
@@ -165,7 +175,7 @@ void ParticleSystem::activeForce(std::string type) {
 	}
 }
 void ParticleSystem::inicialiceBoundingBox() {
-	box = { -1000, 1000, -1000, 1000, -1000, 1000 };
+	box = { -1000, 1000, -10, 1000, -1000, 1000 };
 }
 void ParticleSystem::registerParticlesToForce(std::list<Entity*> p) {
 	for (auto it = _force_generators.begin(); it != _force_generators.end(); ++it) {
@@ -180,7 +190,7 @@ void ParticleSystem::registerParticleToForce(Entity* p) {
 	}
 }
 void ParticleSystem::explode() {
-	auto expl = new ExplotionGenerator(10000000, 1000, 20, Vector3(0, 10, 0),0.5);
+	auto expl = new ExplotionGenerator(100000, 1000, 20, Vector3(0, 10, 0),0.5);
 	_force_generators.insert(expl);
 	for (auto it = _particles.begin(); it != _particles.end(); ++it)
 	{

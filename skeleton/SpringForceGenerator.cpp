@@ -9,7 +9,7 @@ SpringForceGenerator::SpringForceGenerator(double k, double resting_length, Part
 
 void SpringForceGenerator::updateForce(Entity* particle, double t) {
 
-	Vector3 relative_pos_vector = _other->_pose.p - particle->_pose.p; 
+	Vector3 relative_pos_vector = _other->_pose.p - particle->getPosition();
 	Vector3 force;
 
 	const float length = relative_pos_vector.normalize(); 

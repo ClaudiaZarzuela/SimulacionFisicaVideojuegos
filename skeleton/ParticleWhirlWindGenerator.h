@@ -4,7 +4,7 @@ class ParticleWhirlWindGenerator : public ParticleDragGenerator
 {
 public:
 	ParticleWhirlWindGenerator(Vector3 pos, Vector3 Dimensions,int h, int k) :ParticleDragGenerator(pos, Dimensions, h) {
-		_name = "WHIRLWIND"; K = k; setDrag(2, 0);
+		_name = "WHIRLWIND"; K = k; setDrag(2,0);
 	}
 	~ParticleWhirlWindGenerator(){}
 	virtual void updateForce(Entity* particle, double t);

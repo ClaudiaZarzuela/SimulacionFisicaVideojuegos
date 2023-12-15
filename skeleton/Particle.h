@@ -21,7 +21,7 @@ public:
 		Vector4 color = { float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), 1 }, Vector3 scale = { 0.5, 0.5, 0.5 }, GEOMETRY geometria = SPHERE);
 #pragma endregion
 
-	~Particle();
+	virtual ~Particle();
 
 #pragma region PARAMETROS
 	Vector3 a;
@@ -68,6 +68,7 @@ public:
 			else _scale = { 1,1,1 };
 		}
 	}
+	virtual Vector3 getPosition() { return _pose.p; }
 #pragma endregion
 };
 

@@ -30,6 +30,6 @@ protected:
 	PxPhysics* gPhysics = nullptr;
 	int _n_maxParticles = 50;
 	float time = 0;
-	float maxTime = 1.5;
+	float maxTime = 0.5;
 };
 

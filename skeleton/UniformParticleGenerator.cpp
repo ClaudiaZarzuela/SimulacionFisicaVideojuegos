@@ -44,7 +44,6 @@ std::list<Entity*> UniformParticleGenerator::generateParticles() {
 std::list<Entity*> UniformParticleGenerator::generateRigidBodies() {
 	std::list<Entity*> particles;
 	SolidoRigido* p = _model_rigidbody->clone();
-	p->setDensity((rand() % 5) + 1);
 	Vector3 pos = { (*posUniformX)(_mt),(*posUniformY)(_mt),(*posUniformZ)(_mt) };
 	p->setPosition(pos);
 	Vector3 vel = { (*velUniformX)(_mt),(*velUniformY)(_mt),(*velUniformZ)(_mt) };

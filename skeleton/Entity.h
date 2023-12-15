@@ -24,9 +24,10 @@ public:
 	virtual bool generatesOnDeath() = 0;
 	virtual void integrate(double t) = 0;
 	virtual void setPosition(Vector3 Pos) = 0;
+	virtual Vector3 getPosition() = 0;
 	virtual void setVelocity(Vector3 Vel) = 0;
 	bool isAlive() { return alive; }
 	Entity(){}
-	~Entity(){}
+	virtual ~Entity(){}
 };
 
