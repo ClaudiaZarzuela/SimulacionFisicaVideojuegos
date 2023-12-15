@@ -80,7 +80,7 @@ void ParticleSystem::integrate(double t) {
 	_force_registry->updateForces(t);
 
 	for (auto it = _particles.begin(); it != _particles.end();) {
-		if ((*it)->isAlive() && insideBoundingBox((*it)->_pose.p)) {
+		if ((*it)->isAlive() && insideBoundingBox((*it)->getPosition())) {
 			(*it)->integrate(t); ++it;
 		}
 		else {

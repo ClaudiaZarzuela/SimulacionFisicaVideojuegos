@@ -9,10 +9,11 @@ SolidoRigido::SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, V
 	_dynamic->setLinearVelocity(_linearVel);
 	_vel = _linearVel;
 	_dynamic->setAngularVelocity(_angularVel);
+	PxRigidBodyExt::updateMassAndInertia(*_dynamic, density);
 	_shape = CreateShape(PxBoxGeometry(_scale));
 	_dynamic->attachShape(*_shape);
-	_dynamic->setMass(Mass);
-	mass = Mass;
+	//_dynamic->setMass(Mass);
+	mass = _dynamic->getMass();
 	_inv_mass = 1 / mass;
 	esModelo = ismodel;
 	maxTime = time;
