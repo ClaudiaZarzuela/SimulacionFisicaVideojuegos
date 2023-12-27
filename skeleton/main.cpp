@@ -1,19 +1,11 @@
 #include <ctype.h>
-
 #include <PxPhysicsAPI.h>
-
 #include <vector>
-
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
-
 #include <iostream>
-#include "Weapon.h"
-#include "Particle.h"
-#include "ParticleSystem.h"
-
-std::string display_text = "This is a test";
+#include "GameSystem.h"
 
 
 using namespace physx;
@@ -32,10 +24,13 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
-Weapon* _proyectil = NULL;
-Particle* _particula = NULL;
-ParticleSystem* _particleSystem = NULL;
 
+GameSystem* _gameSystem = NULL;
+std::string name_text = "Claudia Zarzuela Amor";
+std::string title_text = " ";
+std::string level_text = " ";
+int WidthCam;
+int HeightCam;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -60,10 +55,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-
-	_proyectil = new Weapon(Weapon::Types::LASER);
-	_particleSystem = new ParticleSystem(gScene, gPhysics);
-
+	_gameSystem = new GameSystem(gScene, gPhysics);
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2) {
@@ -79,8 +71,8 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	_proyectil->integrate(t);
-	_particleSystem->integrate(t);
+	
+	_gameSystem->integrate(t);
 }
 
 // Function to clean data
@@ -88,8 +80,7 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-	delete(_proyectil);
-	delete(_particleSystem);
+	delete(_gameSystem);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
@@ -107,23 +98,23 @@ void cleanupPhysics(bool interactive)
 // Function called when a key is pressed
 void keyPress(unsigned char key, const PxTransform& camera)
 {
-	_particleSystem->keyPress(key);
+	_gameSystem->keyPress(key);
 	PX_UNUSED(camera);
 
 	switch(toupper(key))
 	{
-	case ' ':
-	{
-		_particleSystem->shootFirework(); break;
-	}
-	case 'T': {
-		_proyectil->shoot(GetCamera()->getDir(), GetCamera()->getTransform().p); break;
-	}
 	default:
 		break;
 	}
 }
 
+void handleMouseInput(int button, int state, int x, int y)
+{
+	_gameSystem->handleMouse(button, state,x,y);
+	PX_UNUSED(state);
+	PX_UNUSED(button);
+	
+}
 int main(int, const char*const*)
 {
 #ifndef OFFLINE_EXECUTION 

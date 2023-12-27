@@ -23,7 +23,6 @@ Weapon::Weapon(Types currentType) {
 		masaReal = 0.1f;
 		break;
 	}
-
 }
 
 void Weapon::integrate(double t) {
@@ -40,7 +39,7 @@ void Weapon::integrate(double t) {
 }
 
 void Weapon::shoot(Vector3 dir, Vector3 pos) {
-	particles.push_back(new Particle(pos, speedSim * dir, calculateGravity(dir), 0.998, calculateMass(dir), calculateGravity(dir), 3.0f, Vector4(float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), float(rand() % 256 / 255.0f), 1)));
+	particles.push_back(new Particle(pos, speedSim * dir, calculateGravity(dir), 0.998, calculateMass(dir), calculateGravity(dir), 3.0f, Vector4(0.2, 0.5, 0.8, 1), false, { 0.1,0.1,0.1 }));
 }
 
 Vector3 Weapon::calculateGravity(Vector3 dir) {

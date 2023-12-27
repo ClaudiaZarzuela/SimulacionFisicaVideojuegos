@@ -237,6 +237,9 @@ namespace
 void reshapeCallback(int width, int height)
 {
 	glViewport(0, 0, width, height);
+	WidthCam = width;
+	HeightCam = height;
+	
 }
 }
 
@@ -248,7 +251,6 @@ void setupDefaultWindow(const char *name)
 	char* argv[1] = { namestr };
 
 	glutInit(&argc, argv);
-	
 	glutInitWindowSize(512, 512);
 	glutInitDisplayMode(GLUT_RGB|GLUT_DOUBLE|GLUT_DEPTH);
 	int mainHandle = glutCreateWindow(name);
@@ -287,8 +289,13 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Display text
-	glColor4f(1.0f, 0.2f, 0.2f, 1.0f);
-	drawText(display_text, 0, 0);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	//glColor4f(1.0f, 0.2f, 0.2f, 1.0f);
+	drawText(name_text, 5, 5);
+	drawText(title_text, 250, 450);
+	drawText(level_text, 450, 10);
+
+
 
 	// Setup camera
 	glMatrixMode(GL_PROJECTION);

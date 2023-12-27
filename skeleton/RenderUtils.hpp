@@ -7,6 +7,7 @@
 class RenderItem;
 void RegisterRenderItem(const RenderItem* _item);
 void DeregisterRenderItem(const RenderItem* _item);
+extern void handleMouseInput(int button, int state, int x, int y);
 
 class RenderItem
 {

@@ -47,7 +47,12 @@
 #endif
 #include <string>
 
-extern std::string display_text;
+extern std::string name_text;
+extern std::string title_text;
+extern std::string level_text;
+
+extern int WidthCam;
+extern int HeightCam;
 
 namespace Snippets
 {
