@@ -262,12 +262,12 @@
     <ClCompile Include="ExplotionGenerator.cpp" />
     <ClCompile Include="Firework.cpp" />
     <ClCompile Include="FireworkGenerator.cpp" />
-    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameSystem.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="GravityForceGenerator.cpp" />
+    <ClCompile Include="InteractuableObject.cpp" />
+    <ClCompile Include="LevelSystem.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="ModelParticle.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleDragGenerator.cpp" />
@@ -278,7 +278,6 @@
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="SolidoRigido.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
-    <ClCompile Include="GameStateMachine.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="RenderUtils.cpp" />
@@ -297,12 +296,11 @@
     <ClInclude Include="Firework.h" />
     <ClInclude Include="FireworkGenerator.h" />
     <ClInclude Include="ForceGenerator.h" />
-    <ClInclude Include="GameState.h" />
-    <ClInclude Include="GameStateMachine.h" />
     <ClInclude Include="GameSystem.h" />
     <ClInclude Include="GaussianParticleGenerator.h" />
     <ClInclude Include="GravityForceGenerator.h" />
-    <ClInclude Include="MainMenuState.h" />
+    <ClInclude Include="InteractuableObject.h" />
+    <ClInclude Include="LevelSystem.h" />
     <ClInclude Include="ModelParticle.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleDragGenerator.h" />

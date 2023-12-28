@@ -25,21 +25,8 @@ Weapon::Weapon(Types currentType) {
 	}
 }
 
-void Weapon::integrate(double t) {
-	for (auto it = particles.begin(); it != particles.end();) {
-		if ((*it)->isAlive()) {
-			(*it)->integrate(t); ++it;
-		}
-		else {
-			delete(*it);
-			it = particles.erase(it);
-		}
-
-	}
-}
-
-void Weapon::shoot(Vector3 dir, Vector3 pos) {
-	particles.push_back(new Particle(pos, speedSim * dir, calculateGravity(dir), 0.998, calculateMass(dir), calculateGravity(dir), 3.0f, Vector4(0.2, 0.5, 0.8, 1), false, { 0.1,0.1,0.1 }));
+Particle* Weapon::shoot(Vector3 dir, Vector3 pos) {
+	return new Particle(pos, speedSim * dir, calculateGravity(dir), 0.998, calculateMass(dir), calculateGravity(dir), 50.0f, Vector4(0.2, 0.5, 0.8, 1), false, { 0.1,0.1,0.1 });
 }
 
 Vector3 Weapon::calculateGravity(Vector3 dir) {

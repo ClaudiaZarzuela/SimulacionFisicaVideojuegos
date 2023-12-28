@@ -1,167 +1,136 @@
 #include "GameSystem.h"
 #include <iostream>
+
 GameSystem::GameSystem(PxScene* gS, PxPhysics* gP, const Vector3& g) {
 	gPhysics = gP;
 	gScene = gS;
 	_gravity = g;
 
-	//Inicilaize GameStateMachine and activate Main Menu Scene
-	_gameStateMachine = new GameStateMachine();
-	_gameStateMachine->pushState(new MainMenuState("MainMenuState", gScene, gPhysics));
-
 	//Activate proyectil, used as a cursor
 	_proyectil = new Weapon(Weapon::Types::LASER);
 	showAvailableKeys();
 	inicialiceBoundingBox();
+	actualMenu = MAINMENU;
+	_levelManager = new LevelSystem(gScene, gPhysics);
 }
+
 void GameSystem::showAvailableKeys() {
 	std::cout << "CONTROLS:" << std::endl;
-	std::cout << "- key 'g' to activate the Gravity Force" << std::endl;
+	std::cout << "- blah blah blah blah" << std::endl;
 	std::cout << "--------------------------------------------------------" << std::endl;
 }
 
-void GameSystem::integrate(double t) {
-	_proyectil->integrate(t);
+void GameSystem::MainMenuInicialice() {
+	std::cout << "MAIN MENU" << std::endl;
+	title_text = "NEST";
+	_buttonList.push_back(new Button(gScene, gPhysics, { 0,0,-100 }, 25, 10, Button::STARTGAME));
+
+}
+
+void GameSystem::LevelMenuInicialice() {
+	std::cout << "LEVELS MENU" << std::endl;
+	title_text = "LEVELS MENU";
+	_buttonList.push_back(new Button(gScene, gPhysics, { -75,15,-100 }, 10, 10, Button::LEVEL_1));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 25,15,-100 }, 10, 10, Button::LEVEL_2));
+	_buttonList.push_back(new Button(gScene, gPhysics, { -25,15,-100 }, 10, 10, Button::LEVEL_1));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 75,15,-100 }, 10, 10, Button::LEVEL_2));
+
+	_buttonList.push_back(new Button(gScene, gPhysics, { -75,-20,-100 }, 10, 10, Button::LEVEL_3));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 25,-20,-100 }, 10, 10, Button::LEVEL_4));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 75,-20,-100 }, 10, 10, Button::LEVEL_3));
+	_buttonList.push_back(new Button(gScene, gPhysics, { -25,-20,-100 }, 10, 10, Button::LEVEL_4));
 	
+}
 
-	/*for (auto it = _force_generators.begin(); it != _force_generators.end();) {
-		if (!(*it)->updateTime(t)) {
-			auto aux = (*it);
-			_force_registry->deleteForceRegistry(aux);
-			it = _force_generators.erase(it); delete (aux);
+void GameSystem::GameSceneInicialice() {
+	std::cout << "GAME SCENE" << std::endl;
+	title_text = " ";
+}
+
+void GameSystem::EndSceneInicialice() {
+	std::cout << "END MENU" << std::endl;
+}
+
+void GameSystem::ManageScene() {
+	if (changeMenu) {
+		switch (actualMenu)
+		{
+		case MAINMENU: MainMenuInicialice();
+			break;
+		case LEVELMENU:LevelMenuInicialice();
+			break;
+		case GAMESCENE:GameSceneInicialice();
+			break;
+		case ENDSCENE:EndSceneInicialice();
+			break;
+		default:
+			break;
 		}
-		else ++it;
+		changeMenu = false;
 	}
+}
 
-	_force_registry->updateForces(t);
+void GameSystem::integrate(double t) {
+	ManageScene();
 
-	for (auto it = _particles.begin(); it != _particles.end();) {
+	for (auto it = _pointers.begin(); it != _pointers.end();) {
 		if ((*it)->isAlive() && insideBoundingBox((*it)->getPosition())) {
-			(*it)->integrate(t); ++it;
+			(*it)->integrate(t);
+			for (auto ot = _buttonList.begin(); ot != _buttonList.end();) {
+				if ((*ot)->insideBoundingBox((*it)->getPosition())) {
+					(*ot)->startFunction();
+					clearButtons();
+					ot = _buttonList.end();
+				}
+				else ++ot;
+			}
+			++it;
 		}
 		else {
-			_force_registry->deleteParticleRegistry(*it);
-			if ((*it)->generatesOnDeath()) {
-				auto aux = _firework_generator->explode(static_cast<Firework*>(*it));
-				_particles.splice(_particles.end(), aux);
-				registerParticlesToForce(aux);
-			}
 			delete(*it);
-			it = _particles.erase(it);
+			it = _pointers.erase(it);
 		}
-	}
-	for (auto it = _particle_generators.begin(); it != _particle_generators.end();) {
-		auto _newParticles = (*it)->generateParticles();
-		registerParticlesToForce(_newParticles);
-		_particles.splice(_particles.end(), _newParticles); ++it;
-	}
-	for (auto it = _rigidBody_generator.begin(); it != _rigidBody_generator.end();) {
-		if ((*it)->canGenerateMoreParticles()) {
-			(*it)->updateTime(t);
-			if ((*it)->hasPassedTimeRequired()) {
-				auto _newParticles = (*it)->generateRigidBodies();
-				registerParticlesToForce(_newParticles);
-				_particles.splice(_particles.end(), _newParticles);
-			}
-		}
-		++it;
-	}*/
 
+	}
 }
-void GameSystem::shootFirework() {
-	_particles.push_back(_firework_generator->shoot());
-}
+
 bool GameSystem::insideBoundingBox(Vector3 pos) {
 	return (pos.x > box.minX && pos.x <= box.maxX) && (pos.y >= box.minY && pos.y <= box.maxY) && (pos.z > box.minZ && pos.z <= box.maxZ);
 }
+
 void GameSystem::keyPress(unsigned char key) {
 	switch (toupper(key))
 	{
-		case ' ':
-		{
-			//_particleSystem->shootFirework(); break;
-			std::cout << GetCamera()->getMousePos().x << " " << GetCamera()->getMousePos().y << std::endl;
-		}
-		case 'T': {
-			_proyectil->shoot(GetCamera()->getDir(), GetCamera()->getTransform().p); break;
-		}
-	default:
-		break;
+		default:break;
 	}
 	
 }
+
 void GameSystem::handleMouse(int button, int state, int x, int y)
 {
 	if (button == 0) {
 		Vector3 mousePos = { GetCamera()->getMousePos().x,GetCamera()->getMousePos().y, 0 };
-		_proyectil->shoot({ mousePos.x/5,mousePos.y/5,-1 }, {0,0,0});
+		_pointers.push_back(_proyectil->shoot({ mousePos.x/5,mousePos.y/5,-1 }, {0,0,0}));
 	}
-	
-}
-Vector3 GameSystem::getRayFromScreenSpace(const Vector3& pos)
-{
-	return { 0,0,0 };
 }
 
 void GameSystem::inicialiceBoundingBox() {
 	box = { -1000, 1000, -10, 1000, -1000, 1000 };
 }
 
-void GameSystem::registerParticlesToForce(std::list<Entity*> p) {
-	for (auto it = _force_generators.begin(); it != _force_generators.end(); ++it) {
-		for (auto ot = p.begin(); ot != p.end(); ++ot) {
-			_force_registry->addRegistry(*it, *ot);
-		}
-	}
-}
-void GameSystem::registerParticleToForce(Entity* p) {
-	for (auto it = _force_generators.begin(); it != _force_generators.end(); ++it) {
-		_force_registry->addRegistry(*it, p);
-	}
-}
-void GameSystem::explode() {
-	auto expl = new ExplotionGenerator(100000, 1000, 20, Vector3(0, 10, 0), 0.5);
-	_force_generators.insert(expl);
-	for (auto it = _particles.begin(); it != _particles.end(); ++it)
-	{
-		_force_registry->addRegistry(expl, *it);
-	}
-}
-void GameSystem::addForceWithTime() {
-	auto aux = new ParticleDragGenerator(2, 0, { -50.0,0.0,0.0 }, Vector3(15, 0.01, 15), 100, Vector3(0, 20, -20), 5);
-	_force_generators.insert(aux);
-	for (auto it = _particles.begin(); it != _particles.end(); ++it)
-	{
-		_force_registry->addRegistry(aux, *it);
+void GameSystem::clearButtons() {
+	for (auto it = _buttonList.begin(); it != _buttonList.end();) {
+		delete(*it);
+		it = _buttonList.erase(it);
 	}
 }
 
 GameSystem::~GameSystem() {
-
-	for (auto it = _particles.begin(); it != _particles.end();) {
+	for (auto it = _pointers.begin(); it != _pointers.end();) {
 		delete(*it);
-		it = _particles.erase(it);
+		it = _pointers.erase(it);
 	}
-	for (auto it = _explosion_generator.begin(); it != _explosion_generator.end();) {
-		delete(*it);
-		it = _explosion_generator.erase(it);
-	}
-	for (auto it = _force_generators.begin(); it != _force_generators.end();) {
-		delete(*it);
-		it = _force_generators.erase(it);
-	}
-	for (auto it = _particle_generators.begin(); it != _particle_generators.end();) {
-		delete(*it);
-		it = _particle_generators.erase(it);
-	}
-	for (auto it = _rigidBody_generator.begin(); it != _rigidBody_generator.end();) {
-		delete(*it);
-		it = _rigidBody_generator.erase(it);
-	}
-
-
-	delete(_firework_generator);
-	delete(_force_registry);
+	clearButtons();
 	delete(_proyectil);
-	delete(_gameStateMachine);
+	delete(_levelManager);
 }

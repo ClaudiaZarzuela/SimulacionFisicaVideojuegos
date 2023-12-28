@@ -31,6 +31,9 @@ std::string title_text = " ";
 std::string level_text = " ";
 int WidthCam;
 int HeightCam;
+int actualMenu;
+int levelIndex;
+bool changeMenu = true;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
