@@ -269,6 +269,7 @@
     <ClCompile Include="LevelSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelParticle.cpp" />
+    <ClCompile Include="Nest.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleDragGenerator.cpp" />
     <ClCompile Include="ParticleForceRegistry.cpp" />
@@ -302,6 +303,7 @@
     <ClInclude Include="InteractuableObject.h" />
     <ClInclude Include="LevelSystem.h" />
     <ClInclude Include="ModelParticle.h" />
+    <ClInclude Include="Nest.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleDragGenerator.h" />
     <ClInclude Include="ParticleForceRegistry.h" />
@@ -309,6 +311,7 @@
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="ParticleWhirlWindGenerator.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SolidoRigido.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
@@ -316,6 +319,9 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

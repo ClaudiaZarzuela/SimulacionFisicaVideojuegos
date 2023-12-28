@@ -17,7 +17,7 @@
 #include "BuoyancyForceGenerator.h"
 #include <set>
 #include "SolidoRigido.h"
-#include "Weapon.h"
+#include "Nest.h"
 
 class LevelSystem
 {
@@ -31,10 +31,12 @@ private:
 	void inicialiceBoundingBox();
 	bool insideBoundingBox(Vector3 pos);
 
+	Nest* _nest = nullptr;
 	PxScene* gScene = nullptr;
 	PxPhysics* gPhysics = nullptr;
 	Vector3 _gravity;
 	std::list<Entity*> _particles;
+	std::list<SolidoRigido*> _objPorNivel;
 	Particle* _particleBouyancy;
 	std::list <ParticleGenerator*> _particle_generators;
 	std::list <ParticleGenerator*> _rigidBody_generator;
@@ -65,8 +67,9 @@ public:
 	void keyPress(unsigned char key) {};
 	void integrate(double t) {};
 	void handleMouse(int button, int state, int x, int y) {};
-	LevelSystem(PxScene* gS, PxPhysics* gP, const Vector3& g = { 0.0f, -10.0f, 0.0f }) {};
+	LevelSystem(PxScene* gS, PxPhysics* gP, const Vector3& g = { 0.0f, -10.0f, 0.0f }):gScene(gS), gPhysics(gP){};
 	~LevelSystem() {};
+	void startLevel1();
 	void shootFirework() {};
 };
 

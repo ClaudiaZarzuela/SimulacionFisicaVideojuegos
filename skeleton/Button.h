@@ -2,6 +2,7 @@
 #include "SolidoRigido.h"
 #include "InteractuableObject.h"
 class GameSystem;
+class LevelSystem;
 extern bool changeMenu;
 extern int actualMenu;
 extern int levelIndex;
@@ -13,13 +14,15 @@ public:
 	};
 private:
 	SolidoRigido* button = nullptr;
+	LevelSystem* _levelSystem = nullptr;
 	Functions function;
 	void startGame();
 	void startLevel(int i);
 public:
-	Button(PxScene* gS, PxPhysics* gP, physx::PxTransform pos, float width, float height, Functions f):InteractuableObject(pos.p, height, width, 1){
+	Button(PxScene* gS, PxPhysics* gP, physx::PxTransform pos, float width, float height, Functions f, LevelSystem* _level):InteractuableObject(pos.p, height, width, 1){
 		button = new SolidoRigido(gS, gP, pos, { width, height, 1 }, { 0.8,0.8,0.8,1 });
 		function = f;
+		_levelSystem = _level;
 	}
 	void startFunction() {
 		switch (function) {

@@ -23,22 +23,22 @@ void GameSystem::showAvailableKeys() {
 void GameSystem::MainMenuInicialice() {
 	std::cout << "MAIN MENU" << std::endl;
 	title_text = "NEST";
-	_buttonList.push_back(new Button(gScene, gPhysics, { 0,0,-100 }, 25, 10, Button::STARTGAME));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 0,0,-80 }, 25, 10, Button::STARTGAME, _levelManager));
 
 }
 
 void GameSystem::LevelMenuInicialice() {
 	std::cout << "LEVELS MENU" << std::endl;
 	title_text = "LEVELS MENU";
-	_buttonList.push_back(new Button(gScene, gPhysics, { -75,15,-100 }, 10, 10, Button::LEVEL_1));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 25,15,-100 }, 10, 10, Button::LEVEL_2));
-	_buttonList.push_back(new Button(gScene, gPhysics, { -25,15,-100 }, 10, 10, Button::LEVEL_1));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 75,15,-100 }, 10, 10, Button::LEVEL_2));
+	_buttonList.push_back(new Button(gScene, gPhysics, { -65,15,-90 }, 10, 10, Button::LEVEL_1, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 20,15,-90 }, 10, 10, Button::LEVEL_2, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { -20,15,-90 }, 10, 10, Button::LEVEL_1, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 65,15,-90 }, 10, 10, Button::LEVEL_2, _levelManager));
 
-	_buttonList.push_back(new Button(gScene, gPhysics, { -75,-20,-100 }, 10, 10, Button::LEVEL_3));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 25,-20,-100 }, 10, 10, Button::LEVEL_4));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 75,-20,-100 }, 10, 10, Button::LEVEL_3));
-	_buttonList.push_back(new Button(gScene, gPhysics, { -25,-20,-100 }, 10, 10, Button::LEVEL_4));
+	_buttonList.push_back(new Button(gScene, gPhysics, { -65,-20,-90 }, 10, 10, Button::LEVEL_3, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 20,-20,-90 }, 10, 10, Button::LEVEL_4, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 65,-20,-90 }, 10, 10, Button::LEVEL_3, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { -20,-20,-90 }, 10, 10, Button::LEVEL_4, _levelManager));
 	
 }
 
