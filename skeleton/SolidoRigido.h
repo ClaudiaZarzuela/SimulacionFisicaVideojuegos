@@ -4,7 +4,7 @@
 using namespace physx;
 class SolidoRigido :public Entity
 {
-private:
+protected:
 	PxScene* gScene = nullptr;
 	PxPhysics* gPhysics = nullptr;
 	PxRigidDynamic* _dynamic = nullptr;

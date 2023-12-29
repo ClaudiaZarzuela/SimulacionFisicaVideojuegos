@@ -1,6 +1,6 @@
 #include "SolidoRigido.h"
 SolidoRigido::SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, Vector3 LinearVel, Vector3 AngularVel, Vector3 scale, double d,float Mass, Vector4 color,float time, bool ismodel):
-	gScene(gS), gPhysics(gP), _linearVel(LinearVel), _angularVel(AngularVel), density(d),Entity() {
+	gScene(gS), gPhysics(gP), _linearVel(LinearVel), _angularVel(AngularVel), density(d),Entity(Pos.p, scale) {
 	_pose = Pos;
 	_scale = scale;
 	_color = color;
@@ -19,7 +19,7 @@ SolidoRigido::SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, V
 	maxTime = time;
 	if(!ismodel) renderItem = new RenderItem(_shape, _dynamic, _color);
 }
-SolidoRigido::SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, Vector3 scale, Vector4 color, bool ismodel):Entity(){
+SolidoRigido::SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, Vector3 scale, Vector4 color, bool ismodel):Entity(Pos.p, scale){
 	gScene = gS;
 	gPhysics = gP;
 	_pose = Pos;

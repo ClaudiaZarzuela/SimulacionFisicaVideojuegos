@@ -18,9 +18,16 @@
 #include <set>
 #include "SolidoRigido.h"
 #include "Nest.h"
-
+#include "Button.h"
+#include "Player.h"
+extern bool changeMenu;
+extern int actualMenu;
 class LevelSystem
 {
+public: 
+	bool active = false;
+	std::list<Entity*> _objPorNivel;
+
 private: 
 	struct BoundingBox {
 		int minX, maxX;
@@ -30,13 +37,18 @@ private:
 	BoundingBox box;
 	void inicialiceBoundingBox();
 	bool insideBoundingBox(Vector3 pos);
+	bool endGame = false;
+	int _timer = 3;
+	double elapsedTime = 0;
 
 	Nest* _nest = nullptr;
+	Entity* _player = nullptr;
+	SolidoRigido* suelo = nullptr;
+	bool explodePlayer = true;
 	PxScene* gScene = nullptr;
 	PxPhysics* gPhysics = nullptr;
 	Vector3 _gravity;
 	std::list<Entity*> _particles;
-	std::list<SolidoRigido*> _objPorNivel;
 	Particle* _particleBouyancy;
 	std::list <ParticleGenerator*> _particle_generators;
 	std::list <ParticleGenerator*> _rigidBody_generator;
@@ -47,29 +59,16 @@ private:
 	BuoyancyForceGenerator* _bouyancyForce = nullptr;
 	GravityForceGenerator* _gravityForce = nullptr;
 
-	void changeK(char key) {};
-	void onParticleDeath(Particle* p) {};
-	void createGenerators() {};
-	void createForceGenerators() {};
-	void createSolidoRigidoGenerators() {};
-	void registerParticlesToForce(std::list<Entity*> p) {};
-	void registerParticleToForce(Entity* p) {};
-	void explode() {};
-	void addForceWithTime() {};
-	void generateSpringDemo() {};
-	void generateBouyancy() {};
-	void activeForce(std::string type) {};
-	void generateSlinky() {};
-	void changeMass(char key) {};
-	void changeVolume(char key) {};
-	void showAvailableKeys() {};
+	void reset();
+	void registerParticlesToForce(std::list<Entity*> p);
+	void registerParticleToForce(Entity* p);
 public:
-	void keyPress(unsigned char key) {};
-	void integrate(double t) {};
-	void handleMouse(int button, int state, int x, int y) {};
-	LevelSystem(PxScene* gS, PxPhysics* gP, const Vector3& g = { 0.0f, -10.0f, 0.0f }):gScene(gS), gPhysics(gP){};
-	~LevelSystem() {};
+	void keyPress(unsigned char key);
+	void integrate(double t);
+	LevelSystem(PxScene* gS, PxPhysics* gP, const Vector3& g = { 0.0f, -10.0f, 0.0f });
+	~LevelSystem();
 	void startLevel1();
-	void shootFirework() {};
+	void startLevel2();
+	void shootFirework();
 };
 

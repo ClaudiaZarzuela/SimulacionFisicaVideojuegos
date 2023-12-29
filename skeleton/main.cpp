@@ -6,6 +6,7 @@
 #include "callbacks.hpp"
 #include <iostream>
 #include "GameSystem.h"
+#include "ParticleSystem.h"
 
 
 using namespace physx;
@@ -26,6 +27,7 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
 GameSystem* _gameSystem = NULL;
+ParticleSystem* _particleSystem = NULL;
 std::string name_text = "Claudia Zarzuela Amor";
 std::string title_text = " ";
 std::string level_text = " ";
@@ -59,6 +61,7 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	_gameSystem = new GameSystem(gScene, gPhysics);
+	_particleSystem = new ParticleSystem(gScene, gPhysics);
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2) {
@@ -76,6 +79,7 @@ void stepPhysics(bool interactive, double t)
 	gScene->fetchResults(true);
 	
 	_gameSystem->integrate(t);
+	_particleSystem->integrate(t);
 }
 
 // Function to clean data
@@ -84,6 +88,7 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 	delete(_gameSystem);
+	delete(_particleSystem);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
@@ -102,6 +107,7 @@ void cleanupPhysics(bool interactive)
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	_gameSystem->keyPress(key);
+	_particleSystem->keyPress(key);
 	PX_UNUSED(camera);
 
 	switch(toupper(key))

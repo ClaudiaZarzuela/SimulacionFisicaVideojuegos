@@ -9,5 +9,9 @@ void Button::startLevel(int i) {
 	actualMenu = Menus::GAMESCENE;
 	changeMenu = true;
 	levelIndex = i;
-	_levelSystem->startLevel1();
+	switch (i) {
+		case 0: _levelSystem->startLevel1(); break;
+		case 1: _levelSystem->startLevel2(); break;
+		default: break;
+	}
 }

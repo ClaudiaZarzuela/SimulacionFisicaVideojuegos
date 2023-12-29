@@ -26,7 +26,7 @@ Weapon::Weapon(Types currentType) {
 }
 
 Particle* Weapon::shoot(Vector3 dir, Vector3 pos) {
-	return new Particle(pos, speedSim * dir, calculateGravity(dir), 0.998, calculateMass(dir), calculateGravity(dir), 50.0f, Vector4(0.2, 0.5, 0.8, 1), false, { 0.1,0.1,0.1 });
+	return new Particle(pos, speedSim * dir, calculateGravity(dir), 0.998, calculateMass(dir), calculateGravity(dir), 5.0f, Vector4(0.2, 0.5, 0.8, 1), false, { 0.1,0.1,0.1 });
 }
 
 Vector3 Weapon::calculateGravity(Vector3 dir) {

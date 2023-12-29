@@ -277,6 +277,7 @@
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="ParticleWhirlWindGenerator.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SolidoRigido.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
@@ -311,6 +312,7 @@
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="ParticleWhirlWindGenerator.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SolidoRigido.h" />
     <ClInclude Include="SpringForceGenerator.h" />

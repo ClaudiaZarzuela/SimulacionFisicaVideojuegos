@@ -4,11 +4,12 @@ ParticleSystem::ParticleSystem(PxScene* gS, PxPhysics* gP, const Vector3& g) {
 	gPhysics = gP;
 	gScene = gS;
 	_gravity = g;
-	showAvailableKeys();
+	//showAvailableKeys();
 	_force_registry = new ParticleForceRegistry();
-	createGenerators();
-	createForceGenerators();
-	createSolidoRigidoGenerators();
+	_firework_generator = new FireworkGenerator();
+	//createGenerators();
+	//createForceGenerators();
+	//createSolidoRigidoGenerators();
 	inicialiceBoundingBox();
 }
 void ParticleSystem::showAvailableKeys() {
@@ -121,20 +122,21 @@ bool ParticleSystem::insideBoundingBox(Vector3 pos) {
 void ParticleSystem::keyPress(unsigned char key) {
 	
 	switch (tolower(key)) {
+	//case ' ': shootFirework(); break;
 	case 'e':
-		explode();
+		//explode();
 		break;
 		/*case 'p':
 		addForceWithTime();
 		break;*/
 	case 'g':
-		activeForce("GRAVITY");
+		//activeForce("GRAVITY");
 		break;
 	/*case 'u': 
 		activeForce("WIND");
 		break;*/
 	case 'h':
-		activeForce("WHIRLWIND");
+		//activeForce("WHIRLWIND");
 		break;
 	/*case 'x':
 		activeForce("EXPLOSION");

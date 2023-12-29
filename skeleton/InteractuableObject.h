@@ -8,6 +8,7 @@ protected:
 	float width;
 	float length;
 
+public:
 	struct BoundingBox {
 		int minX, maxX;
 		int minY, maxY;
@@ -21,17 +22,16 @@ protected:
 		width = w;
 		length = l;
 
-		box.minX = pos.x - width / 2;
-		box.maxX = pos.x + width / 2;
+		box.minX = pos.x - width;
+		box.maxX = pos.x + width;
 
-		box.minY = pos.y - height / 2;
-		box.maxY = pos.y + height / 2;
+		box.minY = pos.y - height;
+		box.maxY = pos.y + height;
 
-		box.minZ = pos.z - length / 2;
-		box.maxZ = pos.z + length / 2;
+		box.minZ = pos.z - length;
+		box.maxZ = pos.z + length;
 			
 	}
-public:
 	bool insideBoundingBox(Vector3 pos);
 };
 

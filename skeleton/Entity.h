@@ -1,7 +1,7 @@
 #pragma once
 #include "RenderUtils.hpp"
-
-class Entity
+#include "InteractuableObject.h"
+class Entity : public InteractuableObject
 {
 public:
 	physx::PxTransform _pose;
@@ -27,7 +27,7 @@ public:
 	virtual Vector3 getPosition() = 0;
 	virtual void setVelocity(Vector3 Vel) = 0;
 	bool isAlive() { return alive; }
-	Entity(){}
+	Entity(Vector3 pos, Vector3 scale):InteractuableObject(pos, scale.y, scale.x, scale.z){}
 	virtual ~Entity(){}
 };
 

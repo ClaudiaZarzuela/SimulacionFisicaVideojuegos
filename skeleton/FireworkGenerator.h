@@ -7,6 +7,7 @@ private:
 public:
 	Firework* getModel(int gen) { return _firework_pool[gen];}
 	Particle* shoot();
+	Particle* shoot(Vector3 pos, bool alive);
 	std::list<Entity*> explode(Firework* p);
 	FireworkGenerator();
 	~FireworkGenerator(){

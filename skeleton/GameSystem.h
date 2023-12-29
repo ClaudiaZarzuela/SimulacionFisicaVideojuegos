@@ -15,17 +15,6 @@ extern int levelIndex;
 class GameSystem
 {
 private:
-	//BOUNDING BOX
-	struct BoundingBox {
-		int minX, maxX;
-		int minY, maxY;
-		int minZ, maxZ;
-	};
-	BoundingBox box;
-	void inicialiceBoundingBox();
-	bool insideBoundingBox(Vector3 pos);
-
-//------------------------------------------------------------------------------
 	//MAIN MENU
 	void MainMenuInicialice();
 
@@ -46,7 +35,9 @@ private:
 
 	Weapon* _proyectil = nullptr;
 	std::list<Entity*> _pointers;
-
+	int _timer = 1;
+	double elapsedTime = 0;
+	bool activePointer = true;
 
 	PxScene* gScene = nullptr;
 	PxPhysics* gPhysics = nullptr;

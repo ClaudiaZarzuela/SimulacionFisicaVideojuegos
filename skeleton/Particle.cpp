@@ -2,7 +2,7 @@
 #include <math.h>
 #include "FireworkGenerator.h"
 #include <iostream>
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time, Vector4 color, bool esMod, Vector3 s, GEOMETRY geometria):Entity() {
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Masa, Vector3 Gravedad, float Time, Vector4 color, bool esMod, Vector3 s, GEOMETRY geometria):Entity(Pos, s) {
 	_myGeometry = geometria;
 	_vel = Vel;
 	_pose = physx::PxTransform(Pos);
@@ -20,7 +20,7 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 A, float Damping, float Mas
 }
 
 
-Particle::Particle(Vector3 Pos, Vector3 Vel, float Damping, float Masa, float Time, bool esMod, Vector4 color, Vector3 s, GEOMETRY geometria):Entity() {
+Particle::Particle(Vector3 Pos, Vector3 Vel, float Damping, float Masa, float Time, bool esMod, Vector4 color, Vector3 s, GEOMETRY geometria):Entity(Pos, s) {
 	_myGeometry = geometria;
 	_vel = Vel;
 	_pose = physx::PxTransform(Pos);
@@ -34,7 +34,7 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, float Damping, float Masa, float Ti
 	_color = color;
 	if (!esModelo) renderItem = new RenderItem(_shape, &_pose, _color);
 }
-Particle::Particle(Vector3 Pos, Vector3 Vel, float Masa, float Time, GEOMETRY geometria, Vector3 s,Vector4 color, bool esMod):Entity() {
+Particle::Particle(Vector3 Pos, Vector3 Vel, float Masa, float Time, GEOMETRY geometria, Vector3 s,Vector4 color, bool esMod):Entity(Pos, s) {
 	_myGeometry = geometria;
 	_vel = Vel;
 	_pose = physx::PxTransform(Pos);
