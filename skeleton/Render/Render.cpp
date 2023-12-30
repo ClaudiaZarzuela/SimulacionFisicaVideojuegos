@@ -292,7 +292,12 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
 	drawText(name_text, 5, 5);
 	drawText(title_text, 250, 450);
-	drawText(level_text, 450, 10);
+	drawText(endWin_text1, 242, 290);
+	drawText(endWin_text2, 187, 250);
+	drawText(endWin_text3, 237, 230);
+	drawText(endLoose_text1, 242, 290);
+	drawText(endLoose_text2, 200, 250);
+	drawText(continue_text, 243, 133);
 
 
 

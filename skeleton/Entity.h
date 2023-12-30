@@ -17,7 +17,8 @@ public:
 	float mass;
 	float _inv_mass;
 	Vector3 _vel;
-
+	std::string typeShape;
+	
 	inline int getVolume() { return _scale.x * _scale.y * _scale.z; }
 	inline int getHeight() { return _scale.y; }
 	virtual void addForce(const Vector3& f) = 0;
@@ -26,8 +27,9 @@ public:
 	virtual void setPosition(Vector3 Pos) = 0;
 	virtual Vector3 getPosition() = 0;
 	virtual void setVelocity(Vector3 Vel) = 0;
+	virtual Entity* changeForm() = 0;
 	bool isAlive() { return alive; }
-	Entity(Vector3 pos, Vector3 scale):InteractuableObject(pos, scale.y, scale.x, scale.z){}
+	Entity(Vector3 pos, Vector3 scale, std::string type = "NORMAL", std::string tShape = "BOX") :InteractuableObject(pos, scale.y, scale.x, scale.z, type) {}
 	virtual ~Entity(){}
 };
 

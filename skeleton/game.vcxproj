@@ -258,6 +258,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="ElasticForceGenerator.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExplotionGenerator.cpp" />
     <ClCompile Include="Firework.cpp" />
@@ -293,6 +294,7 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="ElasticForceGenerator.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExplotionGenerator.h" />
     <ClInclude Include="Firework.h" />

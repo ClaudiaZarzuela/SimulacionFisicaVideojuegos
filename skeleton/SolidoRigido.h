@@ -13,8 +13,8 @@ protected:
 	double density;
 	
 public:
-	SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, Vector3 LinearVel, Vector3 AngularVel, Vector3 scale, double d, float Mass,Vector4 color, float time, bool ismodel = false);
-	SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, Vector3 scale, Vector4 color,  bool ismodel = false);
+	SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, Vector3 LinearVel, Vector3 AngularVel, Vector3 scale, double d, float Mass,Vector4 color, float time, std::string tShape = "BOX", std::string type = "NORMAL", bool ismodel = false);
+	SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, Vector3 scale, Vector4 color, std::string tShape = "BOX", std::string type = "NORMAL",  bool ismodel = false);
 	virtual ~SolidoRigido(){
 		if (renderItem != nullptr) {
 			DeregisterRenderItem(renderItem);
@@ -34,6 +34,7 @@ public:
 	virtual void setVelocity(Vector3 Vel) override { _linearVel = Vel; _dynamic->setLinearVelocity(_linearVel); }
 	virtual void integrate(double t)override;
 	virtual bool generatesOnDeath()override { return false; }
+	virtual SolidoRigido* changeForm()override;
 	virtual Vector3 getPosition() { 
 		if (_dynamic != nullptr) return _dynamic->getGlobalPose().p;
 		else return _static->getGlobalPose().p;

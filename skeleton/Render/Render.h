@@ -49,7 +49,12 @@
 
 extern std::string name_text;
 extern std::string title_text;
-extern std::string level_text;
+extern std::string endWin_text1;
+extern std::string endWin_text2;
+extern std::string endWin_text3;
+extern  std::string endLoose_text1;
+extern  std::string endLoose_text2;
+extern  std::string continue_text;
 
 extern int WidthCam;
 extern int HeightCam;

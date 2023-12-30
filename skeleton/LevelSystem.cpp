@@ -10,28 +10,40 @@ LevelSystem::LevelSystem(PxScene* gS, PxPhysics* gP, const Vector3& g) {
 }
 void LevelSystem::startLevel1() {
 	_force_registry = new ParticleForceRegistry();
-	_gravityForce = new GravityForceGenerator(_gravity);
-	_force_generators.insert(_gravityForce);
+	/*_gravityForce = new GravityForceGenerator(_gravity);
+	_force_generators.insert(_gravityForce);*/
 
-	suelo = new SolidoRigido(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }, { 1,1,1,1 });
+	//suelo = new SolidoRigido(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }, { 1,1,1,1 });
 
-	_player = new Player(gScene, gPhysics, { 0,8,-100 }, { 7, 7, 7 }, 10000, 10000);
-	registerParticleToForce(_player);
+	_player = new Player(gScene, gPhysics, { 0,-12,-100 }, { 7, 7, 7 }, 10000, 10000);
+	//registerParticleToForce(_player);
 
-	_nest = new Nest(gScene, gPhysics, { 0,-40,-100});
+	//_nest = new Nest(gScene, gPhysics, { 0,-40,-100});
+	_nest = new Nest(gScene, gPhysics, { 0,-40,100});
 
-	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-19,-100 }, { 0,0,0 }, { 0,0,0 }, { 7, 20, 7 }, 10000,10000, { 1,0.5,1,1 },-1,false));
-	registerParticlesToForce(_objPorNivel);
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-29,-100 }, { 0,0,0 }, { 0,0,0 }, { 7, 10, 7 }, 10000,10000, { 1,0.5,1,1 },-1,"BOX","NORMAL",false));
+	//registerParticlesToForce(_objPorNivel);
 }
 void LevelSystem::startLevel2() {
 	_force_registry = new ParticleForceRegistry();
-	_gravityForce = new GravityForceGenerator(_gravity);
-	_force_generators.insert(_gravityForce);
+	/*_gravityForce = new GravityForceGenerator(_gravity);
+	_force_generators.insert(_gravityForce);*/
 
-	_nest = new Nest(gScene, gPhysics, { 0,0,-100 });
-	_player = new Player(gScene, gPhysics, { 0,8,-100 }, { 7, 7, 7 }, 10000, 10000);
-	suelo = new SolidoRigido(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }, { 1,1,1,1 });
+	//suelo = new SolidoRigido(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }, { 1,1,1,1 });
+	
+	_player = new Player(gScene, gPhysics, { 0,18,-100 }, {7,7,7}, 1, 1);
+	//registerParticleToForce(_player);
+	
+	_nest = new Nest(gScene, gPhysics, { 0,-40,-100 });
 
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,3,-100 }, { 0,0,0 }, { 0,0,0 }, { 8,8,8 }, 1, 1, { 0,1,1,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-6,-100 }, { 0,0,0 }, { 0,0,0 },  { 17,1,17 }, 1, 1, { 0,0.7,0.7,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 20,-14,-100 }, { 7,7,7 }, 1, 1));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -20,-14,-100 }, { 7,7,7}, 1, 1));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-22,-100 }, { 17,1,17 }, { 0,0.5,0.5,1 }));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }));
+	//registerParticlesToForce(_objPorNivel);
 }
 void LevelSystem::registerParticleToForce(Entity* p) {
 	for (auto it = _force_generators.begin(); it != _force_generators.end(); ++it) {
@@ -77,13 +89,27 @@ void LevelSystem::integrate(double t) {
 			}
 		}
 		if (explodePlayer) {
-			if (_nest->insideBoundingBox(_player->getPosition())) {
-					_particles.push_back(_firework_generator->shoot(_player->getPosition(), true));
+			bool die = false;
+			auto it = _objPorNivel.begin();
+			 while(!die && it != _objPorNivel.end()) {
+				 if ((*it)->_type == "ENEMY" && (*it)->insideBoundingBox(_player->getPosition(), _player->_scale, (*it)->getPosition())) {
+					_particles.push_back(_firework_generator->shoot(_player->getPosition(), false));
 					explodePlayer = false;
 					delete(_player);
 					_player = nullptr;
 					endGame = true;
-					
+					win = false;
+					die = true;
+				}
+				else ++it;
+			}
+			if (!die && _nest->insideBoundingBox(_player->getPosition())) {
+					_particles.push_back(_firework_generator->shoot(_player->getPosition()));
+					explodePlayer = false;
+					delete(_player);
+					_player = nullptr;
+					endGame = true;
+					win = true;
 			}
 		}
 
@@ -132,17 +158,40 @@ void LevelSystem::reset() {
 	_nest = nullptr;
 	suelo = nullptr;
 	_force_registry = nullptr;
-	actualMenu = 1;
+	actualMenu = 3;
 	changeMenu = true;
 	explodePlayer = true;
 }
 void LevelSystem::keyPress(unsigned char key) {
 	if (active) {
 		switch (tolower(key)) {
-			default: break;
+		case ' ': changeFormPlayer();break;
+		default: break;
 		}
 	}
 	
+}
+
+void LevelSystem::changeFormEnemy(Entity* obj) {
+	bool found = false;
+	auto it = _objPorNivel.begin();
+	while (!found && it != _objPorNivel.end()) {
+		if ((*it) == obj) {
+			Entity* aux = obj->changeForm();
+			delete(*it);
+			it = _objPorNivel.erase(it);
+			_objPorNivel.push_back(aux);
+			found = true;
+		}
+		else ++it;
+	}
+}
+
+	
+void LevelSystem::changeFormPlayer() {
+	Entity* aux = _player->changeForm();
+	delete(_player);
+	_player = aux;
 }
 void LevelSystem::inicialiceBoundingBox() {
 	box = { -1000, 1000, -1000, 1000, -1000, 1000 };

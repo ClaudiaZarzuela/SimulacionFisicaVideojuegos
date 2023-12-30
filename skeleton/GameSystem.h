@@ -1,6 +1,7 @@
 #pragma once
 #include "Particle.h"
 #include <list>
+#include <string>
 #include "Weapon.h"
 #include "Button.h"
 #include "LevelSystem.h"
@@ -12,6 +13,13 @@ using namespace physx;
 extern bool changeMenu;
 extern int actualMenu;
 extern int levelIndex;
+extern std::string endWin_text1;
+extern std::string endWin_text2;
+extern std::string endWin_text3;
+extern  std::string endLoose_text1;
+extern  std::string endLoose_text2;
+extern  std::string continue_text;
+extern bool win;
 class GameSystem
 {
 private:

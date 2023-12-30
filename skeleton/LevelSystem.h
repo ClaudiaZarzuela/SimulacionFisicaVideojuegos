@@ -20,13 +20,16 @@
 #include "Nest.h"
 #include "Button.h"
 #include "Player.h"
+#include "Enemy.h"
 extern bool changeMenu;
 extern int actualMenu;
+extern bool win;
 class LevelSystem
 {
 public: 
 	bool active = false;
 	std::list<Entity*> _objPorNivel;
+	bool endGame = false;
 
 private: 
 	struct BoundingBox {
@@ -37,7 +40,6 @@ private:
 	BoundingBox box;
 	void inicialiceBoundingBox();
 	bool insideBoundingBox(Vector3 pos);
-	bool endGame = false;
 	int _timer = 3;
 	double elapsedTime = 0;
 
@@ -63,6 +65,8 @@ private:
 	void registerParticlesToForce(std::list<Entity*> p);
 	void registerParticleToForce(Entity* p);
 public:
+	void changeFormEnemy(Entity* obj);
+	void changeFormPlayer();
 	void keyPress(unsigned char key);
 	void integrate(double t);
 	LevelSystem(PxScene* gS, PxPhysics* gP, const Vector3& g = { 0.0f, -10.0f, 0.0f });

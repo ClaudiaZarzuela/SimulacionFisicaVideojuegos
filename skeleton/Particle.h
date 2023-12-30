@@ -32,6 +32,7 @@ public:
 #pragma endregion
 
 #pragma region METODOS
+	virtual Entity* changeForm()override { return nullptr; };
 	virtual void integrate(double t)override;
 	virtual Particle* clone() const;
 	virtual void setPosition(Vector3 p)override { _pose = physx::PxTransform(p); }

@@ -12,15 +12,15 @@ class Button : public InteractuableObject
 {
 public:
 	enum Functions {
-		STARTGAME = 0, LEVEL_1 = 1, LEVEL_2 = 2, LEVEL_3 = 3, LEVEL_4 = 4, LEVEL_5 = 5, LEVEL_6 = 6, LEVEL_7 = 7, LEVEL_8 = 8,
+		STARTGAME = 0, LEVEL_1 = 1, LEVEL_2 = 2, LEVEL_3 = 3, LEVEL_4 = 4, LEVEL_5 = 5, LEVEL_6 = 6, LEVEL_7 = 7, LEVEL_8 = 8, DEFAULT = 9,
 	};
+	Functions function;
 private:
 	PxScene* gScene = nullptr;
 	PxPhysics* gPhysics = nullptr;
 	std::list<SolidoRigido*> _letters;
 	SolidoRigido* obj = nullptr;
 	LevelSystem* _levelSystem = nullptr;
-	Functions function;
 	void startGame();
 	void startLevel(int i);
 
@@ -75,15 +75,16 @@ private:
 				_letters.push_back(new SolidoRigido(gScene, gPhysics, { 66,-20,-85 }, { 1, 6, 0.1 }, { 0,0,0.5,1 }));
 				_letters.push_back(new SolidoRigido(gScene, gPhysics, { 58,-20,-85 }, { 1, 6, 0.1 }, { 0,0,0.5,1 }));
 				break;
+			case DEFAULT:break;
 		
 		default: break;
 		}
 	}
 public:
-	Button(PxScene* gS, PxPhysics* gP, physx::PxTransform pos, float width, float height, Functions f, LevelSystem* _level):InteractuableObject(pos.p, height, width, 1){
+	Button(PxScene* gS, PxPhysics* gP, physx::PxTransform pos, float width, float height, Functions f, LevelSystem* _level, Vector4 _color = { 0.8,0.8,0.8,1 }):InteractuableObject(pos.p, height, width, 1){
 		gScene = gS;
 		gPhysics = gP;
-		obj = new SolidoRigido(gS, gP, pos, { width, height, 0.1 }, { 0.8,0.8,0.8,1 });
+		obj = new SolidoRigido(gS, gP, pos, { width, height, 0.1 }, _color);
 		function = f;
 		_levelSystem = _level;
 		generateLetters();
@@ -99,6 +100,7 @@ public:
 			case LEVEL_2: startLevel(1); break;
 			case LEVEL_3: startLevel(2); break;
 			case LEVEL_4: startLevel(3); break;
+			case DEFAULT:break;
 			default: break;
 		}
 	}
@@ -108,14 +110,6 @@ public:
 			delete(*it);
 			it = _letters.erase(it);
 		}
-	}
-
-	void onButtonClicked() {
-		for (auto it = _letters.begin(); it != _letters.end();) {
-			(*it)->_color = { 1,0,1,1 };
-			++it;
-		}
-
 	}
 	
 };

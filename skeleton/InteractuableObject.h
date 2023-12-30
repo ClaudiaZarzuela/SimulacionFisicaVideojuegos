@@ -7,20 +7,20 @@ protected:
 	float height;
 	float width;
 	float length;
-
-public:
 	struct BoundingBox {
 		int minX, maxX;
 		int minY, maxY;
 		int minZ, maxZ;
 	};
 	BoundingBox box;
-
-	InteractuableObject(Vector3 pos, float h, float w, float l) {
+public:
+	std::string _type;
+	InteractuableObject(Vector3 pos, float h, float w, float l, std::string t = "NORMAL") {
 		position = pos;
 		height = h;
 		width = w;
 		length = l;
+		_type = t;
 
 		box.minX = pos.x - width;
 		box.maxX = pos.x + width;
@@ -30,8 +30,8 @@ public:
 
 		box.minZ = pos.z - length;
 		box.maxZ = pos.z + length;
-			
 	}
+	bool insideBoundingBox(Vector3 posPointer, Vector3 _otherScale, Vector3 _myPos);
 	bool insideBoundingBox(Vector3 pos);
 };
 

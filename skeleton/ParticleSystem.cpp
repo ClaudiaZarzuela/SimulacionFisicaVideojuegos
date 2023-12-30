@@ -8,7 +8,7 @@ ParticleSystem::ParticleSystem(PxScene* gS, PxPhysics* gP, const Vector3& g) {
 	_force_registry = new ParticleForceRegistry();
 	_firework_generator = new FireworkGenerator();
 	//createGenerators();
-	//createForceGenerators();
+	createForceGenerators();
 	//createSolidoRigidoGenerators();
 	inicialiceBoundingBox();
 }
@@ -49,18 +49,18 @@ void ParticleSystem::createSolidoRigidoGenerators() {
 }
 void ParticleSystem::createForceGenerators() {
 #pragma region Practica 3
-	_gravityForce = new GravityForceGenerator(_gravity);
-	_force_generators.insert(_gravityForce);
+	//_gravityForce = new GravityForceGenerator(_gravity);
+	//_force_generators.insert(_gravityForce);
 	//_force_generators.insert(new ParticleDragGenerator(2, 0, { 25,0.0,0.0 }, Vector3(10, 0.01, 10), 100, Vector3(0, 20, -30)));
-	_force_generators.insert(new ParticleWhirlWindGenerator(Vector3(100, -10, 0), Vector3(50, 0.01, 50),500, 2));
+	//_force_generators.insert(new ParticleWhirlWindGenerator(Vector3(100, -10, 0), Vector3(50, 0.01, 50),500, 2));
 #pragma endregion
 
 #pragma region Practica 4
-	//_gravityForce = new GravityForceGenerator(_gravity);
-	//_force_generators.insert(_gravityForce);
-	//generateSpringDemo();
-	//generateSlinky();
-	//generateBouyancy();
+	_gravityForce = new GravityForceGenerator(_gravity);
+	_force_generators.insert(_gravityForce);
+	generateSpringDemo();
+	generateSlinky();
+	generateBouyancy();
 #pragma endregion
 
 #pragma region Solido Rigido
@@ -177,7 +177,7 @@ void ParticleSystem::activeForce(std::string type) {
 	}
 }
 void ParticleSystem::inicialiceBoundingBox() {
-	box = { -1000, 1000, -10, 1000, -1000, 1000 };
+	box = { -1000, 1000, -100, 1000, -1000, 1000 };
 }
 void ParticleSystem::registerParticlesToForce(std::list<Entity*> p) {
 	for (auto it = _force_generators.begin(); it != _force_generators.end(); ++it) {

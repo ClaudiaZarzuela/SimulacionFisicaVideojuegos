@@ -8,7 +8,6 @@
 #include "GameSystem.h"
 #include "ParticleSystem.h"
 
-
 using namespace physx;
 
 PxDefaultAllocator		gAllocator;
@@ -30,12 +29,18 @@ GameSystem* _gameSystem = NULL;
 ParticleSystem* _particleSystem = NULL;
 std::string name_text = "Claudia Zarzuela Amor";
 std::string title_text = " ";
-std::string level_text = " ";
+std::string endWin_text1 = " ";
+std::string endWin_text2 = " ";
+std::string endWin_text3 = " ";
+std::string endLoose_text1 = " ";
+std::string endLoose_text2 = " ";
+std::string continue_text = " ";
 int WidthCam;
 int HeightCam;
 int actualMenu;
 int levelIndex;
 bool changeMenu = true;
+bool win = true;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -53,15 +58,14 @@ void initPhysics(bool interactive)
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
-	sceneDesc.gravity = PxVec3(0.0f, 0.0f, 0.0f);
+	sceneDesc.gravity = PxVec3(0.0f, -10.0f, 0.0f);
 	gDispatcher = PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = gDispatcher;
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-
 	_gameSystem = new GameSystem(gScene, gPhysics);
-	_particleSystem = new ParticleSystem(gScene, gPhysics);
+	//_particleSystem = new ParticleSystem(gScene, gPhysics);
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2) {
@@ -79,7 +83,7 @@ void stepPhysics(bool interactive, double t)
 	gScene->fetchResults(true);
 	
 	_gameSystem->integrate(t);
-	_particleSystem->integrate(t);
+	//_particleSystem->integrate(t);
 }
 
 // Function to clean data
@@ -88,7 +92,7 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 	delete(_gameSystem);
-	delete(_particleSystem);
+	//delete(_particleSystem);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
@@ -107,7 +111,7 @@ void cleanupPhysics(bool interactive)
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	_gameSystem->keyPress(key);
-	_particleSystem->keyPress(key);
+	//_particleSystem->keyPress(key);
 	PX_UNUSED(camera);
 
 	switch(toupper(key))
