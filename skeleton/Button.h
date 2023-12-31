@@ -12,7 +12,7 @@ class Button : public InteractuableObject
 {
 public:
 	enum Functions {
-		STARTGAME = 0, LEVEL_1 = 1, LEVEL_2 = 2, LEVEL_3 = 3, LEVEL_4 = 4, LEVEL_5 = 5, LEVEL_6 = 6, LEVEL_7 = 7, LEVEL_8 = 8, DEFAULT = 9,
+		STARTGAME = 0, LEVEL_1 = 1, LEVEL_2 = 2, LEVEL_3 = 3, LEVEL_4 = 4, LEVEL_5 = 5, LEVEL_6 = 6, LEVEL_7 = 7, LEVEL_8 = 8, DEFAULT = 9, RESTARTGAME = 10, BACK = 11, INSTRUCTIONS = 12
 	};
 	Functions function;
 private:
@@ -23,11 +23,33 @@ private:
 	LevelSystem* _levelSystem = nullptr;
 	void startGame();
 	void startLevel(int i);
+	void instructions();
 
 	void generateLetters() {
 		switch (function) {
+			case BACK: 
+			_letters.push_back(new SolidoRigido(gScene, gPhysics, { 68.25,37.5,-75 }, { 0.5, 2, 0.1 }, { 0,0,0.5,1 }));
+			_letters.push_back(new SolidoRigido(gScene, gPhysics, { 70.25,37.5,-75 }, { 0.5, 2, 0.1 }, { 0,0,0.5,1 }));
+
+			break;
 			case STARTGAME: 
-			
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { -15,7,-75 }, { 4, 1, 0.1 }, { 0,0,0.5,1 }));
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { -15,1,-75 }, { 3, 1, 0.1 }, { 0,0,0.5,1 }));
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { -18,0,-75 }, { 1, 6, 0.1 }, { 0,0,0.5,1 }));
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { -9,2.95,-55 }, { 1, 2.91, 0.1 }, { 0,0,0.5,1 }));
+				
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { -7,1,-75 }, { 1, 7, 0.1 }, { 0,0,0.5,1 }));
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { -5,-5,-75 }, { 2.5, 1, 0.1 }, { 0,0,0.5,1 }));
+				
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { 4,7,-75 }, { 3, 1, 0.1 }, { 0,0,0.5,1 }));
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { 4,1,-75 }, { 2.5, 1, 0.1 }, { 0,0,0.5,1 }));
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { 2,0,-75 }, { 1, 6, 0.1 }, { 0,0,0.5,1 }));
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { 6,0,-75 }, { 1, 6, 0.1 }, { 0,0,0.5,1 }));
+
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { 14,-2,-75 }, { 1, 4, 0.1 }, { 0,0,0.5,1 }));
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { 14,2,-75 }, { 4, 1, 0.1 }, { 0,0,0.5,1 }));
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { 17,5,-75 }, { 1, 3, 0.1 }, { 0,0,0.5,1 }));
+				_letters.push_back(new SolidoRigido(gScene, gPhysics, { 11,5,-75 }, { 1, 3, 0.1 }, { 0,0,0.5,1 }));
 				break;
 			case LEVEL_1: 
 				_letters.push_back(new SolidoRigido(gScene, gPhysics, { -61.5,14,-85 }, { 1, 6, 0.1 }, { 0,0,0.5,1 }));
@@ -76,6 +98,7 @@ private:
 				_letters.push_back(new SolidoRigido(gScene, gPhysics, { 58,-20,-85 }, { 1, 6, 0.1 }, { 0,0,0.5,1 }));
 				break;
 			case DEFAULT:break;
+			case RESTARTGAME:break;
 		
 		default: break;
 		}
@@ -93,17 +116,7 @@ public:
 	Button(PxScene* gS, PxPhysics* gP, physx::PxTransform pos, SolidoRigido* s) :InteractuableObject(pos.p, s->_scale.x, s->_scale.y, s->_scale.z) {
 		obj = s;
 	}
-	void startFunction() {
-		switch (function) {
-		case STARTGAME: startGame(); break;
-			case LEVEL_1: startLevel(0); break;
-			case LEVEL_2: startLevel(1); break;
-			case LEVEL_3: startLevel(2); break;
-			case LEVEL_4: startLevel(3); break;
-			case DEFAULT:break;
-			default: break;
-		}
-	}
+	void startFunction();
 	virtual ~Button() {
 		if(obj != nullptr) delete(obj);
 		for (auto it = _letters.begin(); it != _letters.end();) {

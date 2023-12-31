@@ -22,18 +22,15 @@ void GameSystem::showAvailableKeys() {
 
 void GameSystem::MainMenuInicialice() {
 	_levelManager->active = false;
-	std::cout << "MAIN MENU" << std::endl;
-	title_text = "NEST";
-	_buttonList.push_back(new Button(gScene, gPhysics, { 0,0,-80 }, 25, 10, Button::STARTGAME, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 0,1,-80 }, 25, 10, Button::STARTGAME, _levelManager));
 
 }
 
 void GameSystem::LevelMenuInicialice() {
 	_levelManager->active = false;
-	std::cout << "LEVELS MENU" << std::endl;
-	title_text = "LEVELS MENU";
 	endWin_text1 = " ";  endWin_text2 = " "; endWin_text3 = " ";
 	endLoose_text1 = " "; endLoose_text2 = " "; continue_text = " ";
+	instructions_1 = " "; instructions_2 = " "; instructions_3 = " "; instructions_4 = " "; instructions_5 = " "; instructions_6 = " "; instructions_7 = " ";
 	_buttonList.push_back(new Button(gScene, gPhysics, { -65,15,-90 }, 10, 10, Button::LEVEL_1, _levelManager));
 	_buttonList.push_back(new Button(gScene, gPhysics, { -20,15,-90 }, 10, 10, Button::LEVEL_2, _levelManager));
 	_buttonList.push_back(new Button(gScene, gPhysics, { 20,15,-90 }, 10, 10, Button::LEVEL_3, _levelManager));
@@ -46,14 +43,24 @@ void GameSystem::LevelMenuInicialice() {
 }
 
 void GameSystem::GameSceneInicialice() {
-	std::cout << "GAME SCENE" << std::endl;
-	title_text = " ";
 	_levelManager->active = true;
+	_buttonList.push_back(new Button(gScene, gPhysics, { 83,45,-90 }, 4, 4, Button::BACK, _levelManager));
+}
+
+void GameSystem::Instructions() {
+	instructions_1 = "NEST";
+	instructions_2 = "AYUDA AL PAJARITO A LLEGAR A SU NIDO"; 
+	instructions_3 = "QUE EL PAJARITO NO TOQUE LOS CUBOS DE HIELO AZULES O SE CONGELARÁ!"; 
+	instructions_4 = "NO DEJES QUE SE CAIGA AL SUELO, AÚN NO SABE VOLAR!"; 
+	instructions_5 = "HAZ CLICK EN LOS OBSTACULOS PARA QUITARLOS";
+	instructions_6 = "HAZ CLICK EN EL PAJARITO O LOS CUBOS DE HIELO PARA CAMBIAR SU FORMA";
+	instructions_7 = "BUENA SUERTE!";
+
+	_buttonList.push_back(new Button(gScene, gPhysics, { 0,-2,-80 }, 35, 12, Button::INSTRUCTIONS, _levelManager));
 }
 
 void GameSystem::EndSceneInicialice() {
 	_levelManager->active = false;
-	std::cout << "END MENU" << std::endl;
 	endWin_text3 = "Good luck :)";
 	continue_text = "CONTINUE";
 	if (win) {
@@ -65,7 +72,7 @@ void GameSystem::EndSceneInicialice() {
 		endLoose_text2 = "Don't give up yet, just try again!";
 	}
 	_buttonList.push_back(new Button(gScene, gPhysics, { 0,0,-80 }, 25, 10, Button::DEFAULT, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 0,-20,-75 }, 10, 2, Button::STARTGAME, _levelManager, { 0.5,0,0.5,1 }));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 0,-20,-75 }, 10, 2, Button::RESTARTGAME, _levelManager, { 0.5,0,0.5,1 }));
 
 }
 
@@ -74,6 +81,8 @@ void GameSystem::ManageScene() {
 		switch (actualMenu)
 		{
 		case MAINMENU: MainMenuInicialice();
+			break;
+		case INSTRUCTIONS: Instructions();
 			break;
 		case LEVELMENU:LevelMenuInicialice();
 			break;
@@ -119,19 +128,20 @@ void GameSystem::integrate(double t) {
 					while(alive && ot != _levelManager->_objPorNivel.end()){
 
 						if ((*ot)->insideBoundingBox((*it)->getPosition(), (*it)->_scale, (*ot)->getPosition())) {
-							if ((*ot)->_type != "ENEMY") {
+							if ((*ot)->_type != "ENEMY" && (*ot)->_type != "ENEMYFLOOR") {
 								delete(*ot);
 								ot = _levelManager->_objPorNivel.erase(ot);
 								delete(*it);
 								it = _pointers.erase(it);
 								alive = false;
 							}
-							else {
+							else if ((*ot)->_type == "ENEMY") {
 								_levelManager->changeFormEnemy((*ot));
 								delete(*it);
 								it = _pointers.erase(it);
 								alive = false;
 							}
+							else ++ot;
 						}
 						else ++ot;
 					}

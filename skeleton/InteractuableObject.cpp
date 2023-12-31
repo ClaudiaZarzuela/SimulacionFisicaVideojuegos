@@ -1,6 +1,6 @@
 #include "InteractuableObject.h"
 bool InteractuableObject::insideBoundingBox(Vector3 posPointer, Vector3 _otherScale, Vector3 _myPos) {
-	if(_type == "ENEMY")
+	if(_type == "ENEMY" || _type == "ENEMYFLOOR")
 		return (posPointer.x + _otherScale.x >= _myPos.x - width -1 && posPointer.x - _otherScale.x <= _myPos.x + width +1) &&
 		(posPointer.y + _otherScale.y >= _myPos.y - height-1 && posPointer.y - _otherScale.y <= _myPos.y + height+1) &&
 		(posPointer.z + _otherScale.z >= _myPos.z - length-1 && posPointer.z - _otherScale.z <= _myPos.z + length+1);

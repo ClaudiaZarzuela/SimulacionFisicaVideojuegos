@@ -8,43 +8,41 @@ LevelSystem::LevelSystem(PxScene* gS, PxPhysics* gP, const Vector3& g) {
 	_firework_generator = new FireworkGenerator();
 
 }
-void LevelSystem::startLevel1() {
+void LevelSystem::addForces() {
 	_force_registry = new ParticleForceRegistry();
-	/*_gravityForce = new GravityForceGenerator(_gravity);
-	_force_generators.insert(_gravityForce);*/
+	_gravityForce = new GravityForceGenerator(_gravity);
+	_force_generators.insert(_gravityForce);
 
-	//suelo = new SolidoRigido(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }, { 1,1,1,1 });
+}
+void LevelSystem::startLevel1() {
+	addForces();
+	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -120), Vector3(150, 70, -40), Vector3(0.1, 0.1, 0.1), Vector3(0.1, 0.1, 0.1)));
 
 	_player = new Player(gScene, gPhysics, { 0,-12,-100 }, { 7, 7, 7 }, 10000, 10000);
-	//registerParticleToForce(_player);
 
-	//_nest = new Nest(gScene, gPhysics, { 0,-40,-100});
-	_nest = new Nest(gScene, gPhysics, { 0,-40,100});
+	_nest = new Nest(gScene, gPhysics, { 0,-40,-100});
 
 	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }));
 	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-29,-100 }, { 0,0,0 }, { 0,0,0 }, { 7, 10, 7 }, 10000,10000, { 1,0.5,1,1 },-1,"BOX","NORMAL",false));
-	//registerParticlesToForce(_objPorNivel);
 }
-void LevelSystem::startLevel2() {
-	_force_registry = new ParticleForceRegistry();
-	/*_gravityForce = new GravityForceGenerator(_gravity);
-	_force_generators.insert(_gravityForce);*/
 
-	//suelo = new SolidoRigido(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }, { 1,1,1,1 });
-	
+void LevelSystem::startLevel2() {
+	addForces();
+	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -120), Vector3(150, 70, -40), Vector3(0.1, -60, 0.1), Vector3(0.1, -50, 0.1),nullptr, nullptr, 0));
+	_force_generators.insert(new ParticleDragGenerator(2, 0, { 0,-47,-80 }, { 150, 0.1, 40 }, 120, Vector3(60, -80, 0)));
+
 	_player = new Player(gScene, gPhysics, { 0,18,-100 }, {7,7,7}, 1, 1);
-	//registerParticleToForce(_player);
 	
 	_nest = new Nest(gScene, gPhysics, { 0,-40,-100 });
 
 	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,3,-100 }, { 0,0,0 }, { 0,0,0 }, { 8,8,8 }, 1, 1, { 0,1,1,1 }, -1, "BOX", "NORMAL", false));
-	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-6,-100 }, { 0,0,0 }, { 0,0,0 },  { 17,1,17 }, 1, 1, { 0,0.7,0.7,1 }, -1, "BOX", "NORMAL", false));
-	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 20,-14,-100 }, { 7,7,7 }, 1, 1));
-	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -20,-14,-100 }, { 7,7,7}, 1, 1));
-	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-22,-100 }, { 17,1,17 }, { 0,0.5,0.5,1 }));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-8,-100 }, { 0,0,0 }, { 0,0,0 },  { 17,3,17 }, 1,1 , { 0,0.7,0.7,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 20,-18,-100 }, { 7,7,7 }, 1, 1));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -20,-18,-100 }, { 7,7,7}, 1, 1));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-28,-100 }, { 17,3,17 }, { 0,0.5,0.5,1 }));
 	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }));
-	//registerParticlesToForce(_objPorNivel);
 }
+
 void LevelSystem::registerParticleToForce(Entity* p) {
 	for (auto it = _force_generators.begin(); it != _force_generators.end(); ++it) {
 		_force_registry->addRegistry(*it, p);
@@ -60,6 +58,7 @@ void LevelSystem::registerParticlesToForce(std::list<Entity*> p) {
 void LevelSystem::shootFirework() {
 	_particles.push_back(_firework_generator->shoot());
 }
+
 void LevelSystem::integrate(double t) {
 	if (active) {
 		for (auto it = _force_generators.begin(); it != _force_generators.end();) {
@@ -72,6 +71,13 @@ void LevelSystem::integrate(double t) {
 		}
 
 		_force_registry->updateForces(t);
+
+		for (auto it = _particle_generators.begin(); it != _particle_generators.end();) {
+			(*it)->updateTime(t);
+			auto _newParticles = (*it)->generateParticles();
+			registerParticlesToForce(_newParticles);
+			_particles.splice(_particles.end(), _newParticles); ++it;
+		}
 
 		for (auto it = _particles.begin(); it != _particles.end();) {
 			if ((*it)->isAlive()) {
@@ -92,28 +98,21 @@ void LevelSystem::integrate(double t) {
 			bool die = false;
 			auto it = _objPorNivel.begin();
 			 while(!die && it != _objPorNivel.end()) {
-				 if ((*it)->_type == "ENEMY" && (*it)->insideBoundingBox(_player->getPosition(), _player->_scale, (*it)->getPosition())) {
+				 if (((*it)->_type == "ENEMY" || (*it)->_type == "ENEMYFLOOR") && (*it)->insideBoundingBox(_player->getPosition(), _player->_scale, (*it)->getPosition())) {
 					_particles.push_back(_firework_generator->shoot(_player->getPosition(), false));
-					explodePlayer = false;
-					delete(_player);
-					_player = nullptr;
-					endGame = true;
-					win = false;
+					playerDies(false);
 					die = true;
 				}
 				else ++it;
 			}
 			if (!die && _nest->insideBoundingBox(_player->getPosition())) {
 					_particles.push_back(_firework_generator->shoot(_player->getPosition()));
-					explodePlayer = false;
-					delete(_player);
-					_player = nullptr;
-					endGame = true;
-					win = true;
+					playerDies(true);
 			}
 		}
 
 	}
+
 	if (endGame) {
 		elapsedTime += t;
 		if (elapsedTime >= _timer) {
@@ -126,6 +125,26 @@ void LevelSystem::integrate(double t) {
 
 }
 
+void LevelSystem::explode() {
+	auto expl = new ExplotionGenerator(1000000, 1000, 20, {0,-40,-100}, 0.5);
+	_force_generators.insert(expl);
+	for (auto it = _particles.begin(); it != _particles.end(); ++it)
+	{
+		_force_registry->addRegistry(expl, *it);
+	}
+	for (auto it = _objPorNivel.begin(); it != _objPorNivel.end(); ++it)
+	{
+		_force_registry->addRegistry(expl, *it);
+	}
+}
+void LevelSystem::playerDies(bool _win) {
+	explodePlayer = false;
+	delete(_player);
+	_player = nullptr;
+	endGame = true;
+	win = _win;
+	exp = true;
+}
 void LevelSystem::reset() {
 	for (auto it = _particles.begin(); it != _particles.end();) {
 		delete(*it);
@@ -143,24 +162,23 @@ void LevelSystem::reset() {
 		delete(*it);
 		it = _particle_generators.erase(it);
 	}
-	for (auto it = _rigidBody_generator.begin(); it != _rigidBody_generator.end();) {
-		delete(*it);
-		it = _rigidBody_generator.erase(it);
-	}
 	for (auto it = _objPorNivel.begin(); it != _objPorNivel.end();) {
 		delete(*it);
 		it = _objPorNivel.erase(it);
 	}
 	delete(_nest);
 	delete(_force_registry);
-	delete(suelo);
+	_force_registry = nullptr;
 
 	_nest = nullptr;
-	suelo = nullptr;
-	_force_registry = nullptr;
 	actualMenu = 3;
 	changeMenu = true;
 	explodePlayer = true;
+}
+void LevelSystem::back() {
+	reset();
+	if (_player != nullptr)delete(_player);
+	_player = nullptr;
 }
 void LevelSystem::keyPress(unsigned char key) {
 	if (active) {
@@ -186,19 +204,20 @@ void LevelSystem::changeFormEnemy(Entity* obj) {
 		else ++it;
 	}
 }
-
 	
 void LevelSystem::changeFormPlayer() {
 	Entity* aux = _player->changeForm();
 	delete(_player);
 	_player = aux;
 }
+
 void LevelSystem::inicialiceBoundingBox() {
 	box = { -1000, 1000, -1000, 1000, -1000, 1000 };
 }
 bool LevelSystem::insideBoundingBox(Vector3 pos) {
 	return (pos.x > box.minX && pos.x <= box.maxX) && (pos.y >= box.minY && pos.y <= box.maxY) && (pos.z > box.minZ && pos.z <= box.maxZ);
 }
+
 LevelSystem::~LevelSystem() {
 	for (auto it = _particles.begin(); it != _particles.end();) {
 		delete(*it);
@@ -216,10 +235,6 @@ LevelSystem::~LevelSystem() {
 		delete(*it);
 		it = _particle_generators.erase(it);
 	}
-	for (auto it = _rigidBody_generator.begin(); it != _rigidBody_generator.end();) {
-		delete(*it);
-		it = _rigidBody_generator.erase(it);
-	}
 	for (auto it = _objPorNivel.begin(); it != _objPorNivel.end();) {
 		delete(*it);
 		it = _objPorNivel.erase(it);
@@ -229,5 +244,4 @@ LevelSystem::~LevelSystem() {
 	if(_force_registry != nullptr) delete(_force_registry);
 	if (_nest != nullptr)delete(_nest);
 	if (_player != nullptr)delete(_player);
-	if (suelo != nullptr)delete(suelo);
 }

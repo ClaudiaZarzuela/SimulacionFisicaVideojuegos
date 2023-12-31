@@ -42,29 +42,29 @@ private:
 	bool insideBoundingBox(Vector3 pos);
 	int _timer = 3;
 	double elapsedTime = 0;
-
+	bool exp = true;
 	Nest* _nest = nullptr;
 	Entity* _player = nullptr;
-	SolidoRigido* suelo = nullptr;
 	bool explodePlayer = true;
 	PxScene* gScene = nullptr;
 	PxPhysics* gPhysics = nullptr;
 	Vector3 _gravity;
 	std::list<Entity*> _particles;
-	Particle* _particleBouyancy;
 	std::list <ParticleGenerator*> _particle_generators;
-	std::list <ParticleGenerator*> _rigidBody_generator;
 	std::set<ForceGenerator*> _force_generators;
 	std::list <ExplotionGenerator*> _explosion_generator;
 	FireworkGenerator* _firework_generator = nullptr;
 	ParticleForceRegistry* _force_registry = nullptr;
-	BuoyancyForceGenerator* _bouyancyForce = nullptr;
 	GravityForceGenerator* _gravityForce = nullptr;
 
-	void reset();
 	void registerParticlesToForce(std::list<Entity*> p);
 	void registerParticleToForce(Entity* p);
+	void playerDies(bool _win);
+	void addForces();
+	void explode();
+	void reset();
 public:
+	void back();
 	void changeFormEnemy(Entity* obj);
 	void changeFormPlayer();
 	void keyPress(unsigned char key);

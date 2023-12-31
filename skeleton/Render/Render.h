@@ -48,13 +48,20 @@
 #include <string>
 
 extern std::string name_text;
-extern std::string title_text;
 extern std::string endWin_text1;
+extern std::string instructions;
 extern std::string endWin_text2;
 extern std::string endWin_text3;
 extern  std::string endLoose_text1;
 extern  std::string endLoose_text2;
 extern  std::string continue_text;
+extern std::string instructions_1;
+extern std::string instructions_2;
+extern std::string instructions_3;
+extern std::string instructions_4;
+extern std::string instructions_5;
+extern std::string instructions_6;
+extern std::string instructions_7;
 
 extern int WidthCam;
 extern int HeightCam;

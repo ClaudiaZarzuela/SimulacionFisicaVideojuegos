@@ -14,6 +14,7 @@ Particle* FireworkGenerator::shoot() {
 Particle* FireworkGenerator::shoot(Vector3 pos, bool alive) {
     for (int i = 0; i < _firework_pool.size(); ++i) {
         if (!alive) _firework_pool[i]->_color = { 1,(0.2f*i),+(0.2f * i),1};
+        else _firework_pool[i]->_color = { 0.5f +(i*0.1f),1, 0.5f + (i * 0.1f),1};
         _firework_pool[i]->setPosition(pos);
     }
 	return _firework_pool[0]->clone();

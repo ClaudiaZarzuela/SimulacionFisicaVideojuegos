@@ -11,13 +11,19 @@ SolidoRigido::SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, V
 	_dynamic->setLinearVelocity(_linearVel);
 	_vel = _linearVel;
 	_dynamic->setAngularVelocity(_angularVel);
-	_dynamic->setAngularDamping(2.0f);
-	_dynamic->setLinearDamping(1.0f);
+	if (typeShape == "BOX") {
+		_dynamic->setAngularDamping(2.0f);
+		_dynamic->setLinearDamping(1.0f);
+	}
+	else {
+		_dynamic->setAngularDamping(4.0f);
+		_dynamic->setLinearDamping(2.0f);
+	}
 	PxRigidBodyExt::updateMassAndInertia(*_dynamic, density);
 	PxMaterial*m = gP->createMaterial(0.0000000000000000001f, 0.0000000000000000001f, 1.0f);
 	if(typeShape == "BOX") _shape = CreateShape(PxBoxGeometry(_scale), m);
-	else _shape = CreateShape(PxSphereGeometry(_scale.x), m);
-	_shape->setContactOffset(0.2);
+	else _shape = CreateShape(PxSphereGeometry(_scale.x));
+	_shape->setContactOffset(0.01);
 	_dynamic->attachShape(*_shape);
 	mass = _dynamic->getMass();
 	_inv_mass = 1 / mass;

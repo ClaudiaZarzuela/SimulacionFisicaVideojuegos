@@ -3,7 +3,7 @@
 #include "SolidoRigido.h"
 
 #include <iostream>
-UniformParticleGenerator::UniformParticleGenerator(Vector3 pos_width_min, Vector3 pos_width_max, Vector3 vel_width_min, Vector3 vel_width_max, PxScene* gS, PxPhysics* gP, int numMax):ParticleGenerator(gS,gP) {
+UniformParticleGenerator::UniformParticleGenerator(Vector3 pos_width_min, Vector3 pos_width_max, Vector3 vel_width_min, Vector3 vel_width_max, PxScene* gS, PxPhysics* gP, float t, int numMax):ParticleGenerator(gS,gP) {
 	_pos_width_min = pos_width_min; _pos_width_max = pos_width_max;
 	posUniformX = new std::uniform_real_distribution<float>(pos_width_min.x, pos_width_max.x);
 	posUniformY = new std::uniform_real_distribution<float>(pos_width_min.y, pos_width_max.y);
@@ -15,6 +15,7 @@ UniformParticleGenerator::UniformParticleGenerator(Vector3 pos_width_min, Vector
 	velUniformZ = new std::uniform_real_distribution<float>(vel_width_min.z, vel_width_max.z);
 	_n_maxParticles = numMax;
 	_n_particles = 1;
+	maxTime = t;
 }
 UniformParticleGenerator::~UniformParticleGenerator() {
 	delete(posUniformX);
@@ -28,15 +29,18 @@ UniformParticleGenerator::~UniformParticleGenerator() {
 
 std::list<Entity*> UniformParticleGenerator::generateParticles() {
 	std::list<Entity*> particles;
-	for (int i = 0; i < _n_particles; ++i) {
-		Particle* p = _model_particle->clone();
-		p->_pose.p.x = (*posUniformX)(_mt);
-		p->_pose.p.y = (*posUniformY)(_mt);
-		p->_pose.p.z = (*posUniformZ)(_mt);
-		p->_vel.x = (*velUniformX)(_mt);
-		p->_vel.y = (*velUniformY)(_mt);
-		p->_vel.z = (*velUniformZ)(_mt);
-		particles.push_back(p);
+	if (hasPassedTimeRequired()) {
+		for (int i = 0; i < _n_particles; ++i) {
+			Particle* p = _model_particle->clone();
+			p->_pose.p.x = (*posUniformX)(_mt);
+			p->_pose.p.y = (*posUniformY)(_mt);
+			p->_pose.p.z = (*posUniformZ)(_mt);
+			p->_vel.x = (*velUniformX)(_mt);
+			p->_vel.y = (*velUniformY)(_mt);
+			p->_vel.z = (*velUniformZ)(_mt);
+			particles.push_back(p);
+			time = 0;
+		}
 	}
 	return particles;
 }

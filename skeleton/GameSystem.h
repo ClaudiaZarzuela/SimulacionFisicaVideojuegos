@@ -7,7 +7,7 @@
 #include "LevelSystem.h"
 
 static enum Menus {
-	MAINMENU = 0, LEVELMENU = 1, GAMESCENE = 2, ENDSCENE = 3
+	MAINMENU = 0, LEVELMENU = 1, GAMESCENE = 2, ENDSCENE = 3, INSTRUCTIONS = 4
 };
 using namespace physx;
 extern bool changeMenu;
@@ -19,6 +19,14 @@ extern std::string endWin_text3;
 extern  std::string endLoose_text1;
 extern  std::string endLoose_text2;
 extern  std::string continue_text;
+extern std::string instructions_1;
+extern std::string instructions_2;
+extern std::string instructions_3;
+extern std::string instructions_4;
+extern std::string instructions_5;
+extern std::string instructions_6;
+extern std::string instructions_7;
+
 extern bool win;
 class GameSystem
 {
@@ -31,6 +39,9 @@ private:
 	LevelSystem* _levelManager = nullptr;
 	//GAME SCENE
 	void GameSceneInicialice();
+
+	//INSTRUCTIONS
+	void Instructions();
 
 	//END SCENE
 	void EndSceneInicialice();

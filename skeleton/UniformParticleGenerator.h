@@ -3,7 +3,7 @@
 class UniformParticleGenerator :public ParticleGenerator
 {
 public: 
-	UniformParticleGenerator(Vector3 pos_width_min, Vector3 pos_width_max, Vector3 vel_width_min, Vector3 vel_width_max, PxScene* gS = nullptr, PxPhysics* gP = nullptr, int numMax = 50);
+	UniformParticleGenerator(Vector3 pos_width_min, Vector3 pos_width_max, Vector3 vel_width_min, Vector3 vel_width_max, PxScene* gS = nullptr, PxPhysics* gP = nullptr, float t = 0.1,int numMax = 50);
 	virtual std::list<Entity*> generateParticles() override;
 	virtual std::list<Entity*>  generateRigidBodies() override;
 	~UniformParticleGenerator();
