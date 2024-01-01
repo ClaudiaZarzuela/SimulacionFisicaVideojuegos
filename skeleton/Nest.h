@@ -17,8 +17,9 @@ private:
 	SolidoRigido* centro = nullptr;
 
 public:
-	Nest(PxScene* gS, PxPhysics* gP, physx::PxTransform pos): 
-		InteractuableObject({ pos.p.x , pos.p.y + 3.5f, pos.p.z }, 5, 23, 10) {
+	Nest(PxScene* gS, PxPhysics* gP, physx::PxTransform pos, float floorWidth = 25, float floorLength = 10, float floorHeight = 1,
+		float wallsHeight = 5, float wallsWidth = 2):
+		InteractuableObject({ pos.p.x , pos.p.y + (floorHeight + wallsHeight/2), pos.p.z}, wallsHeight, floorWidth - wallsWidth, floorLength) {
 		floor = new SolidoRigido(gS, gP, pos, { floorWidth, floorHeight, floorLength }, { 0.5,1,0.5,1 });
 		physx::PxTransform posRight = { pos.p.x + floorWidth - wallsWidth, pos.p.y + floorHeight + wallsHeight , pos.p.z };
 		physx::PxTransform posLeft = { pos.p.x - floorWidth + wallsWidth, pos.p.y + floorHeight + wallsHeight , pos.p.z };

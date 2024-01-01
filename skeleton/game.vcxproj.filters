@@ -31,6 +31,13 @@
     <ClCompile Include="BuoyancyForceGenerator.cpp" />
     <ClCompile Include="SolidoRigido.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="GameSystem.cpp" />
+    <ClCompile Include="InteractuableObject.cpp" />
+    <ClCompile Include="LevelSystem.cpp" />
+    <ClCompile Include="Nest.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -64,10 +71,21 @@
     <ClInclude Include="BuoyancyForceGenerator.h" />
     <ClInclude Include="SolidoRigido.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameSystem.h" />
+    <ClInclude Include="InteractuableObject.h" />
+    <ClInclude Include="LevelSystem.h" />
+    <ClInclude Include="Nest.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
       <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc" />
   </ItemGroup>
 </Project>

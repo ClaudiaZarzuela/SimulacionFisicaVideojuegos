@@ -4,10 +4,11 @@
 using namespace physx;
 class SolidoRigido :public Entity
 {
+public:
+	PxRigidDynamic* _dynamic = nullptr;
 protected:
 	PxScene* gScene = nullptr;
 	PxPhysics* gPhysics = nullptr;
-	PxRigidDynamic* _dynamic = nullptr;
 	PxRigidStatic* _static = nullptr;
 	Vector3 _linearVel, _angularVel;
 	double density;

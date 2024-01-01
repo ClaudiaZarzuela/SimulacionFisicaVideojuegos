@@ -57,7 +57,7 @@ private:
 	int _timer = 1;
 	double elapsedTime = 0;
 	bool activePointer = true;
-
+	bool firstPointer = false;
 	PxScene* gScene = nullptr;
 	PxPhysics* gPhysics = nullptr;
 	Vector3 _gravity;

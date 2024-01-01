@@ -300,12 +300,12 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	drawText(continue_text, 243, 133);
 
 	drawText(instructions_1, 246, 290);
-	drawText(instructions_2, 195, 270);
-	drawText(instructions_3, 153, 255);
-	drawText(instructions_4, 175, 240);
-	drawText(instructions_5, 185, 225);
-	drawText(instructions_6, 149, 210);
-	drawText(instructions_7, 230, 195);
+	drawText(instructions_2, 215, 270);
+	drawText(instructions_3, 165, 255);
+	drawText(instructions_4, 152, 240);
+	drawText(instructions_5, 200, 225);
+	drawText(instructions_6, 190, 210);
+	drawText(instructions_7, 195, 195);
 
 	// Setup camera
 	glMatrixMode(GL_PROJECTION);

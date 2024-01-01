@@ -46,6 +46,7 @@ int WidthCam;
 int HeightCam;
 int actualMenu;
 int levelIndex;
+float gravity = -10.0f;
 bool changeMenu = true;
 bool win = true;
 // Initialize physics engine
@@ -70,6 +71,7 @@ void initPhysics(bool interactive)
 	sceneDesc.cpuDispatcher = gDispatcher;
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
+
 	gScene = gPhysics->createScene(sceneDesc);
 	_gameSystem = new GameSystem(gScene, gPhysics);
 	//_particleSystem = new ParticleSystem(gScene, gPhysics);

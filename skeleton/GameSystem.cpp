@@ -49,12 +49,12 @@ void GameSystem::GameSceneInicialice() {
 
 void GameSystem::Instructions() {
 	instructions_1 = "NEST";
-	instructions_2 = "AYUDA AL PAJARITO A LLEGAR A SU NIDO"; 
-	instructions_3 = "QUE EL PAJARITO NO TOQUE LOS CUBOS DE HIELO AZULES O SE CONGELARÁ!"; 
-	instructions_4 = "NO DEJES QUE SE CAIGA AL SUELO, AÚN NO SABE VOLAR!"; 
-	instructions_5 = "HAZ CLICK EN LOS OBSTACULOS PARA QUITARLOS";
-	instructions_6 = "HAZ CLICK EN EL PAJARITO O LOS CUBOS DE HIELO PARA CAMBIAR SU FORMA";
-	instructions_7 = "BUENA SUERTE!";
+	instructions_2 = "HELP THE BIRD TO THE NEST"; 
+	instructions_3 = "DO NOT LET IT TOUCH THE BLUE ICE CUBES OR IT WILL FREEZE!"; 
+	instructions_4 = "DO NOT LET IT FALL TO THE GROUND, IT DOES NOT KNOW HOW TO FLY YET!"; 
+	instructions_5 = "CLICK THE OBSTACLES TO REMOVE THEM";
+	instructions_6 = "CLICK THE ICE CUBES TO CHANGE THEIR FORM";
+	instructions_7 = "PRESS SPACE TO CHANGE THE BIRD'S FORM";
 
 	_buttonList.push_back(new Button(gScene, gPhysics, { 0,-2,-80 }, 35, 12, Button::INSTRUCTIONS, _levelManager));
 }
@@ -72,7 +72,7 @@ void GameSystem::EndSceneInicialice() {
 		endLoose_text2 = "Don't give up yet, just try again!";
 	}
 	_buttonList.push_back(new Button(gScene, gPhysics, { 0,0,-80 }, 25, 10, Button::DEFAULT, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 0,-20,-75 }, 10, 2, Button::RESTARTGAME, _levelManager, { 0.5,0,0.5,1 }));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 0,-20,-75 }, 10, 2, Button::RESTARTGAME, _levelManager));
 
 }
 
@@ -104,7 +104,9 @@ void GameSystem::integrate(double t) {
 	}
 	ManageScene();
 
-	_levelManager->integrate(t);
+	if (actualMenu == GAMESCENE && firstPointer) {
+		_levelManager->integrate(t);
+	}
 	if (!_levelManager->active || (_levelManager->active && !_levelManager->endGame)) {
 		for (auto it = _pointers.begin(); it != _pointers.end();) {
 			bool alive = true;
@@ -176,6 +178,7 @@ void GameSystem::handleMouse(int button, int state, int x, int y)
 		//_pointers.push_back(_proyectil->shoot({ mousePos.x / 5,mousePos.y / 5,-1 },mousePos/5));
 		activePointer = false;
 		elapsedTime = 0;
+		firstPointer = true;
 	}
 }
 

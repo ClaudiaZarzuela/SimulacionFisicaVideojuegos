@@ -15,6 +15,7 @@ void LevelSystem::addForces() {
 
 }
 void LevelSystem::startLevel1() {
+	gravity = -10.0f;
 	addForces();
 	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -120), Vector3(150, 70, -40), Vector3(0.1, 0.1, 0.1), Vector3(0.1, 0.1, 0.1)));
 
@@ -27,22 +28,141 @@ void LevelSystem::startLevel1() {
 }
 
 void LevelSystem::startLevel2() {
+	gravity = -10.0f;
 	addForces();
 	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -120), Vector3(150, 70, -40), Vector3(0.1, -60, 0.1), Vector3(0.1, -50, 0.1),nullptr, nullptr, 0));
 	_force_generators.insert(new ParticleDragGenerator(2, 0, { 0,-47,-80 }, { 150, 0.1, 40 }, 120, Vector3(60, -80, 0)));
 
 	_player = new Player(gScene, gPhysics, { 0,18,-100 }, {7,7,7}, 1, 1);
 	
-	_nest = new Nest(gScene, gPhysics, { 0,-40,-100 });
+	_nest = new Nest(gScene, gPhysics, { 0,-43,-100 });
 
-	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,3,-100 }, { 0,0,0 }, { 0,0,0 }, { 8,8,8 }, 1, 1, { 0,1,1,1 }, -1, "BOX", "NORMAL", false));
-	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-8,-100 }, { 0,0,0 }, { 0,0,0 },  { 17,3,17 }, 1,1 , { 0,0.7,0.7,1 }, -1, "BOX", "NORMAL", false));
-	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 20,-18,-100 }, { 7,7,7 }, 1, 1));
-	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -20,-18,-100 }, { 7,7,7}, 1, 1));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,3,-100 }, { 0,-1,0 }, { 0,0,0 }, { 8,8,8 }, 1, 1, { 0,1,1,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-8,-100 }, { 0,-1,0 }, { 0,0,0 },  { 17,3,17 }, 1,1 , { 0,0.7,0.7,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 18,-18,-100 }, { 7,7,7 }, 1, 1));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -18,-18,-100 }, { 7,7,7}, 1, 1));
 	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-28,-100 }, { 17,3,17 }, { 0,0.5,0.5,1 }));
 	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }));
 }
 
+void LevelSystem::startLevel3() {
+	gravity = -10.0f;
+	addForces();
+	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -120), Vector3(150, 70, -40), Vector3(0.1, -20, 0.1), Vector3(0.1, -10, 0.1), nullptr, nullptr, 0));
+	_force_generators.insert(new ParticleDragGenerator(2, 0, { 0,-47,-80 }, { 150, 0.1, 40 }, 120, Vector3(-40, 0, 0)));
+
+	_player = new Player(gScene, gPhysics, { -40,22,-100 }, { 5,5,5 }, 1, 1);
+
+	_nest = new Nest(gScene, gPhysics, { 40,-40,-100 });
+
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { -40,11,-100 }, { 0,-1,0 }, { 0,0,0 }, {6,6,6}, 1, 1, { 0,1,1,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, {-40,-1,-100 }, {6,6,6}, 1, 1));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { -40,-8,-100 }, { 0,-1,0 }, { 0,0,0 }, {8,1,8 }, 1, 1, { 0,1,1,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { -40,-21,-100 }, { 0,-1,0 }, { 0,0,0 }, { 6,12,6 }, 1, 1, { 0,1,1,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { -50,-39,-100 },{ 6,6,6 }, { 0,1,1,1 }));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { -30,-39,-100 },{ 6,6,6 },{ 0,1,1,1 }));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-46,-80 }, { 150, 1, 40 }));
+
+}
+void LevelSystem::startLevel4() {
+	gravity = -100.0f;
+	addForces();
+	_player = new Player(gScene, gPhysics, { 4,16,-100 }, { 7,5,7 }, 1, 1);
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, {-5,6,-100}, {0,-1,0}, {0,0,0}, { 7,5,7 }, 1, 1, {0,1,1,1}, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 4,-4,-100 }, { 0,-1,0 }, { 0,0,0 }, { 7,5,7 }, 1, 1, { 0,0.8,0.8,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { -5,-14,-100 }, { 0,-1,0 }, { 0,0,0 }, { 7,5,7 }, 1, 1, { 0,0.6,0.6,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 4,-24,-100 }, { 0,-1,0 }, { 0,0,0 }, { 7,5,7 }, 1, 1, { 0,0.4,0.4,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { -5,-34,-100 }, { 0,-1,0 }, { 0,0,0 }, { 7,5,7 }, 1, 1, { 0,0.2,0.2,1 }, -1, "BOX", "NORMAL", false));
+
+	_nest = new Nest(gScene, gPhysics, { 0,-40,-100 },20);
+
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 30,11,-100 }, { 10,5,10 }, 1, 1, {1,0.8,0.8,1}));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 30,1,-100 }, { 10,5,10 }, 1, 1, {1,0.6,0.6,1}));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 30,-9,-100 }, { 10,5,10 }, 1, 1, {1,0.4,0.4,1}));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 30,-19,-100 }, { 10,5,10 }, 1, 1, { 1,0.2,0.2,1 }));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 30,-29,-100 }, { 10,5,10 }, 1, 1, { 1,0,0,1 }));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 30,-39,-100 }, { 10,5,10 }, { 0,0.5,0.5,1 }));
+
+	/*_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -20,-18,-100 }, { 5,5,5 }, 1, 1));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-25,-100 }, {5,5,5 }, { 0,0.5,0.5,1 }));*/
+
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -30,11,-100 }, { 10,5,10 }, 1, 1, { 1,0.8,0.8,1 }));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -30,1,-100 }, { 10,5,10 }, 1, 1, { 1,0.6,0.6,1 }));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -30,-9,-100 }, { 10,5,10 }, 1, 1, { 1,0.4,0.4,1 }));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -30,-19,-100 }, { 10,5,10 }, 1, 1, { 1,0.2,0.2,1 }));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -30,-29,-100 }, { 10,5,10 }, 1, 1, { 1,0,0,1 }));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { -30,-39,-100 }, { 10,5,10 }, { 0,0.5,0.5,1 }));
+
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-45,-80 }, { 150, 1, 40 }));
+
+	//_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -20,-18,-100 }, { 5,5,5 }, 1, 1));
+	/*_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-28,-100 }, { 17,3,17 }, { 0,0.5,0.5,1 }));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }));*/
+}
+void LevelSystem::startLevel5() {
+	addForces();
+	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -120), Vector3(150, 70, -40), Vector3(0.1, -60, 0.1), Vector3(0.1, -50, 0.1), nullptr, nullptr, 0));
+	_force_generators.insert(new ParticleDragGenerator(2, 0, { 0,-47,-80 }, { 150, 0.1, 40 }, 120, Vector3(60, -80, 0)));
+
+	_player = new Player(gScene, gPhysics, { 0,18,-100 }, { 7,7,7 }, 1, 1);
+
+	_nest = new Nest(gScene, gPhysics, { 0,-40,-100 });
+
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,3,-100 }, { 0,0,0 }, { 0,0,0 }, { 8,8,8 }, 1, 1, { 0,1,1,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-8,-100 }, { 0,0,0 }, { 0,0,0 }, { 17,3,17 }, 1, 1, { 0,0.7,0.7,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 20,-18,-100 }, { 7,7,7 }, 1, 1));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -20,-18,-100 }, { 7,7,7 }, 1, 1));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-28,-100 }, { 17,3,17 }, { 0,0.5,0.5,1 }));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }));
+}
+void LevelSystem::startLevel6() {
+	addForces();
+	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -120), Vector3(150, 70, -40), Vector3(0.1, -60, 0.1), Vector3(0.1, -50, 0.1), nullptr, nullptr, 0));
+	_force_generators.insert(new ParticleDragGenerator(2, 0, { 0,-47,-80 }, { 150, 0.1, 40 }, 120, Vector3(60, -80, 0)));
+
+	_player = new Player(gScene, gPhysics, { 0,18,-100 }, { 7,7,7 }, 1, 1);
+
+	_nest = new Nest(gScene, gPhysics, { 0,-40,-100 });
+
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,3,-100 }, { 0,0,0 }, { 0,0,0 }, { 8,8,8 }, 1, 1, { 0,1,1,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-8,-100 }, { 0,0,0 }, { 0,0,0 }, { 17,3,17 }, 1, 1, { 0,0.7,0.7,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 20,-18,-100 }, { 7,7,7 }, 1, 1));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -20,-18,-100 }, { 7,7,7 }, 1, 1));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-28,-100 }, { 17,3,17 }, { 0,0.5,0.5,1 }));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }));
+}
+void LevelSystem::startLevel7() {
+	addForces();
+	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -120), Vector3(150, 70, -40), Vector3(0.1, -60, 0.1), Vector3(0.1, -50, 0.1), nullptr, nullptr, 0));
+	_force_generators.insert(new ParticleDragGenerator(2, 0, { 0,-47,-80 }, { 150, 0.1, 40 }, 120, Vector3(60, -80, 0)));
+
+	_player = new Player(gScene, gPhysics, { 0,18,-100 }, { 7,7,7 }, 1, 1);
+
+	_nest = new Nest(gScene, gPhysics, { 0,-40,-100 });
+
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,3,-100 }, { 0,0,0 }, { 0,0,0 }, { 8,8,8 }, 1, 1, { 0,1,1,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-8,-100 }, { 0,0,0 }, { 0,0,0 }, { 17,3,17 }, 1, 1, { 0,0.7,0.7,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 20,-18,-100 }, { 7,7,7 }, 1, 1));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -20,-18,-100 }, { 7,7,7 }, 1, 1));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-28,-100 }, { 17,3,17 }, { 0,0.5,0.5,1 }));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }));
+}
+void LevelSystem::startLevel8() {
+	addForces();
+	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -120), Vector3(150, 70, -40), Vector3(0.1, -60, 0.1), Vector3(0.1, -50, 0.1), nullptr, nullptr, 0));
+	_force_generators.insert(new ParticleDragGenerator(2, 0, { 0,-47,-80 }, { 150, 0.1, 40 }, 120, Vector3(60, -80, 0)));
+
+	_player = new Player(gScene, gPhysics, { 0,18,-100 }, { 7,7,7 }, 1, 1);
+
+	_nest = new Nest(gScene, gPhysics, { 0,-40,-100 });
+
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,3,-100 }, { 0,0,0 }, { 0,0,0 }, { 8,8,8 }, 1, 1, { 0,1,1,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-8,-100 }, { 0,0,0 }, { 0,0,0 }, { 17,3,17 }, 1, 1, { 0,0.7,0.7,1 }, -1, "BOX", "NORMAL", false));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 20,-18,-100 }, { 7,7,7 }, 1, 1));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { -20,-18,-100 }, { 7,7,7 }, 1, 1));
+	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { 0,-28,-100 }, { 17,3,17 }, { 0,0.5,0.5,1 }));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-45,-80 }, { 150, 0.1, 40 }));
+}
 void LevelSystem::registerParticleToForce(Entity* p) {
 	for (auto it = _force_generators.begin(); it != _force_generators.end(); ++it) {
 		_force_registry->addRegistry(*it, p);

@@ -7,29 +7,33 @@ SolidoRigido::SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, V
 	_color = color;
 	typeShape = tShape;
 	_dynamic = gPhysics->createRigidDynamic(_pose);
-	gScene->addActor(*_dynamic);
 	_dynamic->setLinearVelocity(_linearVel);
 	_vel = _linearVel;
+	PxRigidBodyExt::updateMassAndInertia(*_dynamic, density);
 	_dynamic->setAngularVelocity(_angularVel);
 	if (typeShape == "BOX") {
 		_dynamic->setAngularDamping(2.0f);
+		_dynamic->setMaxAngularVelocity(0);
 		_dynamic->setLinearDamping(1.0f);
 	}
 	else {
 		_dynamic->setAngularDamping(4.0f);
 		_dynamic->setLinearDamping(2.0f);
 	}
-	PxRigidBodyExt::updateMassAndInertia(*_dynamic, density);
-	PxMaterial*m = gP->createMaterial(0.0000000000000000001f, 0.0000000000000000001f, 1.0f);
-	if(typeShape == "BOX") _shape = CreateShape(PxBoxGeometry(_scale), m);
+	PxMaterial* m = gP->createMaterial(0, 0, 0);
+	if(typeShape == "BOX") _shape = CreateShape(PxBoxGeometry(_scale),m);
 	else _shape = CreateShape(PxSphereGeometry(_scale.x));
-	_shape->setContactOffset(0.01);
+	_shape->setContactOffset(0.05);
 	_dynamic->attachShape(*_shape);
 	mass = _dynamic->getMass();
 	_inv_mass = 1 / mass;
 	esModelo = ismodel;
 	maxTime = time;
+	gScene->addActor(*_dynamic);
+	gScene->setBounceThresholdVelocity(100000000);
 	if(!ismodel) renderItem = new RenderItem(_shape, _dynamic, _color);
+
+
 }
 SolidoRigido::SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, Vector3 scale, Vector4 color, std::string tShape, std::string type, bool ismodel):Entity(Pos.p, scale, type, tShape){
 	gScene = gS;
@@ -39,14 +43,16 @@ SolidoRigido::SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, V
 	_color = color;
 	typeShape = tShape;
 	_static = gPhysics->createRigidStatic(_pose);
-	_shape = CreateShape(PxBoxGeometry(_scale));
+	PxMaterial* m = gP->createMaterial(0, 0, 0);
+	_shape = CreateShape(PxBoxGeometry(_scale),m);
+	_shape->setContactOffset(0.05);
 	_static->attachShape(*_shape);
-	mass = 0;
+	mass = 10000000000000000000;
 	_inv_mass = 0;
 	_vel = { 0,0,0 };
-	gScene->addActor(*_static);
 	esModelo = ismodel;
 	maxTime = -1e-10;
+	gScene->addActor(*_static);
 	if (!ismodel) renderItem = new RenderItem(_shape, _static, _color);
 }
 
