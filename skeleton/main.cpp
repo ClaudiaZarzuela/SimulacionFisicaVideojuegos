@@ -7,6 +7,8 @@
 #include <iostream>
 #include "GameSystem.h"
 #include "ParticleSystem.h"
+#include "PxSceneDesc.h"
+#include "MyItem.h"
 
 using namespace physx;
 
@@ -50,6 +52,9 @@ float gravity = -10.0f;
 bool changeMenu = true;
 bool win = true;
 // Initialize physics engine
+MyItem* ground;
+MyItem* box1;
+MyItem* box2;
 void initPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
@@ -66,13 +71,24 @@ void initPhysics(bool interactive)
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
-	sceneDesc.gravity = PxVec3(0.0f, -10.0f, 0.0f);
+	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
 	gDispatcher = PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = gDispatcher;
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
+	sceneDesc.flags = PxSceneFlags(PxSceneFlag::eENABLE_STABILIZATION);
 
 	gScene = gPhysics->createScene(sceneDesc);
+
+	//-------------------------------------------------------------
+
+	//ground = new MyItem(true, 0.0f, -20.0f, 0.0f,       120.0f, 10.0f, 120.0f,            0.5f, 0.5f, 0.5f, gScene, gPhysics);
+	
+	//box1 = new MyItem(false, 0.0f, 30.0f, -100.0f, 10, 10, 10, 0.5f, 0.5f, 0.5f, gScene, gPhysics);
+	//box2 = new MyItem(false, 0.0f, 48, -100.0f, 5, 5, 5, 0.5f, 0.5f, 0.5f, gScene, gPhysics);
+
+	//box1 = new MyItem(false, 0.0f, 00.0f, -100.0f, 10.0f, 10.0f, 10.0f, 0.5f, 0.5f, 0.5f, gScene, gPhysics);
+	//box2 = new MyItem(false, 10.0f, 15.0f, -100.0f, 5.0f, 5.0f, 5.0f, 0.5f, 0.5f, 0.5f, gScene, gPhysics);
 	_gameSystem = new GameSystem(gScene, gPhysics);
 	//_particleSystem = new ParticleSystem(gScene, gPhysics);
 }
@@ -88,7 +104,7 @@ void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
 
-	gScene->simulate(t);
+	gScene->simulate(1.0f/120.0f);
 	gScene->fetchResults(true);
 	
 	_gameSystem->integrate(t);

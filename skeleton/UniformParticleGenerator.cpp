@@ -32,6 +32,7 @@ std::list<Entity*> UniformParticleGenerator::generateParticles() {
 	if (hasPassedTimeRequired()) {
 		for (int i = 0; i < _n_particles; ++i) {
 			Particle* p = _model_particle->clone();
+			p->mass = (rand() % 5) + 1;
 			p->_pose.p.x = (*posUniformX)(_mt);
 			p->_pose.p.y = (*posUniformY)(_mt);
 			p->_pose.p.z = (*posUniformZ)(_mt);

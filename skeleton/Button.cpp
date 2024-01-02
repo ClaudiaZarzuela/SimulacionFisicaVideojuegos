@@ -20,8 +20,6 @@ void Button::startLevel(int i) {
 		case 3: _levelSystem->startLevel4(); break;
 		case 4: _levelSystem->startLevel5(); break;
 		case 5: _levelSystem->startLevel6(); break;
-		case 6: _levelSystem->startLevel7(); break;
-		case 7: _levelSystem->startLevel8(); break;
 		default: break;
 	}
 }
@@ -35,6 +33,8 @@ void  Button::startFunction() {
 	case LEVEL_2: startLevel(1); break;
 	case LEVEL_3: startLevel(2); break;
 	case LEVEL_4: startLevel(3); break;
+	case LEVEL_5: startLevel(4); break;
+	case LEVEL_6: startLevel(5); break;
 	case DEFAULT:break;
 	default: break;
 	}

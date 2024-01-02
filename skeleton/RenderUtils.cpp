@@ -80,15 +80,15 @@ void renderCallback()
 {
 	double t = GetCounter();
 #ifdef FIXED_STEP
-	if (t < (1.0f / 30.0f))
+	if (t < (1.0f / 60.0f))
 	{
 		fprintf(stderr, "Time: %f\n", stepTime);
 		stepTime += t;
 	}
 	else
-		stepTime = 1.0f / 30.0f;
+		stepTime = 1.0f / 60.0f;
 
-	if (stepTime >= (1.0f / 30.0f))
+	if (stepTime >= (1.0f / 60.0f))
 	{
 		stepPhysics(true, stepTime);
 		stepTime = 0.0f;

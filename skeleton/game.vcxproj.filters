@@ -38,6 +38,8 @@
     <ClCompile Include="LevelSystem.cpp" />
     <ClCompile Include="Nest.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="MyItem.cpp" />
+    <ClCompile Include="Decoration.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -79,6 +81,8 @@
     <ClInclude Include="Nest.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="MyItem.h" />
+    <ClInclude Include="Decoration.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

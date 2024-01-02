@@ -257,6 +257,7 @@
     <ClCompile Include="BuoyancyForceGenerator.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="callbacks.cpp" />
+    <ClCompile Include="Decoration.cpp" />
     <ClCompile Include="ElasticForceGenerator.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -270,6 +271,7 @@
     <ClCompile Include="LevelSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelParticle.cpp" />
+    <ClCompile Include="MyItem.cpp" />
     <ClCompile Include="Nest.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleDragGenerator.cpp" />
@@ -293,6 +295,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
+    <ClInclude Include="Decoration.h" />
     <ClInclude Include="ElasticForceGenerator.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
@@ -306,6 +309,7 @@
     <ClInclude Include="InteractuableObject.h" />
     <ClInclude Include="LevelSystem.h" />
     <ClInclude Include="ModelParticle.h" />
+    <ClInclude Include="MyItem.h" />
     <ClInclude Include="Nest.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleDragGenerator.h" />

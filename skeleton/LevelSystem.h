@@ -20,6 +20,7 @@
 #include "Nest.h"
 #include "Button.h"
 #include "Player.h"
+#include "Decoration.h"
 #include "Enemy.h"
 extern bool changeMenu;
 extern int actualMenu;
@@ -31,6 +32,7 @@ public:
 	bool active = false;
 	std::list<Entity*> _objPorNivel;
 	bool endGame = false;
+	bool level4 = false;
 
 private: 
 	struct BoundingBox {
@@ -51,12 +53,14 @@ private:
 	PxPhysics* gPhysics = nullptr;
 	Vector3 _gravity;
 	std::list<Entity*> _particles;
+	std::list<Decoration*> _decor;
 	std::list <ParticleGenerator*> _particle_generators;
 	std::set<ForceGenerator*> _force_generators;
 	std::list <ExplotionGenerator*> _explosion_generator;
 	FireworkGenerator* _firework_generator = nullptr;
 	ParticleForceRegistry* _force_registry = nullptr;
 	GravityForceGenerator* _gravityForce = nullptr;
+	BuoyancyForceGenerator* _bouyancyForce = nullptr;
 
 	void registerParticlesToForce(std::list<Entity*> p);
 	void registerParticleToForce(Entity* p);
@@ -64,6 +68,7 @@ private:
 	void addForces();
 	void explode();
 	void reset();
+	void generateBouyancy();
 public:
 	void back();
 	void changeFormEnemy(Entity* obj);
@@ -78,8 +83,6 @@ public:
 	void startLevel4();
 	void startLevel5();
 	void startLevel6();
-	void startLevel7();
-	void startLevel8();
 	void shootFirework();
 };
 

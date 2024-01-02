@@ -31,14 +31,12 @@ void GameSystem::LevelMenuInicialice() {
 	endWin_text1 = " ";  endWin_text2 = " "; endWin_text3 = " ";
 	endLoose_text1 = " "; endLoose_text2 = " "; continue_text = " ";
 	instructions_1 = " "; instructions_2 = " "; instructions_3 = " "; instructions_4 = " "; instructions_5 = " "; instructions_6 = " "; instructions_7 = " ";
-	_buttonList.push_back(new Button(gScene, gPhysics, { -65,15,-90 }, 10, 10, Button::LEVEL_1, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { -20,15,-90 }, 10, 10, Button::LEVEL_2, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 20,15,-90 }, 10, 10, Button::LEVEL_3, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 65,15,-90 }, 10, 10, Button::LEVEL_4, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { -65,-20,-90 }, 10, 10, Button::LEVEL_5, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { -20,-20,-90 }, 10, 10, Button::LEVEL_6, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 20,-20,-90 }, 10, 10, Button::LEVEL_7, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 65,-20,-90 }, 10, 10, Button::LEVEL_8, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { -50,15,-90 }, 10, 10, Button::LEVEL_1, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 0,15,-90 }, 10, 10, Button::LEVEL_2, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 50,15,-90 }, 10, 10, Button::LEVEL_3, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { -50,-20,-90 }, 10, 10, Button::LEVEL_4, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 0,-20,-90 }, 10, 10, Button::LEVEL_5, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 50,-20,-90 }, 10, 10, Button::LEVEL_6, _levelManager));
 	
 }
 
@@ -50,10 +48,10 @@ void GameSystem::GameSceneInicialice() {
 void GameSystem::Instructions() {
 	instructions_1 = "NEST";
 	instructions_2 = "HELP THE BIRD TO THE NEST"; 
-	instructions_3 = "DO NOT LET IT TOUCH THE BLUE ICE CUBES OR IT WILL FREEZE!"; 
+	instructions_3 = "DO NOT LET IT TOUCH THE RED ENEMIES OR THE BIRD WILL DIE!"; 
 	instructions_4 = "DO NOT LET IT FALL TO THE GROUND, IT DOES NOT KNOW HOW TO FLY YET!"; 
 	instructions_5 = "CLICK THE OBSTACLES TO REMOVE THEM";
-	instructions_6 = "CLICK THE ICE CUBES TO CHANGE THEIR FORM";
+	instructions_6 = "CLICK THE ENEMIES TO CHANGE THEIR FORM";
 	instructions_7 = "PRESS SPACE TO CHANGE THE BIRD'S FORM";
 
 	_buttonList.push_back(new Button(gScene, gPhysics, { 0,-2,-80 }, 35, 12, Button::INSTRUCTIONS, _levelManager));
@@ -104,9 +102,7 @@ void GameSystem::integrate(double t) {
 	}
 	ManageScene();
 
-	if (actualMenu == GAMESCENE && firstPointer) {
-		_levelManager->integrate(t);
-	}
+	_levelManager->integrate(t);
 	if (!_levelManager->active || (_levelManager->active && !_levelManager->endGame)) {
 		for (auto it = _pointers.begin(); it != _pointers.end();) {
 			bool alive = true;
@@ -175,10 +171,8 @@ void GameSystem::handleMouse(int button, int state, int x, int y)
 	if (button == 0 && activePointer) {
 		Vector3 mousePos = { GetCamera()->getMousePos().x,GetCamera()->getMousePos().y, 0 };
 		_pointers.push_back(_proyectil->shoot({ mousePos.x/5,mousePos.y/5,-1 }, {0,0,0}));
-		//_pointers.push_back(_proyectil->shoot({ mousePos.x / 5,mousePos.y / 5,-1 },mousePos/5));
 		activePointer = false;
 		elapsedTime = 0;
-		firstPointer = true;
 	}
 }
 

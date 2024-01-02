@@ -6,31 +6,34 @@ SolidoRigido::SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, V
 	_scale = scale;
 	_color = color;
 	typeShape = tShape;
+
+	PxMaterial* _material = gPhysics->createMaterial(0.5,0.5,0.5);
+	if(typeShape == "BOX") _shape = gPhysics->createShape(PxBoxGeometry(_scale), &_material, true, (PxShapeFlag::eSCENE_QUERY_SHAPE || PxShapeFlag::eSIMULATION_SHAPE));
+	else _shape = gPhysics->createShape(PxSphereGeometry(_scale.x), &_material, true, (PxShapeFlag::eSCENE_QUERY_SHAPE || PxShapeFlag::eSIMULATION_SHAPE));
+	PxFilterData _filterData = PxFilterData(1, 1, 0, 0);
+	_shape->setSimulationFilterData(_filterData);
+
 	_dynamic = gPhysics->createRigidDynamic(_pose);
+
+	_dynamic->attachShape(*_shape);
+
 	_dynamic->setLinearVelocity(_linearVel);
 	_vel = _linearVel;
-	PxRigidBodyExt::updateMassAndInertia(*_dynamic, density);
+
+	float _density = 0.01f;
+	PxRigidBodyExt::updateMassAndInertia(*_dynamic, _density);
 	_dynamic->setAngularVelocity(_angularVel);
-	if (typeShape == "BOX") {
-		_dynamic->setAngularDamping(2.0f);
-		_dynamic->setMaxAngularVelocity(0);
-		_dynamic->setLinearDamping(1.0f);
-	}
-	else {
-		_dynamic->setAngularDamping(4.0f);
-		_dynamic->setLinearDamping(2.0f);
-	}
-	PxMaterial* m = gP->createMaterial(0, 0, 0);
-	if(typeShape == "BOX") _shape = CreateShape(PxBoxGeometry(_scale),m);
-	else _shape = CreateShape(PxSphereGeometry(_scale.x));
-	_shape->setContactOffset(0.05);
-	_dynamic->attachShape(*_shape);
+	PxVec3 inertia = _dynamic->getMassSpaceInertiaTensor();
+	inertia.x = 0.0f;
+	_dynamic->setMassSpaceInertiaTensor(inertia);
+	_dynamic->setMaxDepenetrationVelocity(3.0f);
+
+
 	mass = _dynamic->getMass();
 	_inv_mass = 1 / mass;
 	esModelo = ismodel;
 	maxTime = time;
 	gScene->addActor(*_dynamic);
-	gScene->setBounceThresholdVelocity(100000000);
 	if(!ismodel) renderItem = new RenderItem(_shape, _dynamic, _color);
 
 
@@ -42,17 +45,19 @@ SolidoRigido::SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, V
 	_scale = scale;
 	_color = color;
 	typeShape = tShape;
+	PxMaterial* _material = gPhysics->createMaterial(0.5, 0.5, 0.5);
+	if (typeShape == "BOX") _shape = gPhysics->createShape(PxBoxGeometry(_scale), &_material, true, (PxShapeFlag::eSCENE_QUERY_SHAPE || PxShapeFlag::eSIMULATION_SHAPE));
+	else _shape = gPhysics->createShape(PxSphereGeometry(_scale.x / 2), &_material, true, (PxShapeFlag::eSCENE_QUERY_SHAPE || PxShapeFlag::eSIMULATION_SHAPE));
+	PxFilterData _filterData = PxFilterData(1, 1, 0, 0);
+	_shape->setSimulationFilterData(_filterData);
 	_static = gPhysics->createRigidStatic(_pose);
-	PxMaterial* m = gP->createMaterial(0, 0, 0);
-	_shape = CreateShape(PxBoxGeometry(_scale),m);
-	_shape->setContactOffset(0.05);
 	_static->attachShape(*_shape);
+	gScene->addActor(*_static);
 	mass = 10000000000000000000;
 	_inv_mass = 0;
 	_vel = { 0,0,0 };
 	esModelo = ismodel;
 	maxTime = -1e-10;
-	gScene->addActor(*_static);
 	if (!ismodel) renderItem = new RenderItem(_shape, _static, _color);
 }
 
