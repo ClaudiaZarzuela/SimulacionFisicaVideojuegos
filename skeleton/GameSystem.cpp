@@ -8,16 +8,9 @@ GameSystem::GameSystem(PxScene* gS, PxPhysics* gP, const Vector3& g) {
 
 	//Activate proyectil, used as a cursor
 	_proyectil = new Weapon(Weapon::Types::LASER);
-	showAvailableKeys();
 	actualMenu = MAINMENU;
 	_levelManager = new LevelSystem(gScene, gPhysics);
 	_levelManager->active = false;
-}
-
-void GameSystem::showAvailableKeys() {
-	std::cout << "CONTROLS:" << std::endl;
-	std::cout << "- blah blah blah blah" << std::endl;
-	std::cout << "--------------------------------------------------------" << std::endl;
 }
 
 void GameSystem::MainMenuInicialice() {
@@ -111,6 +104,8 @@ void GameSystem::integrate(double t) {
 				for (auto ot = _buttonList.begin(); ot != _buttonList.end();) {
 					if ((*ot)->function != Button::DEFAULT && (*ot)->insideBoundingBox((*it)->getPosition())) {
 						(*ot)->startFunction();
+						if ((*ot)->function == Button::LEVEL_4) name_text = "THE BIRD CAN´T CHANGE FORM IN THIS LEVEL";
+						else name_text = "Claudia Zarzuela Amor";
 						clearButtons();
 						ot = _buttonList.end();
 						delete(*it);

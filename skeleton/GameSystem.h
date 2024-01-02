@@ -13,6 +13,7 @@ using namespace physx;
 extern bool changeMenu;
 extern int actualMenu;
 extern int levelIndex;
+extern std::string  name_text;
 extern std::string endWin_text1;
 extern std::string endWin_text2;
 extern std::string endWin_text3;

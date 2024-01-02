@@ -6,6 +6,7 @@ LevelSystem::LevelSystem(PxScene* gS, PxPhysics* gP, const Vector3& g) {
 	_gravity = g;
 	
 	_firework_generator = new FireworkGenerator();
+	inicialiceBoundingBox();
 
 }
 void LevelSystem::addForces() {
@@ -149,8 +150,8 @@ void LevelSystem::startLevel5() {
 	_force_generators.insert(new ParticleWhirlWindGenerator({ 0,-47,-200 }, { 300, 0.1, 70 },500, 2));
 
 
-	_player = new Player(gScene, gPhysics, { 0,8.1,-100 }, { 7,7,7 }, 100, 100, "SPHERE");
-	Enemy* e = new Enemy(gScene, gPhysics, { -26,8.1,-100 }, { 7,7,7 }, 100, 100, { 1,0.2,0.2,1 });
+	_player = new Player(gScene, gPhysics, { -26,8.1,-100 }, { 7,7,7 }, 100, 100, "SPHERE");
+	Enemy* e = new Enemy(gScene, gPhysics, { 0,8.1,-100 }, { 7,7,7 }, 100, 100, { 1,0.2,0.2,1 });
 	Enemy* e2 = new Enemy(gScene, gPhysics, { 26,8.11,-100 }, { 7,7,7 }, 100, 100, { 1,0.2,0.2,1 });
 	_objPorNivel.push_back(e); changeFormEnemy(e);
 	_objPorNivel.push_back(e2); changeFormEnemy(e2);
@@ -246,7 +247,7 @@ void LevelSystem::integrate(double t) {
 		}
 
 		for (auto it = _particles.begin(); it != _particles.end();) {
-			if ((*it)->isAlive()) {
+			if ((*it)->isAlive() &&insideBoundingBox((*it)->getPosition())) {
 				(*it)->integrate(t); ++it;
 			}
 			else {
@@ -378,7 +379,7 @@ void LevelSystem::changeFormEnemy(Entity* obj) {
 }
 	
 void LevelSystem::changeFormPlayer() {
-	if (!level4) {
+	if (!level4 && !endGame) {
 		Entity* aux = _player->changeForm();
 		delete(_player);
 		_player = aux;
@@ -386,7 +387,7 @@ void LevelSystem::changeFormPlayer() {
 }
 
 void LevelSystem::inicialiceBoundingBox() {
-	box = { -1000, 1000, -1000, 1000, -1000, 1000 };
+	box = { -1000,  1000, -50, 1000, -1000, 1000 };
 }
 bool LevelSystem::insideBoundingBox(Vector3 pos) {
 	return (pos.x > box.minX && pos.x <= box.maxX) && (pos.y >= box.minY && pos.y <= box.maxY) && (pos.z > box.minZ && pos.z <= box.maxZ);
