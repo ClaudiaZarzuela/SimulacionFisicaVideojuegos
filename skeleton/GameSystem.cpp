@@ -75,7 +75,7 @@ void GameSystem::Instructions() {
 	instructions_6 = "CLICK THE ENEMIES TO CHANGE THEIR FORM";
 	instructions_7 = "PRESS SPACE TO CHANGE THE BIRD'S FORM";
 
-	_buttonList.push_back(new Button(gScene, gPhysics, { 0,-2,-80 }, 35, 12, Button::INSTRUCTIONS, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 0,-2,-80 }, 60, 12, Button::INSTRUCTIONS, _levelManager));
 }
 
 void GameSystem::EndSceneInicialice() {

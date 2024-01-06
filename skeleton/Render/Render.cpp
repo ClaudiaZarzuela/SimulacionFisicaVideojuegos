@@ -297,15 +297,15 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	drawText(endWin_text3, 237, 230);
 	drawText(endLoose_text1, 242, 290);
 	drawText(endLoose_text2, 200, 250);
-	drawText(continue_text, 243, 133);
+	drawText(continue_text, 235, 133);
 
 	drawText(instructions_1, 246, 290);
-	drawText(instructions_2, 215, 270);
-	drawText(instructions_3, 165, 255);
-	drawText(instructions_4, 152, 240);
-	drawText(instructions_5, 200, 225);
-	drawText(instructions_6, 190, 210);
-	drawText(instructions_7, 195, 195);
+	drawText(instructions_2, 195, 270);
+	drawText(instructions_3, 125, 255);
+	drawText(instructions_4, 100, 240);
+	drawText(instructions_5, 170, 225);
+	drawText(instructions_6, 160, 210);
+	drawText(instructions_7, 165, 195);
 
 	// Setup camera
 	glMatrixMode(GL_PROJECTION);
@@ -415,7 +415,7 @@ void drawText(const std::string& text, int x, int y)
 	int length = text.length();
 
 	for (int i = 0; i < length; i++) {
-		glutBitmapCharacter(GLUT_BITMAP_9_BY_15, (int)text[i]);
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, (int)text[i]);
 	}
 	glPopMatrix();
 	glMatrixMode(GL_PROJECTION);

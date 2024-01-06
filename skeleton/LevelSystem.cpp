@@ -81,10 +81,12 @@ void LevelSystem::startLevel1() {
 	_decor.push_back(new Decoration(gScene, gPhysics, { -50,-20,-150 }, { 0.4,1,0.4 }, Decoration::TREE2));
 	_decor.push_back(new Decoration(gScene, gPhysics, { 50,-40,-150 }, { 0.7,1.4,0.7 }, Decoration::SNOWMAN));
 	_decor.push_back(new Decoration(gScene, gPhysics, { -120,-40,-150 }, { 0.3,0.6,0.3 }, Decoration::SNOWMAN));
+	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -40), Vector3(150, 70, -30), Vector3(0.1, -200, 0.1), Vector3(0.1, -90, 0.1)));
+	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -30), Vector3(150, 70, -10), Vector3(0.1, -200, 0.1), Vector3(0.1, -90, 0.1)));
 	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -110), Vector3(150, 70, -109), Vector3(0.1, -100, 0.1), Vector3(0.1, -90, 0.1)));
 	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -110), Vector3(150, 70, -109), Vector3(0.1, -100, 0.1), Vector3(0.1, -90, 0.1)));
 	_particle_generators.push_back(new UniformParticleGenerator(Vector3(-150, 70, -110), Vector3(150, 70, -109), Vector3(0.1, -100, 0.1), Vector3(0.1, -90, 0.1)));
-	_force_generators.insert(new ParticleDragGenerator(2, 0, { 0,-47,-80 }, { 150, 0.1, 40 }, 120, Vector3(60, -100, 0)));
+	_force_generators.insert(new ParticleDragGenerator(2, 0, { 0,-47,-80 }, { 150, 0.1, 40 }, 120, Vector3(150, -100, 0)));
 
 	_player = new Player(gScene, gPhysics, { 0,18,-100 }, {7,7,7}, 100, 100 );
 	
@@ -123,7 +125,7 @@ void LevelSystem::startLevel3() {
 	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { -40,-21,-100 }, { 0,-1,0 }, { 0,0,0 }, { 6,12,6 }, 100, 100, { 0,0.6,0.6,1 }, -1, "BOX", "NORMAL", false));
 	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { -50,-39,-100 },{ 6,6,6 }, { 0,0.8,0.8,1 }));
 	_objPorNivel.push_back(new SolidoRigido(gScene, gPhysics, { -30,-39,-100 },{ 6,6,6 },{ 0,1,1,1 }));
-	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-46,-80 }, { 200, 0.1, 100 }));
+	_objPorNivel.push_back(new Enemy(gScene, gPhysics, { 0,-46,-90 }, { 200, 0.1, 100 }));
 	level4 = false;
 
 }
