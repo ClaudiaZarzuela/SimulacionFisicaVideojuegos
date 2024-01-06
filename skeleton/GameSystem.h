@@ -55,6 +55,7 @@ private:
 
 	Weapon* _proyectil = nullptr;
 	std::list<Entity*> _pointers;
+	std::list<Entity*> _decorationIntro;
 	int _timer = 1;
 	double elapsedTime = 0;
 	bool activePointer = true;

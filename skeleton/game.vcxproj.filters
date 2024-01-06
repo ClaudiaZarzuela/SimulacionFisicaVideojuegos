@@ -40,6 +40,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="MyItem.cpp" />
     <ClCompile Include="Decoration.cpp" />
+    <ClCompile Include="WindMill.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -83,6 +84,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="MyItem.h" />
     <ClInclude Include="Decoration.h" />
+    <ClInclude Include="WindMill.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

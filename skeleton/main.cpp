@@ -6,9 +6,8 @@
 #include "callbacks.hpp"
 #include <iostream>
 #include "GameSystem.h"
-#include "ParticleSystem.h"
 #include "PxSceneDesc.h"
-#include "MyItem.h"
+
 
 using namespace physx;
 
@@ -28,7 +27,6 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
 GameSystem* _gameSystem = NULL;
-ParticleSystem* _particleSystem = NULL;
 std::string name_text = "Claudia Zarzuela Amor";
 std::string endWin_text1 = " ";
 std::string instructions = " ";
@@ -51,10 +49,7 @@ int levelIndex;
 float gravity = -10.0f;
 bool changeMenu = true;
 bool win = true;
-// Initialize physics engine
-MyItem* ground;
-MyItem* box1;
-MyItem* box2;
+
 void initPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
@@ -80,17 +75,7 @@ void initPhysics(bool interactive)
 
 	gScene = gPhysics->createScene(sceneDesc);
 
-	//-------------------------------------------------------------
-
-	//ground = new MyItem(true, 0.0f, -20.0f, 0.0f,       120.0f, 10.0f, 120.0f,            0.5f, 0.5f, 0.5f, gScene, gPhysics);
-	
-	//box1 = new MyItem(false, 0.0f, 30.0f, -100.0f, 10, 10, 10, 0.5f, 0.5f, 0.5f, gScene, gPhysics);
-	//box2 = new MyItem(false, 0.0f, 48, -100.0f, 5, 5, 5, 0.5f, 0.5f, 0.5f, gScene, gPhysics);
-
-	//box1 = new MyItem(false, 0.0f, 00.0f, -100.0f, 10.0f, 10.0f, 10.0f, 0.5f, 0.5f, 0.5f, gScene, gPhysics);
-	//box2 = new MyItem(false, 10.0f, 15.0f, -100.0f, 5.0f, 5.0f, 5.0f, 0.5f, 0.5f, 0.5f, gScene, gPhysics);
 	_gameSystem = new GameSystem(gScene, gPhysics);
-	//_particleSystem = new ParticleSystem(gScene, gPhysics);
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2) {
@@ -108,7 +93,6 @@ void stepPhysics(bool interactive, double t)
 	gScene->fetchResults(true);
 	
 	_gameSystem->integrate(t);
-	//_particleSystem->integrate(t);
 }
 
 // Function to clean data
@@ -117,7 +101,6 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 	delete(_gameSystem);
-	//delete(_particleSystem);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
@@ -136,7 +119,6 @@ void cleanupPhysics(bool interactive)
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	_gameSystem->keyPress(key);
-	//_particleSystem->keyPress(key);
 	PX_UNUSED(camera);
 
 	switch(toupper(key))

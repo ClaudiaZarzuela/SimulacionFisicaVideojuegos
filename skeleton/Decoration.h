@@ -1,7 +1,7 @@
 #pragma once
 #include "SolidoRigido.h"
 #include <list>
-class Decoration
+class Decoration : public SolidoRigido
 {
 public:
 	enum TYPE_DECORATION {
@@ -9,7 +9,7 @@ public:
 	};
 	std::list<SolidoRigido*> decorList;
 
-	Decoration(PxScene* gS, PxPhysics* gP, physx::PxTransform pos, Vector3 scale, TYPE_DECORATION _type) {
+	Decoration(PxScene* gS, PxPhysics* gP, physx::PxTransform pos, Vector3 scale, TYPE_DECORATION _type):SolidoRigido() {
 		switch (_type) {
 			case SNOWMAN:
 				decorList.push_back(new SolidoRigido(gS, gP, pos, { 30 * scale.x, 5 * scale.y, 30 * scale.z }, { 1,1,1,1 }, "SPHERE"));

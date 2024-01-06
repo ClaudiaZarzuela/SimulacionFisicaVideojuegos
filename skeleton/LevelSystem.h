@@ -22,6 +22,8 @@
 #include "Player.h"
 #include "Decoration.h"
 #include "Enemy.h"
+#include "WindMill.h"
+
 extern bool changeMenu;
 extern int actualMenu;
 extern bool win;
@@ -45,7 +47,6 @@ private:
 	bool insideBoundingBox(Vector3 pos);
 	int _timer = 3;
 	double elapsedTime = 0;
-	bool exp = true;
 	Nest* _nest = nullptr;
 	Entity* _player = nullptr;
 	bool explodePlayer = true;
@@ -61,15 +62,23 @@ private:
 	ParticleForceRegistry* _force_registry = nullptr;
 	GravityForceGenerator* _gravityForce = nullptr;
 	BuoyancyForceGenerator* _bouyancyForce = nullptr;
+	std::list<Button*> _buttonList;
 
+	WindMill* viento = nullptr;
+	WindMill* viento2 = nullptr;
+	bool activeWind1 = false;
+	bool activeWind2 = false;
 	void registerParticlesToForce(std::list<Entity*> p);
 	void registerParticleToForce(Entity* p);
+	void registerParticleToSpecificForce(Entity* p, ForceGenerator* f);
 	void playerDies(bool _win);
 	void addForces();
-	void explode();
+	void explode(Vector3 pos);
 	void reset();
 	void generateBouyancy();
 public:
+	void activateWind1();
+	void activateWind2();
 	void back();
 	void changeFormEnemy(Entity* obj);
 	void changeFormPlayer();

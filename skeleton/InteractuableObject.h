@@ -15,6 +15,7 @@ protected:
 	BoundingBox box;
 public:
 	std::string _type;
+	InteractuableObject(){}
 	InteractuableObject(Vector3 pos, float h, float w, float l, std::string t = "NORMAL") {
 		position = pos;
 		height = h;

@@ -12,8 +12,10 @@ protected:
 	PxRigidStatic* _static = nullptr;
 	Vector3 _linearVel, _angularVel;
 	double density;
+
 	
 public:
+	SolidoRigido() :Entity() {};
 	SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, Vector3 LinearVel, Vector3 AngularVel, Vector3 scale, double d, float Mass,Vector4 color, float time, std::string tShape = "BOX", std::string type = "NORMAL", bool ismodel = false);
 	SolidoRigido(PxScene* gS, PxPhysics* gP, physx::PxTransform Pos, Vector3 scale, Vector4 color, std::string tShape = "BOX", std::string type = "NORMAL",  bool ismodel = false);
 	virtual ~SolidoRigido(){

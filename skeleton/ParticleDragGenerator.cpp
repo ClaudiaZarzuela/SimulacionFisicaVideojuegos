@@ -14,5 +14,5 @@ void ParticleDragGenerator::updateForce(Entity* particle, double t) {
 	}
 }
 bool ParticleDragGenerator::insideBoundingBox(Vector3 pos) {
-	return (pos.x >= _pos.x - _dim.x && pos.x <= _pos.x + _dim.x) && (pos.y >= _pos.y && pos.y <= _pos.y + height) && (pos.z >= _pos.z - _dim.z && pos.z <= _pos.z + _dim.z);
+	return plane->insideBoundingBox(pos);
 }

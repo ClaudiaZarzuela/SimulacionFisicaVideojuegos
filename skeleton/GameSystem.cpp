@@ -15,21 +15,45 @@ GameSystem::GameSystem(PxScene* gS, PxPhysics* gP, const Vector3& g) {
 
 void GameSystem::MainMenuInicialice() {
 	_levelManager->active = false;
-	_buttonList.push_back(new Button(gScene, gPhysics, { 0,1,-80 }, 25, 10, Button::STARTGAME, _levelManager));
+	float floorWidth = 15;
+	float floorLength = 5;
+	float floorHeight = 1;
+	float wallsHeight = 2;
+	float wallsWidth = 1;
 
+	physx::PxTransform pos = { 40,-40,-80 };
+	_decorationIntro.push_back(new SolidoRigido(gScene, gPhysics, pos, { floorWidth, floorHeight, floorLength }, { 0.5,1,0.5,1 }));
+	_decorationIntro.push_back(new Player(gScene, gPhysics, { 40,-36,-80 }, { 3,3,3 }, 100, 100));
+	_decorationIntro.push_back(new SolidoRigido(gScene, gPhysics, pos, { floorWidth, floorHeight, floorLength }, { 0.5,1,0.5,1 }));
+	physx::PxTransform posRight = { pos.p.x + floorWidth - wallsWidth, pos.p.y + floorHeight + wallsHeight , pos.p.z };
+	physx::PxTransform posLeft = { pos.p.x - floorWidth + wallsWidth, pos.p.y + floorHeight + wallsHeight , pos.p.z };
+	_decorationIntro.push_back(new SolidoRigido(gScene, gPhysics, posRight, { wallsWidth, wallsHeight, floorLength }, { 0.5,1,0.5,1 }));
+	_decorationIntro.push_back(new SolidoRigido(gScene, gPhysics, posLeft, { wallsWidth, wallsHeight, floorLength }, { 0.5,1,0.5,1 }));
+	_decorationIntro.push_back(new SolidoRigido(gScene, gPhysics, { 35,-32,-70 }, { 0.4,0.1,0.2 }, { 0,0,0,1 }));
+	_decorationIntro.push_back(new SolidoRigido(gScene, gPhysics, { 38,-32,-70 }, { 0.4,0.1,0.2 }, { 0,0,0,1 }));
+	_decorationIntro.push_back(new SolidoRigido(gScene, gPhysics, { 36.5,-34,-70 }, { 0.6,0.1,0.2 }, { 1, 0, 0, 1 }));
+	_buttonList.push_back(new Button(gScene, gPhysics, { -1,2,-160 }, 47, 20, Button::STARTGAME, _levelManager));
+	_decorationIntro.push_back(new Enemy(gScene, gPhysics, { 0,-45,-80 }, { 200, 0.1, 100 }));
+	_decorationIntro.push_back(new Decoration(gScene, gPhysics, { -100,-25,-150 }, { 0.3,1,0.3 }, Decoration::TREE1));
+	_decorationIntro.push_back(new Decoration(gScene, gPhysics, { 125,-15,-150 }, { 0.3,1.5,0.3 }, Decoration::TREE1));
+	_decorationIntro.push_back(new Decoration(gScene, gPhysics, { 75,-25,-150 }, { 0.3,1,0.3 }, Decoration::TREE1));
+	_decorationIntro.push_back(new Decoration(gScene, gPhysics, { -70,-20,-150 }, { 0.4,1,0.4 }, Decoration::TREE2));
+	_decorationIntro.push_back(new Decoration(gScene, gPhysics, { -125,-20,-150 }, { 0.4,1,0.4 }, Decoration::TREE2));
+	_decorationIntro.push_back(new Decoration(gScene, gPhysics, { -50,-40,-100 }, { 0.7,1.4,0.7 }, Decoration::SNOWMAN));
 }
 
 void GameSystem::LevelMenuInicialice() {
+	
 	_levelManager->active = false;
 	endWin_text1 = " ";  endWin_text2 = " "; endWin_text3 = " ";
 	endLoose_text1 = " "; endLoose_text2 = " "; continue_text = " ";
 	instructions_1 = " "; instructions_2 = " "; instructions_3 = " "; instructions_4 = " "; instructions_5 = " "; instructions_6 = " "; instructions_7 = " ";
-	_buttonList.push_back(new Button(gScene, gPhysics, { -50,15,-90 }, 10, 10, Button::LEVEL_1, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 0,15,-90 }, 10, 10, Button::LEVEL_2, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 50,15,-90 }, 10, 10, Button::LEVEL_3, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { -50,-20,-90 }, 10, 10, Button::LEVEL_4, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 0,-20,-90 }, 10, 10, Button::LEVEL_5, _levelManager));
-	_buttonList.push_back(new Button(gScene, gPhysics, { 50,-20,-90 }, 10, 10, Button::LEVEL_6, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { -50,5,-90 }, 10, 10, Button::LEVEL_1, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 0,5,-90 }, 10, 10, Button::LEVEL_2, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 50,5,-90 }, 10, 10, Button::LEVEL_3, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { -50,-30,-90 }, 10, 10, Button::LEVEL_4, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 0,-30,-90 }, 10, 10, Button::LEVEL_5, _levelManager));
+	_buttonList.push_back(new Button(gScene, gPhysics, { 50,-30,-90 }, 10, 10, Button::LEVEL_6, _levelManager));
 	
 }
 
@@ -39,6 +63,10 @@ void GameSystem::GameSceneInicialice() {
 }
 
 void GameSystem::Instructions() {
+	for (auto it = _decorationIntro.begin(); it != _decorationIntro.end();) {
+		delete(*it);
+		it = _decorationIntro.erase(it);
+	}
 	instructions_1 = "NEST";
 	instructions_2 = "HELP THE BIRD TO THE NEST"; 
 	instructions_3 = "DO NOT LET IT TOUCH THE RED ENEMIES OR THE BIRD WILL DIE!"; 
@@ -104,7 +132,7 @@ void GameSystem::integrate(double t) {
 				for (auto ot = _buttonList.begin(); ot != _buttonList.end();) {
 					if ((*ot)->function != Button::DEFAULT && (*ot)->insideBoundingBox((*it)->getPosition())) {
 						(*ot)->startFunction();
-						if ((*ot)->function == Button::LEVEL_4) name_text = "THE BIRD CAN´T CHANGE FORM IN THIS LEVEL";
+						if ((*ot)->function == Button::LEVEL_4 || (*ot)->function == Button::LEVEL_2) name_text = "THE BIRD CAN´T CHANGE FORM IN THIS LEVEL";
 						else name_text = "Claudia Zarzuela Amor";
 						clearButtons();
 						ot = _buttonList.end();

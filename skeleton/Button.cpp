@@ -35,6 +35,8 @@ void  Button::startFunction() {
 	case LEVEL_4: startLevel(3); break;
 	case LEVEL_5: startLevel(4); break;
 	case LEVEL_6: startLevel(5); break;
+	case WIND1: _levelSystem->activateWind1(); break;
+	case WIND2: _levelSystem->activateWind2(); break;
 	case DEFAULT:break;
 	default: break;
 	}

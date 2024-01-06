@@ -29,6 +29,7 @@ public:
 	virtual void setVelocity(Vector3 Vel) = 0;
 	virtual Entity* changeForm() = 0;
 	bool isAlive() { return alive; }
+	Entity():InteractuableObject(){}
 	Entity(Vector3 pos, Vector3 scale, std::string type = "NORMAL", std::string tShape = "BOX") :InteractuableObject(pos, scale.y, scale.x, scale.z, type) {}
 	virtual ~Entity(){}
 };
