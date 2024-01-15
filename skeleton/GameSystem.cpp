@@ -117,6 +117,7 @@ void GameSystem::ManageScene() {
 }
 
 void GameSystem::integrate(double t) {
+	//Para que no salgan varios pointers a la vez, sino que tengas que esperar 1 segundo entre clicks de ratón
 	if (!activePointer) {
 		elapsedTime += t;
 		if (elapsedTime >= _timer) activePointer = true;
@@ -129,6 +130,7 @@ void GameSystem::integrate(double t) {
 			bool alive = true;
 			if ((*it)->isAlive()) {
 				(*it)->integrate(t);
+				//Checkea si ha colisionado con un botón y, en caso de hacerlo, llama a su función, borra el pointer y los botones
 				for (auto ot = _buttonList.begin(); ot != _buttonList.end();) {
 					if ((*ot)->function != Button::DEFAULT && (*ot)->insideBoundingBox((*it)->getPosition())) {
 						(*ot)->startFunction();
@@ -147,7 +149,9 @@ void GameSystem::integrate(double t) {
 				if (_levelManager->active) {
 					auto ot = _levelManager->_objPorNivel.begin();
 					while(alive && ot != _levelManager->_objPorNivel.end()){
-
+						//Checkea si ha colisionado con un objeto de nivel.
+						//En caso de ser un enemigo, llama al LevelSytem para que lo cambie de forma y borra el pointer.
+						//En caso de ser un objeto normal, lo borra de la lista y borra el pointer.
 						if ((*ot)->insideBoundingBox((*it)->getPosition(), (*it)->_scale, (*ot)->getPosition())) {
 							if ((*ot)->_type != "ENEMY" && (*ot)->_type != "ENEMYFLOOR") {
 								delete(*ot);
@@ -189,6 +193,7 @@ void GameSystem::keyPress(unsigned char key) {
 	
 }
 
+//Con la posición de la cámara, la cual te indica donde esta el ratón en pantalla, disparas un nuevo pointer usando el proyectil
 void GameSystem::handleMouse(int button, int state, int x, int y)
 {
 	if (button == 0 && activePointer) {
@@ -199,6 +204,7 @@ void GameSystem::handleMouse(int button, int state, int x, int y)
 	}
 }
 
+//Elimina todos los botones en pantalla
 void GameSystem::clearButtons() {
 	for (auto it = _buttonList.begin(); it != _buttonList.end();) {
 		delete(*it);

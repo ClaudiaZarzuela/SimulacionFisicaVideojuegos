@@ -2,6 +2,7 @@
 #include "InteractuableObject.h"
 #include "SolidoRigido.h"
 
+//Clase que crea el nido en el que el jugador debe entrar para ganar. El nido esta compuesto por solidos rígidos estáticos verdes.
 class Nest : public InteractuableObject
 {
 private:

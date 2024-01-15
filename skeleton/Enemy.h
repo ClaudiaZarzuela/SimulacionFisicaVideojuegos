@@ -1,5 +1,7 @@
 #pragma once
 #include "SolidoRigido.h"
+
+//Clase que actua como identificador de enemigos. Un enemigo puede ser un solido rígido, dinámico o estático de cualquier forma, rojo (o blanco si se trata del suelo)
 class Enemy : public SolidoRigido
 {
 public:
@@ -10,6 +12,7 @@ public:
 		SolidoRigido(gS, gP, Pos,  scale, color, "BOX", "ENEMYFLOOR") {
 	}
 
+	//Destructora vacía ya que no se tiene referencia al enemigo, se encarga el LevelSystem
 	virtual ~Enemy() {}
 };
 

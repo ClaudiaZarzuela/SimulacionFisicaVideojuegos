@@ -1,5 +1,7 @@
 #pragma once
 #include "core.hpp"
+
+//Clase padre de Entidad que se encarga de detectar las colisiones entre el objeto mismo y otro.
 class InteractuableObject
 {
 protected:

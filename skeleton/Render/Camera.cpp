@@ -55,6 +55,8 @@ void Camera::handleMouse(int button, int state, int x, int y)
 	mMouseX = x;
 	mMouseY = y;
 }
+
+//Metodo que transforma las coordenadas de pantalla en coordenadas de mundo
 physx::PxVec2 Camera::getMousePos() {
 	float ndcX = (2.0f * mMouseX) / WidthCam - 1.0f;
 	float ndcY = 1.0f - (2.0f * mMouseY) / HeightCam;
@@ -62,6 +64,8 @@ physx::PxVec2 Camera::getMousePos() {
 	float viewY = ndcY * 3.0f;
 	return { (float)viewX , (float)viewY};
 }
+
+//Comentado ya que queremos dar una aparencia de 2D con cámara estatica
 bool Camera::handleKey(unsigned char key, int x, int y, float speed)
 {
 	PX_UNUSED(x);
@@ -86,6 +90,7 @@ void Camera::handleAnalogMove(float x, float y)
 	mEye += viewY*x;*/
 }
 
+//Comentado ya que queremos dar una aparencia de 2D con cámara estatica
 void Camera::handleMotion(int x, int y)
 {
 	/*int dx = mMouseX - x;

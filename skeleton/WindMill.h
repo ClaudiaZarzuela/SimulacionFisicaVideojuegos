@@ -3,6 +3,11 @@
 #include "ParticleDragGenerator.h"
 #include <list>
 
+/*
+	Clase encargada de generar los ventiladores: solidos rígidos estáticos con una velocidad angular contante ya que no les afecta ninguna otra fuerza y tiene el damping angular a 0.
+
+	Esta clase tiene un metodo activate() que permite activar y deactivarlo añadiendo o quitando velocidad angular.
+*/
 class WindMill
 {
 public:
@@ -38,9 +43,6 @@ public:
 		 _shapeDyn->release();
 		 m->release();
 		 dyn->release();
-		/* delete(&dyn);
-		 delete(&m);
-		 delete(&_shapeDyn);*/
 		DeregisterRenderItem(renderItem);
 		delete(renderItem);
 	}

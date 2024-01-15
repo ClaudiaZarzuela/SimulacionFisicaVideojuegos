@@ -1,6 +1,10 @@
 #pragma once
 #include "RenderUtils.hpp"
 #include "InteractuableObject.h"
+
+/*
+Clase padre de Particle y SolidoRigido, que hereda de InteractuableObject ya que todos los objetos creados necesitan detectar colisiones
+*/
 class Entity : public InteractuableObject
 {
 public:

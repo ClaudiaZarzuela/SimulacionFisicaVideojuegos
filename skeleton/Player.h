@@ -1,6 +1,8 @@
 #pragma once
 #include "SolidoRigido.h"
 #include <iostream>
+
+//Clase que actua como identificador del jugador. Este es  un solido rígido dinámico de cualquier forma amarillo.
 class Player: public SolidoRigido
 {
 public:

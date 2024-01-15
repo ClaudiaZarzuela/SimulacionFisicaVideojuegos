@@ -2,6 +2,19 @@
 #include <PxPhysicsAPI.h>>
 #include "Entity.h"
 using namespace physx;
+
+/*
+	Igual que antes pero se le ha añadido un identificador de objeto (enemigo, normal, player...) y un de forma (box o sphere). 
+	Dependiendo de la forma se generará un sólido rígido u otro.
+
+	TEn la constructora tambien se les añade nuevo:
+		- un material para hacerlos inelásticos ya que de base nvidia genera un mundo elástico
+		- un PxFilterData para mejorar las colisiones entre solidos rigidos
+		- un tensor de inercia con valor en la x a 0 para bloquear la rotacion en ese eje y simular un mundo en 2D
+		- setMaxDepenetrationVelocity(), el cual hace que las colisiones se detecten a mayor distancia y mejore las colisiones
+
+	El método changeForm() devuelve un nuevo solido rigido haciendo un clon del anterior pero variando su forma.
+*/
 class SolidoRigido :public Entity
 {
 public:

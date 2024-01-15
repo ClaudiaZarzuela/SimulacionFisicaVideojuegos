@@ -23,7 +23,6 @@
     <ClCompile Include="ParticleDragGenerator.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="ParticleWhirlWindGenerator.cpp" />
-    <ClCompile Include="ModelParticle.cpp" />
     <ClCompile Include="ExplotionGenerator.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="AnchoredSpringFG.cpp" />
@@ -38,8 +37,6 @@
     <ClCompile Include="LevelSystem.cpp" />
     <ClCompile Include="Nest.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="MyItem.cpp" />
-    <ClCompile Include="Decoration.cpp" />
     <ClCompile Include="WindMill.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +63,6 @@
     <ClInclude Include="ParticleDragGenerator.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="ParticleWhirlWindGenerator.h" />
-    <ClInclude Include="ModelParticle.h" />
     <ClInclude Include="ExplotionGenerator.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="AnchoredSpringFG.h" />
@@ -82,7 +78,6 @@
     <ClInclude Include="Nest.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="MyItem.h" />
     <ClInclude Include="Decoration.h" />
     <ClInclude Include="WindMill.h" />
   </ItemGroup>

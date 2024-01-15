@@ -256,7 +256,7 @@ void setupDefaultWindow(const char *name)
 	int mainHandle = glutCreateWindow(name);
 	glutSetWindow(mainHandle);
 	glutReshapeFunc(reshapeCallback);
-	
+
 	delete[] namestr;
 }
 
@@ -289,16 +289,27 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Display text
+	
+	//Color de los textos
 	glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
+
+	//Nombre
 	drawText(name_text, 5, 5);
+
+	//Pantalla final al ganar
 	drawText(endWin_text1, 242, 290);
 	drawText(endWin_text2, 187, 250);
-	drawText(instructions, 187, 250);
 	drawText(endWin_text3, 237, 230);
+
+	//Pantalla final al perder
 	drawText(endLoose_text1, 242, 290);
 	drawText(endLoose_text2, 200, 250);
+
+	//Texto de continuar tras acabar un nivel
 	drawText(continue_text, 235, 133);
 
+	//Pantalla que contiene el párrafo de instrucciones
+	drawText(instructions, 187, 250);
 	drawText(instructions_1, 246, 290);
 	drawText(instructions_2, 195, 270);
 	drawText(instructions_3, 125, 255);
